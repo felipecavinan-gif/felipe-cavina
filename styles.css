@@ -9,6 +9,7 @@ h1 em { font-weight: 600; color: var(--orange); }
 .portrait { position: absolute; width: clamp(150px, 22vw, 290px); aspect-ratio: 1; top: clamp(20px, 5vh, 62px); right: 2%; object-fit: cover; border-radius: 50%; border: 5px solid var(--cream); box-shadow: 11px 11px 0 var(--blue); }
 .subtitle { margin: 29px 0 0; font-size: 12px; letter-spacing: .02em; }
 .links { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: clamp(54px, 10vh, 108px); }
+.notice { max-width: 510px; margin: 18px 0 0; font-size: 10px; line-height: 1.55; letter-spacing: .01em; color: #4e5f67; }
 .link-card { min-height: clamp(205px, 27vw, 330px); padding: 22px 23px; position: relative; display: flex; flex-direction: column; justify-content: space-between; text-decoration: none; color: white; overflow: hidden; transition: transform .3s ease, box-shadow .3s ease; }
 .link-card::after { content: ""; position: absolute; width: 130px; height: 130px; right: -35px; bottom: -50px; border: 1px solid currentColor; border-radius: 50%; opacity: .28; transition: transform .4s ease; }
 .link-card:hover { transform: translateY(-6px); box-shadow: 0 14px 0 rgba(27,27,26,.15); }.link-card:hover::after { transform: scale(1.4); }
@@ -16,4 +17,4 @@ h1 em { font-weight: 600; color: var(--orange); }
 .era-logo { width: min(86%, 360px); align-self: center; display: block; mix-blend-mode: screen; filter: contrast(1.1); }
 .number { font-size: 11px; }.label { font: 600 clamp(32px, 4vw, 56px)/.9 "Playfair Display", serif; letter-spacing: -.05em; z-index: 1; }.arrow { position: absolute; top: 18px; right: 23px; font-size: 30px; transition: transform .3s ease; }.link-card:hover .arrow { transform: translate(4px, -4px); }
 footer { margin-top: auto; padding-top: 66px; display: flex; justify-content: space-between; font-size: 10px; letter-spacing: .07em; } footer a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--ink); }
-@media (max-width: 560px) { main { padding: 25px 18px 18px; } .intro { padding-top: 42px; } .portrait { top: 4px; right: 1%; width: 112px; box-shadow: 6px 6px 0 var(--blue); } h1 { font-size: clamp(51px, 16vw, 76px); } .links { grid-template-columns: 1fr; margin-top: 64px; gap: 10px; } .link-card { min-height: 180px; } footer { padding-top: 44px; } }
+@media (max-width: 560px) { main { padding: 25px 18px 18px; } .intro { padding-top: 42px; } .portrait { top: 4px; right: 1%; width: 112px; box-shadow: 6px 6px 0 var(--blue); } h1 { font-size: clamp(51px, 16vw, 76px); } .links { grid-template-columns: 1fr; margin-top: 64px; gap: 10px; } .notice { margin-top: 14px; } .link-card { min-height: 180px; } footer { padding-top: 44px; } }
