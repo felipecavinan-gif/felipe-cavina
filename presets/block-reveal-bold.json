@@ -1,0 +1,136 @@
+{
+  "id": "block-reveal-bold",
+  "name": "Revelação em Bloco",
+  "category": "Títulos",
+  "description": "Bloco de cor passa e revela o texto, linha por linha.",
+  "style": "block-reveal",
+  "fps": 30,
+  "durationInFrames": 110,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "line1",
+      "label": "Linha 1",
+      "type": "text",
+      "default": "BLACK",
+      "maxLength": 24
+    },
+    {
+      "key": "line2",
+      "label": "Linha 2",
+      "type": "text",
+      "default": "FRIDAY",
+      "maxLength": 24
+    },
+    {
+      "key": "line3",
+      "label": "Linha 3 (menor, opcional)",
+      "type": "text",
+      "default": "até 70% off em todo o site",
+      "maxLength": 40
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 150,
+      "min": 40,
+      "max": 260,
+      "step": 1
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "secondColor",
+      "label": "Cor da linha 2",
+      "type": "color",
+      "default": "#ff3d5a"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor do bloco",
+      "type": "color",
+      "default": "#ff3d5a"
+    },
+    {
+      "key": "uppercase",
+      "label": "Caixa alta",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "align",
+      "label": "Alinhamento",
+      "type": "select",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Centro"
+        },
+        {
+          "value": "left",
+          "label": "Esquerda"
+        }
+      ]
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#0b0b0f"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false,
+      "help": "Exporte em MOV/WebM para manter a transparência"
+    }
+  ]
+}

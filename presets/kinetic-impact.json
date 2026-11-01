@@ -1,0 +1,111 @@
+{
+  "id": "kinetic-impact",
+  "name": "Impacto Kinetic",
+  "category": "Tipografia animada",
+  "description": "Palavras surgindo uma a uma com mola. Use *asteriscos* para destacar.",
+  "style": "kinetic-words",
+  "fps": 30,
+  "durationInFrames": 100,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "text",
+      "label": "Texto",
+      "type": "textarea",
+      "default": "ISSO VAI *MUDAR* SEU JOGO"
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor do destaque",
+      "type": "color",
+      "default": "#ffd400"
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 130,
+      "min": 40,
+      "max": 260,
+      "step": 1
+    },
+    {
+      "key": "wordDelay",
+      "label": "Intervalo entre palavras (frames)",
+      "type": "number",
+      "default": 5,
+      "min": 1,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "key": "uppercase",
+      "label": "Caixa alta",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#0b0b0f"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false,
+      "help": "Exporte em MOV/WebM para manter a transparência"
+    }
+  ],
+  "props": {
+    "accentBox": false
+  }
+}

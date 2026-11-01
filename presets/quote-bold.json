@@ -1,0 +1,105 @@
+{
+  "id": "quote-bold",
+  "name": "Citação Impacto",
+  "category": "Citações",
+  "description": "Frase em destaque, fonte forte.",
+  "style": "quote",
+  "fps": 30,
+  "durationInFrames": 160,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "quote",
+      "label": "Citação",
+      "type": "textarea",
+      "default": "Feito é *melhor* que perfeito."
+    },
+    {
+      "key": "author",
+      "label": "Autor",
+      "type": "text",
+      "default": "Sheryl Sandberg"
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 84,
+      "min": 30,
+      "max": 140,
+      "step": 1
+    },
+    {
+      "key": "italic",
+      "label": "Itálico",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#111111"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor de destaque",
+      "type": "color",
+      "default": "#ff3d5a"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false,
+      "help": "Exporte em MOV/WebM para manter a transparência"
+    }
+  ]
+}

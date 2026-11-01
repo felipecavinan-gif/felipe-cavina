@@ -1,0 +1,105 @@
+{
+  "id": "quote-elegant",
+  "name": "Citação Elegante",
+  "category": "Citações",
+  "description": "Frase com aspas animadas e autor.",
+  "style": "quote",
+  "fps": 30,
+  "durationInFrames": 180,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "quote",
+      "label": "Citação",
+      "type": "textarea",
+      "default": "A criatividade é a inteligência se *divertindo*."
+    },
+    {
+      "key": "author",
+      "label": "Autor",
+      "type": "text",
+      "default": "Albert Einstein"
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "playfair",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 70,
+      "min": 30,
+      "max": 140,
+      "step": 1
+    },
+    {
+      "key": "italic",
+      "label": "Itálico",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#f5efe0"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor de destaque",
+      "type": "color",
+      "default": "#c9a45c"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#14110d"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false,
+      "help": "Exporte em MOV/WebM para manter a transparência"
+    }
+  ]
+}

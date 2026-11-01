@@ -1,0 +1,132 @@
+{
+  "id": "counter-money",
+  "name": "Contador de Faturamento",
+  "category": "Números e dados",
+  "description": "Valores em reais contando.",
+  "style": "counter",
+  "fps": 30,
+  "durationInFrames": 120,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "prefix",
+      "label": "Prefixo",
+      "type": "text",
+      "default": "R$ "
+    },
+    {
+      "key": "value",
+      "label": "Valor final",
+      "type": "number",
+      "default": 1000000,
+      "min": -1000000000,
+      "max": 1000000000,
+      "step": 1
+    },
+    {
+      "key": "startValue",
+      "label": "Valor inicial",
+      "type": "number",
+      "default": 0,
+      "min": -1000000000,
+      "max": 1000000000,
+      "step": 1
+    },
+    {
+      "key": "suffix",
+      "label": "Sufixo",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "decimals",
+      "label": "Casas decimais",
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 3,
+      "step": 1
+    },
+    {
+      "key": "label",
+      "label": "Legenda",
+      "type": "text",
+      "default": "faturados em 2026"
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "poppins",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 180,
+      "min": 60,
+      "max": 400,
+      "step": 1
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#111111"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor de destaque",
+      "type": "color",
+      "default": "#1f4dff"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false,
+      "help": "Exporte em MOV/WebM para manter a transparência"
+    }
+  ]
+}

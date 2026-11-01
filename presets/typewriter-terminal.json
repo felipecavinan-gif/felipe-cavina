@@ -1,0 +1,124 @@
+{
+  "id": "typewriter-terminal",
+  "name": "Terminal Hacker",
+  "category": "Tipografia animada",
+  "description": "Texto digitado com cursor, estilo terminal.",
+  "style": "typewriter",
+  "fps": 30,
+  "durationInFrames": 150,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "prompt",
+      "label": "Linha de comando",
+      "type": "text",
+      "default": "> run motion.exe"
+    },
+    {
+      "key": "text",
+      "label": "Texto",
+      "type": "textarea",
+      "default": "Inicializando o projeto..."
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "jetbrains",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 80,
+      "min": 30,
+      "max": 200,
+      "step": 1
+    },
+    {
+      "key": "speed",
+      "label": "Velocidade (caracteres/frame)",
+      "type": "number",
+      "default": 0.8,
+      "min": 0.2,
+      "max": 5,
+      "step": 0.1
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#33ff88"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor do cursor",
+      "type": "color",
+      "default": "#33ff88"
+    },
+    {
+      "key": "align",
+      "label": "Alinhamento",
+      "type": "select",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Esquerda"
+        },
+        {
+          "value": "center",
+          "label": "Centro"
+        }
+      ]
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#050805"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false,
+      "help": "Exporte em MOV/WebM para manter a transparência"
+    }
+  ]
+}

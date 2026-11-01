@@ -1,0 +1,120 @@
+{
+  "id": "lower-third-classic",
+  "name": "Lower Third Clássico",
+  "category": "Lower thirds",
+  "description": "Nome e cargo com barra lateral. Fundo transparente para usar sobre o vídeo.",
+  "style": "lower-third",
+  "fps": 30,
+  "durationInFrames": 150,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "name",
+      "label": "Nome",
+      "type": "text",
+      "default": "Ana Souza",
+      "maxLength": 40
+    },
+    {
+      "key": "role",
+      "label": "Cargo / descrição",
+      "type": "text",
+      "default": "Diretora de Criação",
+      "maxLength": 50
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "inter",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do nome",
+      "type": "color",
+      "default": "#111111"
+    },
+    {
+      "key": "boxColor",
+      "label": "Fundo do nome",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor de destaque",
+      "type": "color",
+      "default": "#ff3d5a"
+    },
+    {
+      "key": "roleColor",
+      "label": "Cor do cargo",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "align",
+      "label": "Alinhamento",
+      "type": "select",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Esquerda"
+        },
+        {
+          "value": "right",
+          "label": "Direita"
+        }
+      ]
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#1a1a1a"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": true,
+      "help": "Exporte em MOV/WebM para manter a transparência"
+    }
+  ]
+}
