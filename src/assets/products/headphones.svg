@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700" width="700" height="700">
+  <defs>
+    <linearGradient id="band" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3f4a"/><stop offset="1" stop-color="#111318"/></linearGradient>
+    <linearGradient id="cup" x1="0" x2="1"><stop offset="0" stop-color="#1b1e25"/><stop offset=".4" stop-color="#4b5160"/><stop offset="1" stop-color="#14161b"/></linearGradient>
+    <linearGradient id="ring" x1="0" x2="1"><stop offset="0" stop-color="#9aa3b5"/><stop offset=".5" stop-color="#eef2f8"/><stop offset="1" stop-color="#7b8496"/></linearGradient>
+  </defs>
+  <path d="M120 400 C 110 150, 590 150, 580 400" fill="none" stroke="url(#band)" stroke-width="46" stroke-linecap="round"/>
+  <path d="M150 380 C 150 200, 550 200, 550 380" fill="none" stroke="#5c6475" stroke-width="6" opacity=".6"/>
+  <rect x="70" y="360" width="150" height="230" rx="70" fill="url(#cup)"/>
+  <rect x="480" y="360" width="150" height="230" rx="70" fill="url(#cup)"/>
+  <rect x="86" y="380" width="118" height="190" rx="58" fill="none" stroke="url(#ring)" stroke-width="8"/>
+  <rect x="496" y="380" width="118" height="190" rx="58" fill="none" stroke="url(#ring)" stroke-width="8"/>
+  <rect x="100" y="400" width="22" height="120" rx="11" fill="#fff" opacity=".18"/>
+  <rect x="510" y="400" width="22" height="120" rx="11" fill="#fff" opacity=".18"/>
+</svg>

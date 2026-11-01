@@ -24,6 +24,12 @@ import { StrobeCut } from "./StrobeCut";
 import { CineReveal } from "./CineReveal";
 import { Trailer } from "./Trailer";
 import { BackgroundScene } from "./BackgroundScene";
+import { ProductFlick } from "./ProductFlick";
+import { GlassCard3D } from "./GlassCard3D";
+import { ProductSpin3D } from "./ProductSpin3D";
+import { ProductImpact } from "./ProductImpact";
+import { GlassShatter } from "./GlassShatter";
+import { ImpactFrame } from "./ImpactFrame";
 
 /** Registro de estilos. Um preset JSON aponta para uma destas chaves no campo "style". */
 export const STYLES: Record<string, React.FC<StyleProps>> = {
@@ -50,4 +56,10 @@ export const STYLES: Record<string, React.FC<StyleProps>> = {
   "cine-reveal": CineReveal,
   trailer: Trailer,
   "background-scene": BackgroundScene,
+  "product-flick": ProductFlick,
+  "glass-card-3d": GlassCard3D,
+  "product-spin-3d": ProductSpin3D,
+  "product-impact": ProductImpact,
+  "glass-shatter": GlassShatter,
+  "impact-frame": ImpactFrame,
 };

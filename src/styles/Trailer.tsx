@@ -27,7 +27,7 @@ export const Trailer: React.FC<StyleProps> = ({ v }) => {
   const size = fitSize(Number(isFinal ? v.finalSize ?? 160 : v.fontSize ?? 70) * u, text.length * (isFinal ? 1.2 : 1.3), width * 0.86, 0.66);
 
   return (
-    <AbsoluteFill style={{ background: v.bgColor }}>
+    <AbsoluteFill style={{ background: v.transparent ? "transparent" : v.bgColor }}>
       {isFinal && v.leaks ? <LightLeaks colors={[v.leakA, v.leakB]} strength={0.55 * fadeIn * fadeOut} flick={0.35} /> : null}
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: fadeIn * fadeOut * flick, transform: `scale(${push})` }}>
         <div style={{ fontFamily: font(isFinal ? v.font : v.lineFont ?? v.font), fontWeight: isFinal ? 700 : 400, fontSize: size, color: isFinal ? v.finalColor : v.textColor, letterSpacing: isFinal ? "0.2em" : "0.3em", textTransform: "uppercase", textAlign: "center", whiteSpace: "nowrap", filter: `blur(${(1 - fadeIn) * 14 * u}px)`, textShadow: isFinal ? `0 0 ${40 * u}px ${v.leakA}aa` : "none" }}>

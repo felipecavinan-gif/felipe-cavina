@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 640" width="800" height="640">
+  <defs>
+    <linearGradient id="leather" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a4a2a"/><stop offset="1" stop-color="#4a2a16"/></linearGradient>
+    <linearGradient id="side" x1="0" x2="1"><stop offset="0" stop-color="#3a2010"/><stop offset=".2" stop-color="#6a3e22"/><stop offset=".85" stop-color="#6a3e22"/><stop offset="1" stop-color="#2e180b"/></linearGradient>
+    <linearGradient id="gold" x1="0" x2="1"><stop offset="0" stop-color="#8a6420"/><stop offset=".4" stop-color="#f6dc8c"/><stop offset="1" stop-color="#9a7428"/></linearGradient>
+  </defs>
+  <path d="M270 230 C 270 90, 530 90, 530 230" fill="none" stroke="#1d1410" stroke-width="30" stroke-linecap="round"/>
+  <rect x="120" y="220" width="560" height="380" rx="70" fill="url(#leather)"/>
+  <rect x="120" y="220" width="560" height="380" rx="70" fill="url(#side)" opacity=".55"/>
+  <path d="M140 300 H 660" stroke="#2a170b" stroke-width="4" stroke-dasharray="10 8" opacity=".7"/>
+  <rect x="360" y="235" width="80" height="40" rx="8" fill="url(#gold)"/>
+  <circle cx="255" cy="232" r="16" fill="url(#gold)"/><circle cx="545" cy="232" r="16" fill="url(#gold)"/>
+  <rect x="150" y="250" width="30" height="300" rx="15" fill="#fff" opacity=".08"/>
+  <path d="M120 520 Q 400 560 680 520" stroke="#2a170b" stroke-width="4" fill="none" stroke-dasharray="10 8" opacity=".6"/>
+</svg>

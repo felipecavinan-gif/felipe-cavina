@@ -1,4 +1,4 @@
-import { renderMediaOnWeb, canRenderMediaOnWeb } from "@remotion/web-renderer";
+import { renderMediaOnWeb, canRenderMediaOnWeb, renderStillOnWeb } from "@remotion/web-renderer";
 import { PresetVideo } from "../remotion/PresetVideo";
 import { buildInput, type FormatId, type Preset, type Values } from "../types";
 
@@ -37,4 +37,15 @@ export async function renderInBrowser(
   } as never);
   const blob = await result.getBlob();
   return { blob, filename: `${preset.id}-${format.replace(":", "x")}${transparent ? "-alpha" : ""}.${container}` };
+}
+
+/** Renderiza um quadro como PNG com fundo transparente. */
+export async function renderPngInBrowser(preset: Preset, values: Values, format: FormatId, frame: number): Promise<Blob> {
+  const input = buildInput(preset, values, format);
+  const composition = {
+    id: "Preset", component: PresetVideo, durationInFrames: input.durationInFrames,
+    fps: input.fps, width: input.width, height: input.height,
+  };
+  const result = await renderStillOnWeb({ composition, inputProps: input, frame, licenseKey: "free-license" } as never);
+  return (result as { blob: (o: { format: "png" }) => Promise<Blob> }).blob({ format: "png" });
 }

@@ -84,3 +84,19 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+
+.klass { margin-bottom: 34px; }
+.klass h2 { font-size: 18px; margin: 8px 0 14px; display: flex; align-items: baseline; gap: 8px; }
+.klass h2 span { color: var(--muted); font-size: 13px; font-weight: 500; }
+.card-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.badge { font-size: 11px; background: var(--panel2); border: 1px solid var(--line); color: var(--text); padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+.imgfield { display: flex; flex-direction: column; gap: 8px; }
+.imgfield-row { display: flex; gap: 12px; align-items: flex-start; }
+.imgfield-thumb { flex: none; width: 84px; height: 84px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); display: grid; place-items: center; }
+.imgfield-thumb img { width: 100%; height: 100%; object-fit: contain; }
+.imgfield-actions { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.samples { display: flex; flex-wrap: wrap; gap: 6px; }
+.samples .chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 4px; }
+.samples .chip img { width: 22px; height: 22px; object-fit: contain; background: #fff; border-radius: 99px; }
+.primary.small { padding: 8px 14px; font-size: 14px; align-self: flex-start; }
+.checker { background: repeating-conic-gradient(#2a2a2a 0% 25%, #1e1e1e 0% 50%) 50% / 16px 16px; }

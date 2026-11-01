@@ -4,7 +4,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { bundle } from "@remotion/bundler";
-import { renderMedia, selectComposition } from "@remotion/renderer";
+import { renderMedia, renderStill, selectComposition } from "@remotion/renderer";
 import { FORMATS, buildInput, defaultValues, type FormatId, type Preset, type Values } from "../src/types";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -68,6 +68,8 @@ function sanitize(p: Preset, input: unknown): Values {
         if (f.options?.some((o) => o.value === x)) v[f.key] = x;
       } else if (f.type === "color") {
         if (typeof x === "string" && /^#[0-9a-fA-F]{3,8}$/.test(x)) v[f.key] = x;
+      } else if (f.type === "image") {
+        if (typeof x === "string" && (/^data:image\/(png|jpeg|webp|svg\+xml);base64,/.test(x) || /^builtin:[a-z]+$/.test(x) || /^https?:\/\//.test(x)) && x.length < 20e6) v[f.key] = x;
       } else if (typeof x === "string") v[f.key] = x.slice(0, f.maxLength ?? 500);
     }
   }
@@ -110,7 +112,7 @@ setInterval(() => {
 
 // ---------- API ----------
 const app = express();
-app.use(express.json({ limit: "200kb" }));
+app.use(express.json({ limit: "25mb" }));
 
 app.get("/api/presets", (_req, res) => res.json(loadPresets()));
 app.get("/api/exports", (_req, res) => res.json(Object.entries(EXPORTS).map(([id, e]) => ({ id, label: e.label }))));
@@ -126,6 +128,26 @@ app.post("/api/render", (req, res) => {
   const clean = sanitize(preset, values);
   queue = queue.then(() => runJob(job, preset, clean, format, exportType));
   res.json({ jobId: job.id });
+});
+
+app.post("/api/still", async (req, res) => {
+  const { presetId, values, format = "16:9", frame = 0 } = req.body ?? {};
+  const preset = loadPresets().find((p) => p.id === presetId);
+  if (!preset) return res.status(404).json({ error: "Preset não encontrado" });
+  if (!(format in FORMATS)) return res.status(400).json({ error: "Formato inválido" });
+  const f = Math.max(0, Math.min(preset.durationInFrames - 1, Math.floor(Number(frame) || 0)));
+  const clean = { ...sanitize(preset, values), transparent: true };
+  const file = path.join(OUT_DIR, `${crypto.randomUUID()}.png`);
+  try {
+    const serveUrl = await getBundle();
+    const inputProps = buildInput(preset, clean, format);
+    const composition = await selectComposition({ serveUrl, id: "Preset", inputProps, browserExecutable: BROWSER });
+    await renderStill({ serveUrl, composition, inputProps, output: file, frame: f, imageFormat: "png", browserExecutable: BROWSER });
+    res.download(file, `${preset.id}-quadro${f}.png`, () => fs.rm(file, { force: true }, () => {}));
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: (e as Error).message });
+  }
 });
 
 app.get("/api/render/:id", (req, res) => {

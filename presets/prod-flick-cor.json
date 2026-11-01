@@ -1,0 +1,243 @@
+{
+  "id": "prod-flick-cor",
+  "name": "Flick Colorido",
+  "category": "Produto & imagem",
+  "description": "Palavra gigante atrás do produto em fundo de cor chapada, cortes rápidos.",
+  "style": "product-flick",
+  "fps": 30,
+  "durationInFrames": 110,
+  "formats": [
+    "9:16",
+    "16:9",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "image",
+      "label": "Imagem (produto ou elemento)",
+      "type": "image",
+      "default": "builtin:headphones"
+    },
+    {
+      "key": "small1",
+      "label": "Frase 1 · linha pequena",
+      "type": "text",
+      "default": "som",
+      "maxLength": 30
+    },
+    {
+      "key": "big1",
+      "label": "Frase 1 · palavra grande",
+      "type": "text",
+      "default": "PURO.",
+      "maxLength": 20
+    },
+    {
+      "key": "small2",
+      "label": "Frase 2 · linha pequena",
+      "type": "text",
+      "default": "grave",
+      "maxLength": 30
+    },
+    {
+      "key": "big2",
+      "label": "Frase 2 · palavra grande",
+      "type": "text",
+      "default": "FORTE.",
+      "maxLength": 20
+    },
+    {
+      "key": "small3",
+      "label": "Frase 3 · linha pequena",
+      "type": "text",
+      "default": "",
+      "maxLength": 30
+    },
+    {
+      "key": "big3",
+      "label": "Frase 3 · palavra grande",
+      "type": "text",
+      "default": "",
+      "maxLength": 20
+    },
+    {
+      "key": "font",
+      "label": "Fonte da palavra grande",
+      "type": "font",
+      "default": "bebas",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "smallFont",
+      "label": "Fonte da linha pequena",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho do texto",
+      "type": "number",
+      "default": 300,
+      "min": 50,
+      "max": 420,
+      "step": 1
+    },
+    {
+      "key": "textOffset",
+      "label": "Posição do texto (relativa à imagem, negativo = acima)",
+      "type": "number",
+      "default": -8,
+      "min": -120,
+      "max": 120,
+      "step": 1
+    },
+    {
+      "key": "imageScale",
+      "label": "Tamanho da imagem",
+      "type": "number",
+      "default": 0.6,
+      "min": 0.2,
+      "max": 1,
+      "step": 0.01
+    },
+    {
+      "key": "imageY",
+      "label": "Deslocar imagem (vertical)",
+      "type": "number",
+      "default": 0,
+      "min": -60,
+      "max": 60,
+      "step": 1
+    },
+    {
+      "key": "textLayer",
+      "label": "Texto em relação à imagem",
+      "type": "select",
+      "default": "back",
+      "options": [
+        {
+          "value": "back",
+          "label": "Atrás da imagem"
+        },
+        {
+          "value": "front",
+          "label": "Na frente da imagem"
+        }
+      ]
+    },
+    {
+      "key": "flickSpeed",
+      "label": "Velocidade do flick",
+      "type": "number",
+      "default": 1.2,
+      "min": 0.5,
+      "max": 3,
+      "step": 0.1
+    },
+    {
+      "key": "flash",
+      "label": "Flash nos cortes",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "key": "float",
+      "label": "Imagem flutuando",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#111111"
+    },
+    {
+      "key": "smallColor",
+      "label": "Cor da linha pequena",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#ff5c39"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false
+    }
+  ],
+  "props": {
+    "align": "center",
+    "shadow": true,
+    "punch": 1.08,
+    "uppercase": true,
+    "smallRatio": 0.18,
+    "bigWeight": 400,
+    "smallWeight": 800
+  }
+}

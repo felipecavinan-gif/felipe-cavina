@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
+import type { PlayerRef } from "@remotion/player";
+import { ImageField } from "./ImageField";
 import { FORMATS, defaultValues, type FormatId, type Preset, type PresetField, type Values } from "../types";
 import { Preview } from "./Preview";
-import { STANDALONE, fetchExports, getJob, startRender } from "./api";
-import { WEB_EXPORTS, renderInBrowser, type WebExportType } from "./webExport";
+import { STANDALONE, fetchExports, getJob, startRender, renderStillServer } from "./api";
+import { WEB_EXPORTS, renderInBrowser, renderPngInBrowser, type WebExportType } from "./webExport";
 
 declare global {
   interface Window { claude?: { use: (name: string) => Promise<any> } }
@@ -10,6 +12,8 @@ declare global {
 
 const Field: React.FC<{ f: PresetField; value: any; onChange: (v: any) => void }> = ({ f, value, onChange }) => {
   switch (f.type) {
+    case "image":
+      return <ImageField id={`f-${f.key}`} value={value} onChange={onChange} />;
     case "textarea":
       return <textarea rows={3} maxLength={f.maxLength} value={value} onChange={(e) => onChange(e.target.value)} />;
     case "color":
@@ -56,6 +60,8 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
   const [exportType, setExportType] = useState("mp4");
   const [render, setRender] = useState<RenderState>(null);
   const poll = useRef<number | undefined>(undefined);
+  const player = useRef<PlayerRef>(null);
+  const [png, setPng] = useState<{ busy: boolean; error?: string; done?: string }>({ busy: false });
 
   useEffect(() => { if (STANDALONE) setExports(WEB_EXPORTS); else fetchExports().then(setExports); }, []);
   useEffect(() => { try { localStorage.setItem(storageKey, JSON.stringify(values)); } catch {} }, [values, storageKey]);
@@ -116,6 +122,29 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
     }
   };
 
+  const doPng = async () => {
+    const frame = player.current?.getCurrentFrame() ?? Math.floor(preset.durationInFrames * 0.6);
+    player.current?.pause();
+    setPng({ busy: true });
+    try {
+      const pngValues = { ...values, transparent: true };
+      const filename = `${preset.id}-${format.replace(":", "x")}-quadro${frame}.png`;
+      if (STANDALONE) {
+        const blob = await renderPngInBrowser(preset, pngValues, format, frame);
+        await saveFile({ blob, filename });
+      } else {
+        const blob = await renderStillServer(preset.id, pngValues, format, frame);
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+      }
+      setPng({ busy: false, done: `Quadro ${frame} exportado sem fundo.` });
+    } catch (e) {
+      setPng({ busy: false, error: (e as Error).message });
+    }
+  };
+
   const busy = render && (render.status === "queued" || render.status === "rendering");
   const secs = (preset.durationInFrames / preset.fps).toFixed(1);
 
@@ -148,7 +177,7 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
           <span className="muted">{FORMATS[format].width}×{FORMATS[format].height} · {preset.fps}fps · {secs}s</span>
         </div>
         <div className={`stage-preview fmt-${format.replace(":", "x")}`}>
-          <Preview preset={preset} values={values} format={format} />
+          <Preview ref={player} preset={preset} values={values} format={format} />
         </div>
         <div className="export">
           <select value={exportType} onChange={(e) => setExportType(e.target.value)}>
@@ -157,12 +186,17 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
           <button className="primary" disabled={!!busy} onClick={doExport}>
             {busy ? `Renderizando… ${Math.round((render!.progress ?? 0) * 100)}%` : "Exportar vídeo"}
           </button>
+          <button className="ghost" disabled={png.busy} onClick={doPng} title="Exporta o quadro atual do preview como PNG transparente, com todos os elementos e textos">
+            {png.busy ? "Gerando PNG…" : "Baixar PNG sem fundo"}
+          </button>
           {busy && <div className="bar"><div style={{ width: `${(render!.progress ?? 0) * 100}%` }} /></div>}
           {render?.status === "done" && !STANDALONE && <a className="muted" href={`/api/render/${render.jobId}/file`}>Download iniciado. Clique aqui se não começou.</a>}
           {STANDALONE && saved && render?.status !== "rendering" && (
             <button className="ghost" onClick={() => saveFile(saved)}>Salvar {saved.filename} ({(saved.blob.size / 1e6).toFixed(1)} MB)</button>
           )}
           {render?.status === "error" && <span className="err">Erro: {render.error}</span>}
+          {png.error && <span className="err">PNG: {png.error}</span>}
+          {png.done && !png.busy && <span className="muted">{png.done} Pause o preview no momento que quiser antes de baixar.</span>}
           {values.transparent && exportType === "mp4" && <span className="warn">MP4 não suporta transparência: use MOV ou WebM.</span>}
         </div>
       </section>

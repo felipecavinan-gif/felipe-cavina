@@ -61,7 +61,7 @@ Crie `presets/meu-template.json`. Ele aparece na galeria ao recarregar a página
 ```
 
 - `fields`: o que o editor pode mudar. Tipos: `text`, `textarea`, `color`, `number` (com `min`/`max`/`step`),
-  `toggle`, `select` (com `options`), `font`.
+  `toggle`, `select` (com `options`), `font` e `image` (upload, link ou exemplo embutido como `"builtin:perfume"`, `"builtin:headphones"`, `"builtin:bag"`).
 - `props`: valores **fixos** do estilo que o editor não vê. Use para "travar" o visual do preset.
 - Para ver quais chaves cada estilo aceita, abra o arquivo do estilo em `src/styles/` (tudo que aparece como `v.algumaCoisa`)
   ou copie um preset existente do mesmo estilo.
@@ -95,6 +95,13 @@ Crie `presets/meu-template.json`. Ele aparece na galeria ao recarregar a página
 | `trailer` | Frases entre cortes no preto e título final | lines, finalTitle, date, flash, leaks |
 | `background-scene` | Fundo animado + texto (blobs, particles, shapes, grid, confetti, stripes) | title, subtitle, background, card, color1/2/3 |
 
+| `product-flick` | Produto entra em flicks rápidos e frases trocam em cortes secos (texto atrás ou na frente) | image, small1..3, big1..3, textOffset, imageScale, imageY, textLayer, flickSpeed, flash |
+| `product-spin-3d` | Produto girando em 3D sobre palavra gigante, com reflexo e selo | image, bgWord, title, subtitle, badge, swing, marquee, reflection |
+| `glass-card-3d` | Cartão de vidro 3D com reflexo; o produto salta para fora | image, title, subtitle, badge, cardLabel, sway, impact, blobs, glassColor |
+| `glass-shatter` | Vidro trinca e estilhaça revelando produto e título | image, title, subtitle, crackHold, force, glassColor, crackColor |
+| `product-impact` | Produto despenca com onda de choque, linhas radiais e texto martelado | image, text, badge, shake |
+| `impact-frame` | Linhas de velocidade estilo mangá, frames invertidos e soco de texto | title, showImage, image, lineCount, invert, tilt |
+
 Todos aceitam `font`, `bgColor` e `transparent`, e se adaptam a 16:9, 9:16, 1:1 e 4:5.
 
 ### Criar um novo estilo (programando)
@@ -118,6 +125,8 @@ Para adicionar uma, coloque o `.woff2` lá e registre em `src/fonts.ts`.
 | GIF | Prévia rápida |
 
 Com "Fundo transparente" ligado, a plataforma já sugere MOV.
+
+**PNG sem fundo:** o botão "Baixar PNG sem fundo" exporta o quadro em que o preview está pausado, com fundo transparente e todos os elementos e textos.
 
 ## Revisão visual
 

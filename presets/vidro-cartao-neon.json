@@ -1,0 +1,183 @@
+{
+  "id": "vidro-cartao-neon",
+  "name": "Cartão de Vidro Neon",
+  "category": "Vidro 3D",
+  "description": "Cartão de vidro em 3D sobre bolhas de cor, reflexo varrendo e o produto saltando para fora.",
+  "style": "glass-card-3d",
+  "fps": 30,
+  "durationInFrames": 150,
+  "formats": [
+    "9:16",
+    "16:9",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "image",
+      "label": "Imagem (produto ou elemento)",
+      "type": "image",
+      "default": "builtin:headphones"
+    },
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "NOVO DROP",
+      "maxLength": 24
+    },
+    {
+      "key": "subtitle",
+      "label": "Subtítulo",
+      "type": "text",
+      "default": "disponível amanhã",
+      "maxLength": 40
+    },
+    {
+      "key": "badge",
+      "label": "Selo (vazio = sem selo)",
+      "type": "text",
+      "default": "NOVO",
+      "maxLength": 10
+    },
+    {
+      "key": "cardLabel",
+      "label": "Texto no vidro",
+      "type": "text",
+      "default": "edição 01",
+      "maxLength": 24
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho do título",
+      "type": "number",
+      "default": 90,
+      "min": 40,
+      "max": 180,
+      "step": 1
+    },
+    {
+      "key": "sway",
+      "label": "Balanço 3D",
+      "type": "number",
+      "default": 12,
+      "min": 0,
+      "max": 30,
+      "step": 1
+    },
+    {
+      "key": "impact",
+      "label": "Força do impacto",
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 3,
+      "step": 0.1
+    },
+    {
+      "key": "flash",
+      "label": "Flash ao pousar",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "blobs",
+      "label": "Bolhas de cor no fundo",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "glassColor",
+      "label": "Cor do vidro",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "badgeColor",
+      "label": "Cor do selo",
+      "type": "color",
+      "default": "#b6ff00"
+    },
+    {
+      "key": "badgeTextColor",
+      "label": "Texto do selo",
+      "type": "color",
+      "default": "#111111"
+    },
+    {
+      "key": "color1",
+      "label": "Bolha 1",
+      "type": "color",
+      "default": "#7b2ff7"
+    },
+    {
+      "key": "color2",
+      "label": "Bolha 2",
+      "type": "color",
+      "default": "#00c2ff"
+    },
+    {
+      "key": "color3",
+      "label": "Bolha 3",
+      "type": "color",
+      "default": "#ff2bd6"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#120a2a"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false
+    }
+  ],
+  "props": {
+    "uppercase": true
+  }
+}

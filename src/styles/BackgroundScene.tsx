@@ -120,7 +120,7 @@ export const BackgroundScene: React.FC<StyleProps> = ({ v }) => {
   const size = fitSize(Number(v.fontSize ?? 130) * u, String(v.title ?? "").length, width * (v.card ? 0.72 : 0.86), 0.66);
 
   return (
-    <AbsoluteFill style={{ background: v.bgColor }}>
+    <AbsoluteFill style={{ background: v.transparent ? "transparent" : v.bgColor }}>
       <Bg v={v} frame={frame} u={u} />
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: 1 - out, transform: `scale(${1 + out * 0.08})`, filter: `blur(${out * 12 * u}px)` }}>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: v.card ? `${50 * u}px ${70 * u}px` : 0, background: v.card ? v.cardColor : "transparent", borderRadius: 28 * u, border: v.card ? `${2 * u}px solid rgba(255,255,255,.35)` : "none", boxShadow: v.card ? `0 ${20 * u}px ${60 * u}px rgba(0,0,0,.25)` : "none", transform: `scale(${pop})` }}>

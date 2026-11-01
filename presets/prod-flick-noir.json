@@ -1,0 +1,243 @@
+{
+  "id": "prod-flick-noir",
+  "name": "Flick Noir",
+  "category": "Produto & imagem",
+  "description": "Fundo preto, tipografia forte na frente do produto e flashes a cada corte.",
+  "style": "product-flick",
+  "fps": 30,
+  "durationInFrames": 110,
+  "formats": [
+    "9:16",
+    "16:9",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "image",
+      "label": "Imagem (produto ou elemento)",
+      "type": "image",
+      "default": "builtin:perfume"
+    },
+    {
+      "key": "small1",
+      "label": "Frase 1 · linha pequena",
+      "type": "text",
+      "default": "nova",
+      "maxLength": 30
+    },
+    {
+      "key": "big1",
+      "label": "Frase 1 · palavra grande",
+      "type": "text",
+      "default": "COLEÇÃO",
+      "maxLength": 20
+    },
+    {
+      "key": "small2",
+      "label": "Frase 2 · linha pequena",
+      "type": "text",
+      "default": "edição",
+      "maxLength": 30
+    },
+    {
+      "key": "big2",
+      "label": "Frase 2 · palavra grande",
+      "type": "text",
+      "default": "LIMITADA",
+      "maxLength": 20
+    },
+    {
+      "key": "small3",
+      "label": "Frase 3 · linha pequena",
+      "type": "text",
+      "default": "",
+      "maxLength": 30
+    },
+    {
+      "key": "big3",
+      "label": "Frase 3 · palavra grande",
+      "type": "text",
+      "default": "",
+      "maxLength": 20
+    },
+    {
+      "key": "font",
+      "label": "Fonte da palavra grande",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "smallFont",
+      "label": "Fonte da linha pequena",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho do texto",
+      "type": "number",
+      "default": 170,
+      "min": 50,
+      "max": 260,
+      "step": 1
+    },
+    {
+      "key": "textOffset",
+      "label": "Posição do texto (relativa à imagem, negativo = acima)",
+      "type": "number",
+      "default": 72,
+      "min": -120,
+      "max": 120,
+      "step": 1
+    },
+    {
+      "key": "imageScale",
+      "label": "Tamanho da imagem",
+      "type": "number",
+      "default": 0.6,
+      "min": 0.2,
+      "max": 1,
+      "step": 0.01
+    },
+    {
+      "key": "imageY",
+      "label": "Deslocar imagem (vertical)",
+      "type": "number",
+      "default": -14,
+      "min": -60,
+      "max": 60,
+      "step": 1
+    },
+    {
+      "key": "textLayer",
+      "label": "Texto em relação à imagem",
+      "type": "select",
+      "default": "front",
+      "options": [
+        {
+          "value": "back",
+          "label": "Atrás da imagem"
+        },
+        {
+          "value": "front",
+          "label": "Na frente da imagem"
+        }
+      ]
+    },
+    {
+      "key": "flickSpeed",
+      "label": "Velocidade do flick",
+      "type": "number",
+      "default": 1.3,
+      "min": 0.5,
+      "max": 3,
+      "step": 0.1
+    },
+    {
+      "key": "flash",
+      "label": "Flash nos cortes",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "float",
+      "label": "Imagem flutuando",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "smallColor",
+      "label": "Cor da linha pequena",
+      "type": "color",
+      "default": "#c9a45c"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#050505"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false
+    }
+  ],
+  "props": {
+    "align": "center",
+    "shadow": false,
+    "punch": 1.1,
+    "uppercase": true,
+    "smallRatio": 0.28,
+    "bigWeight": 900,
+    "smallWeight": 600
+  }
+}

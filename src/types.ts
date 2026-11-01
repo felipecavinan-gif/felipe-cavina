@@ -1,4 +1,4 @@
-export type FieldType = "text" | "textarea" | "color" | "number" | "select" | "toggle" | "font";
+export type FieldType = "text" | "textarea" | "color" | "number" | "select" | "toggle" | "font" | "image";
 
 export interface PresetField {
   key: string;

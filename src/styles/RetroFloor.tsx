@@ -19,12 +19,12 @@ export const RetroFloor: React.FC<StyleProps> = ({ v }) => {
   const size = fitSize(Number(v.fontSize ?? 150) * u, String(v.title ?? "").length, width * 0.86, 0.7);
 
   return (
-    <AbsoluteFill style={{ background: `linear-gradient(180deg, ${v.skyTop} 0%, ${v.skyBottom} 58%, ${v.floorColor} 58%)`, opacity: 1 - out }}>
+    <AbsoluteFill style={{ background: v.transparent ? "transparent" : `linear-gradient(180deg, ${v.skyTop} 0%, ${v.skyBottom} 58%, ${v.floorColor} 58%)`, opacity: 1 - out }}>
       <div style={{ position: "absolute", left: width / 2 - sunR, top: horizon - sunR * 1.15, width: sunR * 2, height: sunR * 2, borderRadius: "50%", background: `linear-gradient(180deg, ${v.sunTop}, ${v.sunBottom})`, boxShadow: `0 0 ${80 * u}px ${v.sunBottom}` }} />
-      {Array.from({ length: 6 }).map((_, i) => (
+      {!v.transparent && Array.from({ length: 6 }).map((_, i) => (
         <div key={i} style={{ position: "absolute", left: 0, right: 0, top: horizon - sunR * 0.6 + i * sunR * 0.13 + ((frame * 0.6 * u) % (sunR * 0.13)), height: (2 + i * 2.2) * u, background: v.skyBottom }} />
       ))}
-      <div style={{ position: "absolute", left: 0, right: 0, top: horizon, height: height - horizon, background: v.floorColor }} />
+      {v.transparent ? null : <div style={{ position: "absolute", left: 0, right: 0, top: horizon, height: height - horizon, background: v.floorColor }} />}
       {/* Chão projetado em 2D (perspectiva calculada à mão): funciona igual em qualquer renderizador */}
       <AbsoluteFill style={{ overflow: "hidden" }}>
         {Array.from({ length: rows }).map((_, r) => {
@@ -41,7 +41,7 @@ export const RetroFloor: React.FC<StyleProps> = ({ v }) => {
           return <div key={`c${c}`} style={{ position: "absolute", left: width / 2 - 1.5 * u, top: horizon, width: 3 * u, height: len, background: v.gridColor, boxShadow: `0 0 ${8 * u}px ${v.gridColor}`, transformOrigin: "50% 0%", transform: `rotate(${-ang}deg)` }} />;
         })}
       </AbsoluteFill>
-      <AbsoluteFill style={{ background: `linear-gradient(180deg, transparent 50%, ${v.skyBottom}88 58%, transparent 66%)` }} />
+      {v.transparent ? null : <AbsoluteFill style={{ background: `linear-gradient(180deg, transparent 50%, ${v.skyBottom}88 58%, transparent 66%)` }} />}
       <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: height * (height > width ? 0.16 : 0.07) }}>
         <div style={{ fontFamily: font(v.font), fontStyle: "italic", fontWeight: 900, fontSize: size, color: v.textColor, opacity: neonOn, transform: `scale(${0.6 + 0.4 * pop}) skewX(-8deg)`, textShadow: `0 0 ${10 * u}px ${v.neonColor}, 0 0 ${40 * u}px ${v.neonColor}, 0 0 ${90 * u}px ${v.neonColor}`, textTransform: "uppercase", whiteSpace: "nowrap", lineHeight: 1 }}>
           {v.title}

@@ -1,0 +1,157 @@
+{
+  "id": "vidro-estilhaco",
+  "name": "Vidro Estilhaçando",
+  "category": "Vidro 3D",
+  "description": "Um vidro trinca e explode em cacos 3D revelando o produto e o título.",
+  "style": "glass-shatter",
+  "fps": 30,
+  "durationInFrames": 120,
+  "formats": [
+    "9:16",
+    "16:9",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "image",
+      "label": "Imagem (produto ou elemento)",
+      "type": "image",
+      "default": "builtin:bag"
+    },
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "DROP 01",
+      "maxLength": 20
+    },
+    {
+      "key": "subtitle",
+      "label": "Subtítulo",
+      "type": "text",
+      "default": "só 100 unidades",
+      "maxLength": 40
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho do título",
+      "type": "number",
+      "default": 130,
+      "min": 40,
+      "max": 220,
+      "step": 1
+    },
+    {
+      "key": "imageScale",
+      "label": "Tamanho da imagem",
+      "type": "number",
+      "default": 0.55,
+      "min": 0.2,
+      "max": 1,
+      "step": 0.01
+    },
+    {
+      "key": "crackHold",
+      "label": "Tempo trincado antes de quebrar (frames)",
+      "type": "number",
+      "default": 10,
+      "min": 2,
+      "max": 40,
+      "step": 1
+    },
+    {
+      "key": "force",
+      "label": "Força da explosão",
+      "type": "number",
+      "default": 1,
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.1
+    },
+    {
+      "key": "shake",
+      "label": "Tremor",
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 3,
+      "step": 0.1
+    },
+    {
+      "key": "glassColor",
+      "label": "Cor do vidro",
+      "type": "color",
+      "default": "#cfe8ff"
+    },
+    {
+      "key": "crackColor",
+      "label": "Cor das trincas",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do título",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor do subtítulo",
+      "type": "color",
+      "default": "#7fd1ff"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#05080d"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false
+    }
+  ],
+  "props": {
+    "crackFrame": 8
+  }
+}

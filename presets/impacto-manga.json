@@ -1,0 +1,136 @@
+{
+  "id": "impacto-manga",
+  "name": "Impacto Mangá",
+  "category": "Impacto",
+  "description": "Linhas de velocidade radiais, frames invertidos e soco de texto.",
+  "style": "impact-frame",
+  "fps": 30,
+  "durationInFrames": 60,
+  "formats": [
+    "9:16",
+    "16:9",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "title",
+      "label": "Texto",
+      "type": "text",
+      "default": "BOOM!",
+      "maxLength": 16
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 200,
+      "min": 60,
+      "max": 320,
+      "step": 1
+    },
+    {
+      "key": "lineCount",
+      "label": "Quantidade de linhas",
+      "type": "number",
+      "default": 60,
+      "min": 20,
+      "max": 140,
+      "step": 1
+    },
+    {
+      "key": "shake",
+      "label": "Tremor",
+      "type": "number",
+      "default": 24,
+      "min": 0,
+      "max": 80,
+      "step": 1
+    },
+    {
+      "key": "tilt",
+      "label": "Inclinação do texto",
+      "type": "number",
+      "default": -6,
+      "min": -30,
+      "max": 30,
+      "step": 1
+    },
+    {
+      "key": "invert",
+      "label": "Frames invertidos",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#111111"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor da sombra do texto",
+      "type": "color",
+      "default": "#ff2a2a"
+    },
+    {
+      "key": "lineColor",
+      "label": "Cor das linhas",
+      "type": "color",
+      "default": "#111111"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false
+    }
+  ],
+  "props": {
+    "showImage": false,
+    "innerRadius": 0.3
+  }
+}

@@ -30,3 +30,13 @@ export async function startRender(presetId: string, values: Values, format: Form
 export async function getJob(id: string): Promise<{ status: string; progress: number; error?: string }> {
   return (await fetch(`/api/render/${id}`)).json();
 }
+
+export async function renderStillServer(presetId: string, values: Values, format: FormatId, frame: number): Promise<Blob> {
+  const r = await fetch("/api/still", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ presetId, values, format, frame }),
+  });
+  if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error ?? "Erro ao gerar PNG");
+  return r.blob();
+}

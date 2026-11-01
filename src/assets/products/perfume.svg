@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800">
+  <defs>
+    <linearGradient id="glass" x1="0" x2="1">
+      <stop offset="0" stop-color="#f3d9c4"/><stop offset=".18" stop-color="#fff6ee"/><stop offset=".45" stop-color="#e9b48f"/><stop offset=".8" stop-color="#c9825a"/><stop offset="1" stop-color="#f0c8a8"/>
+    </linearGradient>
+    <linearGradient id="liquid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7b886"/><stop offset="1" stop-color="#b8582c"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" x2="1">
+      <stop offset="0" stop-color="#8a6420"/><stop offset=".3" stop-color="#f6dc8c"/><stop offset=".55" stop-color="#b98a2e"/><stop offset=".85" stop-color="#f1d27a"/><stop offset="1" stop-color="#7a561a"/>
+    </linearGradient>
+  </defs>
+  <rect x="235" y="60" width="130" height="150" rx="14" fill="url(#gold)"/>
+  <rect x="265" y="200" width="70" height="50" fill="url(#gold)"/>
+  <rect x="110" y="240" width="380" height="500" rx="60" fill="url(#glass)" opacity=".92"/>
+  <rect x="135" y="380" width="330" height="335" rx="44" fill="url(#liquid)" opacity=".85"/>
+  <rect x="140" y="265" width="34" height="440" rx="17" fill="#fff" opacity=".55"/>
+  <rect x="430" y="300" width="14" height="380" rx="7" fill="#fff" opacity=".3"/>
+  <rect x="200" y="470" width="200" height="120" rx="6" fill="#fff8f0" opacity=".9"/>
+  <text x="300" y="525" text-anchor="middle" font-family="Georgia, serif" font-size="34" letter-spacing="6" fill="#5a2c14">AURA</text>
+  <text x="300" y="565" text-anchor="middle" font-family="Georgia, serif" font-size="16" letter-spacing="5" fill="#8a5a3a">EAU DE PARFUM</text>
+</svg>
