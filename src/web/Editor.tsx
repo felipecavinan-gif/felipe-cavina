@@ -1,7 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FORMATS, defaultValues, type FormatId, type Preset, type PresetField, type Values } from "../types";
 import { Preview } from "./Preview";
-import { fetchExports, getJob, startRender } from "./api";
+import { STANDALONE, fetchExports, getJob, startRender } from "./api";
+import { WEB_EXPORTS, renderInBrowser, type WebExportType } from "./webExport";
+
+declare global {
+  interface Window { claude?: { use: (name: string) => Promise<any> } }
+}
 
 const Field: React.FC<{ f: PresetField; value: any; onChange: (v: any) => void }> = ({ f, value, onChange }) => {
   switch (f.type) {
@@ -52,14 +57,48 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
   const [render, setRender] = useState<RenderState>(null);
   const poll = useRef<number | undefined>(undefined);
 
-  useEffect(() => { fetchExports().then(setExports); }, []);
+  useEffect(() => { if (STANDALONE) setExports(WEB_EXPORTS); else fetchExports().then(setExports); }, []);
   useEffect(() => { try { localStorage.setItem(storageKey, JSON.stringify(values)); } catch {} }, [values, storageKey]);
-  useEffect(() => { setExportType(values.transparent ? "mov-alpha" : "mp4"); }, [values.transparent]);
+  useEffect(() => { setExportType(values.transparent ? (STANDALONE ? "webm-alpha" : "mov-alpha") : "mp4"); }, [values.transparent]);
   useEffect(() => () => window.clearInterval(poll.current), []);
 
   const set = (k: string, v: any) => setValues((s) => ({ ...s, [k]: v }));
 
+  const [saved, setSaved] = useState<{ blob: Blob; filename: string } | null>(null);
+
+  const saveFile = async (file: { blob: Blob; filename: string }) => {
+    const downloads = await window.claude?.use("downloads").catch(() => null);
+    if (downloads) {
+      try {
+        await downloads.save({ filename: file.filename, data: file.blob });
+        setRender((r) => r && { ...r, status: "done" });
+      } catch (e: any) {
+        if (e?.code !== "declined") setRender((r) => r && { ...r, status: "error", error: e?.message ?? "Não foi possível salvar o arquivo." });
+      }
+      return;
+    }
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(file.blob);
+    a.download = file.filename;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 60_000);
+  };
+
   const doExport = async () => {
+    if (STANDALONE) {
+      setSaved(null);
+      setRender({ jobId: "web", status: "rendering", progress: 0 });
+      try {
+        const file = await renderInBrowser(preset, values, format, exportType as WebExportType, (p) =>
+          setRender((r) => r && { ...r, progress: p }));
+        setSaved(file);
+        setRender({ jobId: "web", status: "ready", progress: 1 });
+        await saveFile(file);
+      } catch (e) {
+        setRender({ jobId: "web", status: "error", progress: 0, error: (e as Error).message });
+      }
+      return;
+    }
     try {
       const jobId = await startRender(preset.id, values, format, exportType);
       setRender({ jobId, status: "queued", progress: 0 });
@@ -83,7 +122,7 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
   return (
     <main className="editor">
       <aside className="panel">
-        <a href="#/" className="back">← Todos os templates</a>
+        <a href="#" className="back">← Todos os templates</a>
         <div className="card-cat">{preset.category}</div>
         <h1>{preset.name}</h1>
         {preset.description && <p className="muted">{preset.description}</p>}
@@ -119,7 +158,10 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
             {busy ? `Renderizando… ${Math.round((render!.progress ?? 0) * 100)}%` : "Exportar vídeo"}
           </button>
           {busy && <div className="bar"><div style={{ width: `${(render!.progress ?? 0) * 100}%` }} /></div>}
-          {render?.status === "done" && <a className="muted" href={`/api/render/${render.jobId}/file`}>Download iniciado. Clique aqui se não começou.</a>}
+          {render?.status === "done" && !STANDALONE && <a className="muted" href={`/api/render/${render.jobId}/file`}>Download iniciado. Clique aqui se não começou.</a>}
+          {STANDALONE && saved && render?.status !== "rendering" && (
+            <button className="ghost" onClick={() => saveFile(saved)}>Salvar {saved.filename} ({(saved.blob.size / 1e6).toFixed(1)} MB)</button>
+          )}
           {render?.status === "error" && <span className="err">Erro: {render.error}</span>}
           {values.transparent && exportType === "mp4" && <span className="warn">MP4 não suporta transparência: use MOV ou WebM.</span>}
         </div>

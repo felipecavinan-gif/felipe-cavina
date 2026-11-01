@@ -23,13 +23,13 @@ export const App: React.FC = () => {
     fetchPresets().then(setPresets).catch((e) => setError(e.message));
   }, []);
 
-  const match = hash.match(/^#\/t\/(.+)$/);
-  const current = match && presets?.find((p) => p.id === decodeURIComponent(match[1]));
+  const id = decodeURIComponent(hash.replace(/^#\/?(t\/)?/, ""));
+  const current = id ? presets?.find((p) => p.id === id) : undefined;
 
   return (
     <div className="app">
       <header className="topbar">
-        <a href="#/" className="logo">
+        <a href="#" className="logo">
           <span className="logo-mark">▶</span> Motion<b>Presets</b>
         </a>
         <span className="topbar-note">Templates de motion para editores. Troque o texto, exporte e use no seu vídeo.</span>

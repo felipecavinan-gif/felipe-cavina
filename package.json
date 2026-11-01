@@ -5,13 +5,16 @@
     "dev": "concurrently -k -n api,web \"tsx watch server/index.ts\" \"vite\"",
     "build": "vite build",
     "start": "NODE_ENV=production tsx server/index.ts",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "build:standalone": "vite build --mode standalone",
+    "build:artifact": "vite build --mode standalone && node scripts/make-artifact.mjs"
   },
   "dependencies": {
     "@remotion/bundler": "^4.0.539",
     "@remotion/google-fonts": "^4.0.539",
     "@remotion/player": "^4.0.539",
     "@remotion/renderer": "^4.0.539",
+    "@remotion/web-renderer": "^4.0.539",
     "express": "^4.22.3",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
@@ -25,7 +28,8 @@
     "concurrently": "^10.0.6",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
-    "vite": "^6.4.5"
+    "vite": "^6.4.5",
+    "vite-plugin-singlefile": "^2.3.4"
   },
   "type": "module",
   "private": true

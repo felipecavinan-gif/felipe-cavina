@@ -1,6 +1,12 @@
 import type { FormatId, Preset, Values } from "../types";
 
+export const STANDALONE = import.meta.env.VITE_STANDALONE === "1";
+
 export async function fetchPresets(): Promise<Preset[]> {
+  if (STANDALONE) {
+    const mods = import.meta.glob("../../presets/*.json", { eager: true, import: "default" }) as Record<string, Preset>;
+    return Object.keys(mods).sort().map((k) => mods[k]);
+  }
   const r = await fetch("/api/presets");
   if (!r.ok) throw new Error("Falha ao carregar presets");
   return r.json();

@@ -10,7 +10,7 @@ const Card: React.FC<{ preset: Preset; format: FormatId }> = ({ preset, format }
   return (
     <a
       className="card"
-      href={`#/t/${encodeURIComponent(preset.id)}`}
+      href={`#${preset.id}`}
       onMouseEnter={() => ref.current?.play()}
       onMouseLeave={() => { ref.current?.pause(); ref.current?.seekTo(Math.floor(preset.durationInFrames * 0.6)); }}
     >
