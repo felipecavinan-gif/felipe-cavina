@@ -1,0 +1,121 @@
+{
+  "id": "ag-impacto-slam",
+  "name": "Impacto Slam",
+  "category": "Motion agressivo",
+  "description": "Cada palavra bate na tela com motion blur, flash branco e câmera tremendo.",
+  "style": "slam-impact",
+  "fps": 30,
+  "durationInFrames": 90,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "text",
+      "label": "Texto (use *palavra* para destacar)",
+      "type": "textarea",
+      "default": "SEM *DESCULPAS* HOJE"
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 220,
+      "min": 80,
+      "max": 340,
+      "step": 1
+    },
+    {
+      "key": "beat",
+      "label": "Frames entre batidas",
+      "type": "number",
+      "default": 9,
+      "min": 3,
+      "max": 30,
+      "step": 1
+    },
+    {
+      "key": "shake",
+      "label": "Força do tremor",
+      "type": "number",
+      "default": 26,
+      "min": 0,
+      "max": 80,
+      "step": 1
+    },
+    {
+      "key": "flash",
+      "label": "Flash a cada batida",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor do destaque",
+      "type": "color",
+      "default": "#ff2a2a"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#000000"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false
+    }
+  ],
+  "props": {
+    "mode": "single",
+    "tiltWords": 5,
+    "flashColor": "#ffffff"
+  }
+}

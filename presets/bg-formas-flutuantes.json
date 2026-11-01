@@ -1,0 +1,121 @@
+{
+  "id": "bg-formas-flutuantes",
+  "name": "Formas Flutuantes",
+  "category": "Fundo animado",
+  "description": "Círculos, quadrados e pílulas girando e flutuando em 3D.",
+  "style": "background-scene",
+  "fps": 30,
+  "durationInFrames": 150,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Aula 01",
+      "maxLength": 28
+    },
+    {
+      "key": "subtitle",
+      "label": "Subtítulo",
+      "type": "text",
+      "default": "Fundamentos do design",
+      "maxLength": 40
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 140,
+      "min": 50,
+      "max": 220,
+      "step": 1
+    },
+    {
+      "key": "card",
+      "label": "Cartão",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#111111"
+    },
+    {
+      "key": "cardColor",
+      "label": "Cor do cartão",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "color1",
+      "label": "Cor 1",
+      "type": "color",
+      "default": "#ff5c39"
+    },
+    {
+      "key": "color2",
+      "label": "Cor 2",
+      "type": "color",
+      "default": "#2f6bff"
+    },
+    {
+      "key": "color3",
+      "label": "Cor 3",
+      "type": "color",
+      "default": "#ffc400"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#f3efe6"
+    }
+  ],
+  "props": {
+    "background": "shapes"
+  }
+}

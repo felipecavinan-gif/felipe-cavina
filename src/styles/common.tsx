@@ -51,3 +51,32 @@ export function fitSize(base: number, chars: number, maxWidth: number, charRatio
   if (chars <= 0) return base;
   return Math.min(base, maxWidth / (chars * charRatio));
 }
+
+import { random } from "remotion";
+
+/** Ruído determinístico 0..1 (mesmo resultado em todo render). */
+export function noise(seed: string | number, frame: number) {
+  return random(`${seed}-${frame}`);
+}
+
+/** Cintilação tipo "flicker": devolve multiplicador de opacidade. */
+export function flicker(frame: number, amount: number, seed = "f") {
+  if (amount <= 0) return 1;
+  return 1 - noise(seed, Math.floor(frame)) * amount;
+}
+
+/** Tremida de câmera determinística que decai a partir de `since`. */
+export function shake(frame: number, since: number, intensity: number, decay = 10) {
+  const t = frame - since;
+  if (t < 0 || intensity <= 0) return { x: 0, y: 0, r: 0 };
+  const k = Math.max(0, 1 - t / decay);
+  return {
+    x: (noise("sx", frame) - 0.5) * 2 * intensity * k,
+    y: (noise("sy", frame) - 0.5) * 2 * intensity * k,
+    r: (noise("sr", frame) - 0.5) * intensity * 0.05 * k,
+  };
+}
+
+export function splitList(text: unknown): string[] {
+  return String(text ?? "").split(/\s*[|\n]\s*/).map((s) => s.trim()).filter(Boolean);
+}

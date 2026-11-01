@@ -1,0 +1,105 @@
+{
+  "id": "3d-tunel-profundidade",
+  "name": "Túnel de Profundidade",
+  "category": "Câmera 3D",
+  "description": "A câmera atravessa um túnel e cada palavra entra em foco (depth of field).",
+  "style": "depth-tunnel",
+  "fps": 30,
+  "durationInFrames": 150,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "words",
+      "label": "Palavras em sequência (separe com |)",
+      "type": "textarea",
+      "default": "PENSE | CRIE | LANCE"
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "bebas",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 200,
+      "min": 60,
+      "max": 320,
+      "step": 1
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor da última palavra / destaque",
+      "type": "color",
+      "default": "#ff2bd6"
+    },
+    {
+      "key": "ringColor",
+      "label": "Cor do túnel",
+      "type": "color",
+      "default": "#3a3f5c"
+    },
+    {
+      "key": "twist",
+      "label": "Giro do túnel (graus por anel)",
+      "type": "number",
+      "default": 4,
+      "min": 0,
+      "max": 30,
+      "step": 1
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#05050a"
+    }
+  ],
+  "props": {
+    "uppercase": true,
+    "ringRadius": 24
+  }
+}

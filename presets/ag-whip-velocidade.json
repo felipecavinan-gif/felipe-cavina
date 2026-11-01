@@ -1,0 +1,118 @@
+{
+  "id": "ag-whip-velocidade",
+  "name": "Whip de Velocidade",
+  "category": "Motion agressivo",
+  "description": "Texto entra rasgando com motion blur e linhas de velocidade, sai em whip-pan.",
+  "style": "whip-speed",
+  "fps": 30,
+  "durationInFrames": 90,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "line1",
+      "label": "Linha principal",
+      "type": "text",
+      "default": "MAIS RÁPIDO",
+      "maxLength": 24
+    },
+    {
+      "key": "line2",
+      "label": "Linha de apoio",
+      "type": "text",
+      "default": "entrega em 24h",
+      "maxLength": 32
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 170,
+      "min": 60,
+      "max": 280,
+      "step": 1
+    },
+    {
+      "key": "italic",
+      "label": "Itálico",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor da faixa",
+      "type": "color",
+      "default": "#00e08a"
+    },
+    {
+      "key": "line2Color",
+      "label": "Cor do texto da faixa",
+      "type": "color",
+      "default": "#002b1c"
+    },
+    {
+      "key": "lineColor",
+      "label": "Cor das linhas de velocidade",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#0b0b0f"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false
+    }
+  ]
+}

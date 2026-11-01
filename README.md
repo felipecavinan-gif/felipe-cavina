@@ -82,6 +82,19 @@ Crie `presets/meu-template.json`. Ele aparece na galeria ao recarregar a página
 | `subscribe-cta` | Cursor clica em "Inscrever-se" e o sino toca | channelName, buttonText, doneText, showBell, cardColor |
 | `social-handle` | Pílula com @ da rede social | platform, handle, position, useBrandColor |
 
+| `camera-3d` | Plano 3D voando até a câmera, dolly e saída passando pela câmera | title, subtitle, direction, glow, vignette, orbit, speed |
+| `flip-3d-words` | Palavras trocando como faces de um cubo 3D | prefix, words (separadas por \|), stacked, boxColor |
+| `depth-tunnel` | Câmera atravessa túnel; palavras com profundidade de campo | words, ringColor, twist |
+| `orbit-3d` | Palavras orbitando o título em 3D | title, items, spinSpeed, tilt |
+| `retro-floor` | Synthwave: chão em grade 3D, sol e neon piscando | title, subtitle, speed, cores do céu/sol/grade |
+| `slam-impact` | Palavras batendo com blur, flash e tremor | text, beat, shake, flash, mode (single/stack), stripes |
+| `glitch` | Separação RGB, fatias, ruído e flicker | title, subtitle, intensity, scanlines |
+| `whip-speed` | Whip-pan com motion blur e linhas de velocidade | line1, line2, italic |
+| `strobe-cut` | Uma palavra por vez com fundo alternando | text, framesPerWord, chaos, colorA/B/C |
+| `cine-reveal` | Letterbox, letras saindo do desfoque, flare e luz | title, subtitle, letterbox, flare, leaks, flicker |
+| `trailer` | Frases entre cortes no preto e título final | lines, finalTitle, date, flash, leaks |
+| `background-scene` | Fundo animado + texto (blobs, particles, shapes, grid, confetti, stripes) | title, subtitle, background, card, color1/2/3 |
+
 Todos aceitam `font`, `bgColor` e `transparent`, e se adaptam a 16:9, 9:16, 1:1 e 4:5.
 
 ### Criar um novo estilo (programando)
@@ -112,3 +125,10 @@ Com "Fundo transparente" ligado, a plataforma já sugere MOV.
 npx tsx scripts/preview-all.ts out/previews 16:9,9:16
 ```
 Gera um PNG de cada preset em cada formato.
+
+## Versão sem servidor (para celular)
+
+```bash
+npm run build:artifact
+```
+Gera `dist-standalone/motion-presets.html`, um único arquivo com tudo embutido, que exporta o vídeo no próprio navegador (MP4/WebM).

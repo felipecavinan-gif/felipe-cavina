@@ -1,0 +1,128 @@
+{
+  "id": "ag-strobe-hype",
+  "name": "Strobe Hype",
+  "category": "Motion agressivo",
+  "description": "Uma palavra por vez em cortes rápidos com fundo alternando cores.",
+  "style": "strobe-cut",
+  "fps": 30,
+  "durationInFrames": 90,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "text",
+      "label": "Texto (use *palavra* para destacar)",
+      "type": "textarea",
+      "default": "ÚLTIMA CHANCE PRA GARANTIR O SEU *AGORA*"
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 230,
+      "min": 80,
+      "max": 340,
+      "step": 1
+    },
+    {
+      "key": "framesPerWord",
+      "label": "Frames por palavra",
+      "type": "number",
+      "default": 6,
+      "min": 2,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "key": "chaos",
+      "label": "Caos (rotação aleatória)",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 40,
+      "step": 1
+    },
+    {
+      "key": "flash",
+      "label": "Flashes",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "colorA",
+      "label": "Fundo 1",
+      "type": "color",
+      "default": "#ff3d5a"
+    },
+    {
+      "key": "colorB",
+      "label": "Fundo 2",
+      "type": "color",
+      "default": "#111111"
+    },
+    {
+      "key": "colorC",
+      "label": "Fundo 3",
+      "type": "color",
+      "default": "#ffd400"
+    },
+    {
+      "key": "textOnA",
+      "label": "Texto sobre fundo 1",
+      "type": "color",
+      "default": "#111111"
+    },
+    {
+      "key": "textOnB",
+      "label": "Texto nos outros fundos",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor do destaque",
+      "type": "color",
+      "default": "#00e5ff"
+    }
+  ]
+}

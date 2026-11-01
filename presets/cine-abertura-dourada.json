@@ -1,0 +1,125 @@
+{
+  "id": "cine-abertura-dourada",
+  "name": "Abertura Dourada",
+  "category": "Cinematográfico",
+  "description": "Letterbox, letras saindo do desfoque, flare anamórfico dourado e push-in lento.",
+  "style": "cine-reveal",
+  "fps": 30,
+  "durationInFrames": 180,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "HORIZONTE",
+      "maxLength": 24
+    },
+    {
+      "key": "subtitle",
+      "label": "Subtítulo",
+      "type": "text",
+      "default": "uma história real",
+      "maxLength": 40
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "playfair",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 130,
+      "min": 50,
+      "max": 220,
+      "step": 1
+    },
+    {
+      "key": "letterbox",
+      "label": "Barras de cinema",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "flare",
+      "label": "Flare de lente",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#f5efe0"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor do subtítulo",
+      "type": "color",
+      "default": "#c9a45c"
+    },
+    {
+      "key": "flareColor",
+      "label": "Cor do flare",
+      "type": "color",
+      "default": "#ffb347"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#050505"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false
+    }
+  ],
+  "props": {
+    "uppercase": true,
+    "tracking": 0.25,
+    "push": 1.1,
+    "weight": 700,
+    "glowColor": "#c9a45c55"
+  }
+}

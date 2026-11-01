@@ -1,0 +1,121 @@
+{
+  "id": "bg-bokeh",
+  "name": "Bokeh Subindo",
+  "category": "Fundo animado",
+  "description": "Partículas desfocadas subindo em várias profundidades.",
+  "style": "background-scene",
+  "fps": 30,
+  "durationInFrames": 150,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Boas festas",
+      "maxLength": 28
+    },
+    {
+      "key": "subtitle",
+      "label": "Subtítulo",
+      "type": "text",
+      "default": "de toda a equipe",
+      "maxLength": 40
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "playfair",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 130,
+      "min": 50,
+      "max": 220,
+      "step": 1
+    },
+    {
+      "key": "card",
+      "label": "Cartão",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#fff6e5"
+    },
+    {
+      "key": "cardColor",
+      "label": "Cor do cartão",
+      "type": "color",
+      "default": "#00000055"
+    },
+    {
+      "key": "color1",
+      "label": "Cor 1",
+      "type": "color",
+      "default": "#ffc96b"
+    },
+    {
+      "key": "color2",
+      "label": "Cor 2",
+      "type": "color",
+      "default": "#ff8f4d"
+    },
+    {
+      "key": "color3",
+      "label": "Cor 3",
+      "type": "color",
+      "default": "#fff1c9"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#1a0f08"
+    }
+  ],
+  "props": {
+    "background": "particles"
+  }
+}

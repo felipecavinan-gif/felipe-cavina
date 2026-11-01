@@ -1,0 +1,172 @@
+{
+  "id": "cine-trailer",
+  "name": "Trailer Épico",
+  "category": "Cinematográfico",
+  "description": "Frases curtas entre cortes no preto com flashes, e título final com luz.",
+  "style": "trailer",
+  "fps": 30,
+  "durationInFrames": 240,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "lines",
+      "label": "Frases (separe com |)",
+      "type": "textarea",
+      "default": "ESTE ANO | TUDO VAI MUDAR | PREPARE-SE"
+    },
+    {
+      "key": "finalTitle",
+      "label": "Título final",
+      "type": "text",
+      "default": "O DESPERTAR",
+      "maxLength": 24
+    },
+    {
+      "key": "date",
+      "label": "Data / chamada",
+      "type": "text",
+      "default": "em breve",
+      "maxLength": 30
+    },
+    {
+      "key": "font",
+      "label": "Fonte do título",
+      "type": "font",
+      "default": "playfair",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "lineFont",
+      "label": "Fonte das frases",
+      "type": "font",
+      "default": "inter",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho das frases",
+      "type": "number",
+      "default": 70,
+      "min": 30,
+      "max": 140,
+      "step": 1
+    },
+    {
+      "key": "finalSize",
+      "label": "Tamanho do título",
+      "type": "number",
+      "default": 160,
+      "min": 60,
+      "max": 260,
+      "step": 1
+    },
+    {
+      "key": "flash",
+      "label": "Flashes nos cortes",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "leaks",
+      "label": "Luz no título final",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "textColor",
+      "label": "Cor das frases",
+      "type": "color",
+      "default": "#d9d9d9"
+    },
+    {
+      "key": "finalColor",
+      "label": "Cor do título",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "leakA",
+      "label": "Luz 1",
+      "type": "color",
+      "default": "#ff7a18"
+    },
+    {
+      "key": "leakB",
+      "label": "Luz 2",
+      "type": "color",
+      "default": "#3d5afe"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#000000"
+    }
+  ],
+  "props": {
+    "flicker": 0.06
+  }
+}

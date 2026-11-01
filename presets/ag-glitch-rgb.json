@@ -1,0 +1,121 @@
+{
+  "id": "ag-glitch-rgb",
+  "name": "Glitch RGB",
+  "category": "Motion agressivo",
+  "description": "Separação RGB, fatias deslocadas, blocos de ruído e flicker em rajadas.",
+  "style": "glitch",
+  "fps": 30,
+  "durationInFrames": 120,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "SYSTEM ERROR",
+      "maxLength": 24
+    },
+    {
+      "key": "subtitle",
+      "label": "Subtítulo",
+      "type": "text",
+      "default": "// reiniciando conteúdo",
+      "maxLength": 40
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "spacegrotesk",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 170,
+      "min": 60,
+      "max": 280,
+      "step": 1
+    },
+    {
+      "key": "intensity",
+      "label": "Intensidade do glitch",
+      "type": "number",
+      "default": 1,
+      "min": 0.2,
+      "max": 2,
+      "step": 0.1
+    },
+    {
+      "key": "scanlines",
+      "label": "Linhas de TV",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "colorA",
+      "label": "Canal 1",
+      "type": "color",
+      "default": "#00f0ff"
+    },
+    {
+      "key": "colorB",
+      "label": "Canal 2",
+      "type": "color",
+      "default": "#ff0050"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#07070a"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "id": "3d-voo-camera",
+  "name": "Voo de Câmera 3D",
+  "category": "Câmera 3D",
+  "description": "O título voa de longe num plano 3D, a câmera faz dolly e passa por ele na saída.",
+  "style": "camera-3d",
+  "fps": 30,
+  "durationInFrames": 120,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "NOVO EPISÓDIO",
+      "maxLength": 30
+    },
+    {
+      "key": "subtitle",
+      "label": "Subtítulo",
+      "type": "text",
+      "default": "toda quinta às 19h",
+      "maxLength": 40
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 150,
+      "min": 60,
+      "max": 260,
+      "step": 1
+    },
+    {
+      "key": "direction",
+      "label": "Vem de",
+      "type": "select",
+      "default": "bottom",
+      "options": [
+        {
+          "value": "bottom",
+          "label": "Baixo"
+        },
+        {
+          "value": "top",
+          "label": "Cima"
+        },
+        {
+          "value": "left",
+          "label": "Esquerda"
+        },
+        {
+          "value": "right",
+          "label": "Direita"
+        }
+      ]
+    },
+    {
+      "key": "glow",
+      "label": "Brilho neon",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor de destaque",
+      "type": "color",
+      "default": "#3da9ff"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#05070d"
+    },
+    {
+      "key": "bgColor2",
+      "label": "Cor do centro (vinheta)",
+      "type": "color",
+      "default": "#14233f"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false
+    }
+  ],
+  "props": {
+    "uppercase": true,
+    "vignette": true,
+    "orbit": 1,
+    "speed": 1
+  }
+}
