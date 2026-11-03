@@ -1,9 +1,9 @@
 {
-  "id": "prod-flick-cor",
-  "name": "Flick Colorido",
-  "category": "Produto & imagem",
-  "description": "Palavra gigante atrás do produto em fundo de cor chapada, cortes rápidos.",
-  "style": "product-flick",
+  "id": "flick-noir",
+  "name": "Flick Noir",
+  "category": "Texto flick",
+  "description": "Preto e dourado, flashes nos cortes e tipografia forte.",
+  "style": "text-flick-3d",
   "fps": 30,
   "durationInFrames": 110,
   "formats": [
@@ -14,37 +14,31 @@
   ],
   "fields": [
     {
-      "key": "image",
-      "label": "Imagem (produto ou elemento)",
-      "type": "image",
-      "default": "builtin:headphones"
-    },
-    {
       "key": "small1",
       "label": "Frase 1 · linha pequena",
       "type": "text",
-      "default": "som",
+      "default": "nova",
       "maxLength": 30
     },
     {
       "key": "big1",
       "label": "Frase 1 · palavra grande",
       "type": "text",
-      "default": "PURO.",
+      "default": "COLEÇÃO",
       "maxLength": 20
     },
     {
       "key": "small2",
       "label": "Frase 2 · linha pequena",
       "type": "text",
-      "default": "grave",
+      "default": "edição",
       "maxLength": 30
     },
     {
       "key": "big2",
       "label": "Frase 2 · palavra grande",
       "type": "text",
-      "default": "FORTE.",
+      "default": "LIMITADA",
       "maxLength": 20
     },
     {
@@ -62,10 +56,24 @@
       "maxLength": 20
     },
     {
+      "key": "small4",
+      "label": "Frase 4 · linha pequena",
+      "type": "text",
+      "default": "",
+      "maxLength": 30
+    },
+    {
+      "key": "big4",
+      "label": "Frase 4 · palavra grande",
+      "type": "text",
+      "default": "",
+      "maxLength": 20
+    },
+    {
       "key": "font",
       "label": "Fonte da palavra grande",
       "type": "font",
-      "default": "bebas",
+      "default": "montserrat",
       "options": [
         {
           "value": "inter",
@@ -137,92 +145,100 @@
       "key": "fontSize",
       "label": "Tamanho do texto",
       "type": "number",
-      "default": 300,
+      "default": 180,
       "min": 50,
-      "max": 420,
+      "max": 320,
       "step": 1
     },
     {
-      "key": "textOffset",
-      "label": "Posição do texto (relativa à imagem, negativo = acima)",
-      "type": "number",
-      "default": -8,
-      "min": -120,
-      "max": 120,
-      "step": 1
-    },
-    {
-      "key": "imageScale",
-      "label": "Tamanho da imagem",
-      "type": "number",
-      "default": 0.6,
-      "min": 0.2,
-      "max": 1,
-      "step": 0.01
-    },
-    {
-      "key": "imageY",
-      "label": "Deslocar imagem (vertical)",
-      "type": "number",
-      "default": 0,
-      "min": -60,
-      "max": 60,
-      "step": 1
-    },
-    {
-      "key": "textLayer",
-      "label": "Texto em relação à imagem",
+      "key": "cameraMode",
+      "label": "Movimento da câmera 3D",
       "type": "select",
-      "default": "back",
+      "default": "tilt",
       "options": [
         {
-          "value": "back",
-          "label": "Atrás da imagem"
+          "value": "orbit",
+          "label": "Órbita"
         },
         {
-          "value": "front",
-          "label": "Na frente da imagem"
+          "value": "tilt",
+          "label": "Inclinação"
+        },
+        {
+          "value": "dolly",
+          "label": "Dolly lateral"
+        },
+        {
+          "value": "flat",
+          "label": "Sem câmera 3D"
         }
       ]
     },
     {
-      "key": "flickSpeed",
-      "label": "Velocidade do flick",
+      "key": "cameraAmount",
+      "label": "Intensidade da câmera 3D",
       "type": "number",
-      "default": 1.2,
-      "min": 0.5,
-      "max": 3,
+      "default": 0.7,
+      "min": 0,
+      "max": 2.5,
       "step": 0.1
     },
     {
-      "key": "flash",
-      "label": "Flash nos cortes",
-      "type": "toggle",
-      "default": false
+      "key": "flickAmount",
+      "label": "Intensidade do flick",
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
     },
     {
-      "key": "float",
-      "label": "Imagem flutuando",
+      "key": "zoomScale",
+      "label": "Zoom atravessando a tela",
+      "type": "number",
+      "default": 7,
+      "min": 1,
+      "max": 15,
+      "step": 0.5
+    },
+    {
+      "key": "zoomFrames",
+      "label": "Duração do zoom (frames)",
+      "type": "number",
+      "default": 7,
+      "min": 3,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "key": "flash",
+      "label": "Flash a cada frase",
       "type": "toggle",
       "default": true
     },
     {
+      "key": "echo",
+      "label": "Rastro no zoom",
+      "type": "toggle",
+      "default": false
+    },
+    {
       "key": "textColor",
-      "label": "Cor do texto",
+      "label": "Cor da palavra grande",
       "type": "color",
-      "default": "#111111"
+      "default": "#ffffff"
     },
     {
       "key": "smallColor",
       "label": "Cor da linha pequena",
       "type": "color",
-      "default": "#ffffff"
+      "default": "#c9a45c"
     },
     {
       "key": "bgColor",
       "label": "Cor de fundo",
       "type": "color",
-      "default": "#ff5c39"
+      "default": "#050505"
     },
     {
       "key": "transparent",
@@ -232,12 +248,9 @@
     }
   ],
   "props": {
-    "align": "center",
-    "shadow": true,
-    "punch": 1.08,
     "uppercase": true,
-    "smallRatio": 0.18,
-    "bigWeight": 400,
-    "smallWeight": 800
+    "smallRatio": 0.26,
+    "smallUppercase": true,
+    "smallTracking": 0.3
   }
 }

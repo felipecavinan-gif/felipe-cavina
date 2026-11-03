@@ -1,0 +1,255 @@
+{
+  "id": "cam3d-pastel",
+  "name": "Pastel 3D",
+  "category": "Texto câmera 3D",
+  "description": "Câmera 3D suave em tons pastel, para conteúdos leves.",
+  "style": "text-flick-3d",
+  "fps": 30,
+  "durationInFrames": 130,
+  "formats": [
+    "9:16",
+    "16:9",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "small1",
+      "label": "Frase 1 · linha pequena",
+      "type": "text",
+      "default": "fragrância",
+      "maxLength": 30
+    },
+    {
+      "key": "big1",
+      "label": "Frase 1 · palavra grande",
+      "type": "text",
+      "default": "floral",
+      "maxLength": 20
+    },
+    {
+      "key": "small2",
+      "label": "Frase 2 · linha pequena",
+      "type": "text",
+      "default": "notas de",
+      "maxLength": 30
+    },
+    {
+      "key": "big2",
+      "label": "Frase 2 · palavra grande",
+      "type": "text",
+      "default": "baunilha",
+      "maxLength": 20
+    },
+    {
+      "key": "small3",
+      "label": "Frase 3 · linha pequena",
+      "type": "text",
+      "default": "",
+      "maxLength": 30
+    },
+    {
+      "key": "big3",
+      "label": "Frase 3 · palavra grande",
+      "type": "text",
+      "default": "",
+      "maxLength": 20
+    },
+    {
+      "key": "small4",
+      "label": "Frase 4 · linha pequena",
+      "type": "text",
+      "default": "",
+      "maxLength": 30
+    },
+    {
+      "key": "big4",
+      "label": "Frase 4 · palavra grande",
+      "type": "text",
+      "default": "",
+      "maxLength": 20
+    },
+    {
+      "key": "font",
+      "label": "Fonte da palavra grande",
+      "type": "font",
+      "default": "playfair",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "smallFont",
+      "label": "Fonte da linha pequena",
+      "type": "font",
+      "default": "playfair",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho do texto",
+      "type": "number",
+      "default": 160,
+      "min": 50,
+      "max": 320,
+      "step": 1
+    },
+    {
+      "key": "cameraMode",
+      "label": "Movimento da câmera 3D",
+      "type": "select",
+      "default": "orbit",
+      "options": [
+        {
+          "value": "orbit",
+          "label": "Órbita"
+        },
+        {
+          "value": "tilt",
+          "label": "Inclinação"
+        },
+        {
+          "value": "dolly",
+          "label": "Dolly lateral"
+        },
+        {
+          "value": "flat",
+          "label": "Sem câmera 3D"
+        }
+      ]
+    },
+    {
+      "key": "cameraAmount",
+      "label": "Intensidade da câmera 3D",
+      "type": "number",
+      "default": 1.2,
+      "min": 0,
+      "max": 2.5,
+      "step": 0.1
+    },
+    {
+      "key": "flickAmount",
+      "label": "Intensidade do flick",
+      "type": "number",
+      "default": 0.4,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "key": "zoomScale",
+      "label": "Zoom atravessando a tela",
+      "type": "number",
+      "default": 5,
+      "min": 1,
+      "max": 15,
+      "step": 0.5
+    },
+    {
+      "key": "zoomFrames",
+      "label": "Duração do zoom (frames)",
+      "type": "number",
+      "default": 7,
+      "min": 3,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "key": "flash",
+      "label": "Flash a cada frase",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "key": "echo",
+      "label": "Rastro no zoom",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "key": "textColor",
+      "label": "Cor da palavra grande",
+      "type": "color",
+      "default": "#4a2a2a"
+    },
+    {
+      "key": "smallColor",
+      "label": "Cor da linha pequena",
+      "type": "color",
+      "default": "#b5707a"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#fff1ef"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false
+    }
+  ],
+  "props": {
+    "uppercase": false,
+    "bigWeight": 700,
+    "smallRatio": 0.3
+  }
+}

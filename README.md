@@ -102,6 +102,8 @@ Crie `presets/meu-template.json`. Ele aparece na galeria ao recarregar a página
 | `product-impact` | Produto despenca com onda de choque, linhas radiais e texto martelado | image, text, badge, shake |
 | `impact-frame` | Linhas de velocidade estilo mangá, frames invertidos e soco de texto | title, showImage, image, lineCount, invert, tilt |
 
+| `text-flick-3d` | Só texto: frases em flick, câmera 3D e zoom atravessando a tela | small1..4, big1..4, cameraMode, cameraAmount, flickAmount, zoomScale, zoomFrames, flash, echo |
+
 Todos aceitam `font`, `bgColor` e `transparent`, e se adaptam a 16:9, 9:16, 1:1 e 4:5.
 
 ### Criar um novo estilo (programando)
