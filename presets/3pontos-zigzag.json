@@ -1,0 +1,218 @@
+{
+  "id": "3pontos-zigzag",
+  "name": "3 Pontos Zigue-zague",
+  "category": "Câmera 3D · 3 pontos",
+  "description": "A câmera voa em zigue-zague entre três textos espalhados no espaço.",
+  "style": "camera-3-points",
+  "fps": 30,
+  "durationInFrames": 210,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "label1",
+      "label": "Ponto 1 · rótulo",
+      "type": "text",
+      "default": "passo um",
+      "maxLength": 30
+    },
+    {
+      "key": "text1",
+      "label": "Ponto 1 · texto",
+      "type": "text",
+      "default": "PLANEJE",
+      "maxLength": 24
+    },
+    {
+      "key": "label2",
+      "label": "Ponto 2 · rótulo",
+      "type": "text",
+      "default": "passo dois",
+      "maxLength": 30
+    },
+    {
+      "key": "text2",
+      "label": "Ponto 2 · texto",
+      "type": "text",
+      "default": "CRIE",
+      "maxLength": 24
+    },
+    {
+      "key": "label3",
+      "label": "Ponto 3 · rótulo",
+      "type": "text",
+      "default": "passo três",
+      "maxLength": 30
+    },
+    {
+      "key": "text3",
+      "label": "Ponto 3 · texto",
+      "type": "text",
+      "default": "PUBLIQUE",
+      "maxLength": 24
+    },
+    {
+      "key": "layout",
+      "label": "Caminho da câmera",
+      "type": "select",
+      "default": "zigzag",
+      "options": [
+        {
+          "value": "zigzag",
+          "label": "Zigue-zague"
+        },
+        {
+          "value": "corredor",
+          "label": "Corredor (paredes)"
+        },
+        {
+          "value": "escada",
+          "label": "Escada (descendo)"
+        },
+        {
+          "value": "orbita",
+          "label": "Órbita (girando)"
+        }
+      ]
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho do texto",
+      "type": "number",
+      "default": 150,
+      "min": 50,
+      "max": 280,
+      "step": 1
+    },
+    {
+      "key": "travelFrames",
+      "label": "Duração de cada viagem (frames)",
+      "type": "number",
+      "default": 18,
+      "min": 6,
+      "max": 60,
+      "step": 1
+    },
+    {
+      "key": "depth",
+      "label": "Distância entre os pontos",
+      "type": "number",
+      "default": 1,
+      "min": 0.4,
+      "max": 2,
+      "step": 0.1
+    },
+    {
+      "key": "bank",
+      "label": "Inclinação da câmera nas curvas",
+      "type": "number",
+      "default": 6,
+      "min": 0,
+      "max": 25,
+      "step": 1
+    },
+    {
+      "key": "motionBlur",
+      "label": "Desfoque de movimento",
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 3,
+      "step": 0.1
+    },
+    {
+      "key": "focusBlur",
+      "label": "Desfoque de profundidade",
+      "type": "number",
+      "default": 6,
+      "min": 0,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "key": "flick",
+      "label": "Flick ao chegar em cada ponto",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "showIndex",
+      "label": "Mostrar números 01 02 03",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "underline",
+      "label": "Sublinhado",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor de destaque",
+      "type": "color",
+      "default": "#ffd400"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#0b0b0f"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false
+    }
+  ],
+  "props": {
+    "uppercase": true
+  }
+}
