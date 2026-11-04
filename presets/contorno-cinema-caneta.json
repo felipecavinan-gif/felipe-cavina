@@ -94,12 +94,30 @@
     },
     {
       "key": "outlineWidth",
-      "label": "Espessura do contorno",
+      "label": "Espessura do risco",
       "type": "number",
-      "default": 7,
-      "min": 2,
-      "max": 20,
-      "step": 1
+      "default": 3.5,
+      "min": 1,
+      "max": 12,
+      "step": 0.5
+    },
+    {
+      "key": "outlineBlur",
+      "label": "Blur do risco",
+      "type": "number",
+      "default": 1.2,
+      "min": 0,
+      "max": 6,
+      "step": 0.1
+    },
+    {
+      "key": "outlineOpacity",
+      "label": "Opacidade do risco",
+      "type": "number",
+      "default": 0.85,
+      "min": 0.2,
+      "max": 1,
+      "step": 0.05
     },
     {
       "key": "outlineAt",
@@ -112,11 +130,11 @@
     },
     {
       "key": "outlineFrames",
-      "label": "Duração do desenho do contorno (frames)",
+      "label": "Duração do risco (frames)",
       "type": "number",
-      "default": 18,
-      "min": 6,
-      "max": 40,
+      "default": 24,
+      "min": 8,
+      "max": 60,
       "step": 1
     },
     {
