@@ -2,7 +2,7 @@
   "id": "cta-subscribe",
   "name": "Botão Inscreva-se",
   "category": "CTA / Redes sociais",
-  "description": "Cursor clica em 'Inscrever-se' e o sino toca. Fundo transparente.",
+  "description": "Cursor clica em 'Inscrever-se' e o sino toca. Fundo transparente. Troque a foto pela do seu perfil.",
   "style": "subscribe-cta",
   "fps": 30,
   "durationInFrames": 110,
@@ -13,6 +13,19 @@
     "4:5"
   ],
   "fields": [
+    {
+      "key": "avatar",
+      "label": "Foto do perfil (Instagram, YouTube…)",
+      "type": "image",
+      "default": "builtin:avatar",
+      "allowEmpty": true,
+      "options": [
+        {
+          "value": "builtin:avatar",
+          "label": "Exemplo"
+        }
+      ]
+    },
     {
       "key": "channelName",
       "label": "Nome do canal",

@@ -2,6 +2,8 @@ import React from "react";
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig, Easing } from "remotion";
 import { Background, StyleProps, useUnit, clamp } from "./common";
 import { font } from "../fonts";
+import { Img } from "remotion";
+import { resolveOptionalImage } from "../images";
 
 export const SubscribeCTA: React.FC<StyleProps> = ({ v }) => {
   const frame = useCurrentFrame();
@@ -22,8 +24,12 @@ export const SubscribeCTA: React.FC<StyleProps> = ({ v }) => {
     <Background v={v}>
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", transform: `scale(${inS * (1 - outS)})` }}>
         <div style={{ display: "flex", alignItems: "center", gap: 24 * u, background: v.cardColor, padding: `${22 * u}px ${28 * u}px`, borderRadius: 999, boxShadow: `0 ${10 * u}px ${40 * u}px rgba(0,0,0,.35)` }}>
-          <div style={{ width: 90 * u, height: 90 * u, borderRadius: 99, background: v.accentColor, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: font(v.font), fontWeight: 900, fontSize: 44 * u, color: "#fff" }}>
-            {String(v.channelName ?? "").replace(/^[@#\s]+/, "").slice(0, 1).toUpperCase()}
+          <div style={{ width: 90 * u, height: 90 * u, borderRadius: 99, overflow: "hidden", flex: "none", background: v.accentColor, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: font(v.font), fontWeight: 900, fontSize: 44 * u, color: "#fff", border: v.avatar ? `${3 * u}px solid ${v.accentColor}` : "none" }}>
+            {resolveOptionalImage(v.avatar) ? (
+              <Img src={resolveOptionalImage(v.avatar)} style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 99 }} />
+            ) : (
+              String(v.channelName ?? "").replace(/^[@#\s]+/, "").slice(0, 1).toUpperCase()
+            )}
           </div>
           <div style={{ fontFamily: font(v.font), fontWeight: 800, fontSize: 44 * u, color: v.textColor, whiteSpace: "nowrap" }}>{v.channelName}</div>
           <div style={{ position: "relative", fontFamily: font(v.font), fontWeight: 800, fontSize: 36 * u, color: "#fff", background: clicked ? "#6b6b6b" : v.accentColor, padding: `${18 * u}px ${36 * u}px`, borderRadius: 999, transform: `scale(${press})`, textTransform: "uppercase", whiteSpace: "nowrap" }}>

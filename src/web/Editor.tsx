@@ -13,7 +13,7 @@ declare global {
 const Field: React.FC<{ f: PresetField; value: any; onChange: (v: any) => void }> = ({ f, value, onChange }) => {
   switch (f.type) {
     case "image":
-      return <ImageField id={`f-${f.key}`} value={value} onChange={onChange} />;
+      return <ImageField id={`f-${f.key}`} value={value} onChange={onChange} samples={f.options} allowEmpty={f.allowEmpty} emptyLabel={f.help ? undefined : "Sem foto (usar inicial)"} />;
     case "textarea":
       return <textarea rows={3} maxLength={f.maxLength} value={value} onChange={(e) => onChange(e.target.value)} />;
     case "color":

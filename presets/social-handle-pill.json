@@ -2,7 +2,7 @@
   "id": "social-handle-pill",
   "name": "@ da Rede Social",
   "category": "CTA / Redes sociais",
-  "description": "Pílula com ícone e @ da rede.",
+  "description": "Pílula com ícone e @ da rede. Troque a foto pela do seu perfil.",
   "style": "social-handle",
   "fps": 30,
   "durationInFrames": 120,
@@ -13,6 +13,19 @@
     "4:5"
   ],
   "fields": [
+    {
+      "key": "avatar",
+      "label": "Foto do perfil (Instagram, YouTube…)",
+      "type": "image",
+      "default": "builtin:avatar",
+      "allowEmpty": true,
+      "options": [
+        {
+          "value": "builtin:avatar",
+          "label": "Exemplo"
+        }
+      ]
+    },
     {
       "key": "platform",
       "label": "Rede",

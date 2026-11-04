@@ -32,7 +32,8 @@ async function fileToDataUrl(file: File, max = 1400): Promise<string> {
   return c.toDataURL("image/png");
 }
 
-export const ImageField: React.FC<{ id: string; value: string; onChange: (v: string) => void }> = ({ id, value, onChange }) => {
+export const ImageField: React.FC<{ id: string; value: string; onChange: (v: string) => void; samples?: { value: string; label: string }[]; allowEmpty?: boolean; emptyLabel?: string }> = ({ id, value, onChange, samples, allowEmpty, emptyLabel }) => {
+  const list = samples?.length ? samples.map((s) => ({ id: s.value.replace(/^builtin:/, ""), label: s.label })) : SAMPLES;
   const input = useRef<HTMLInputElement>(null);
   const [err, setErr] = useState<string | null>(null);
   const [url, setUrl] = useState(value?.startsWith("http") ? value : "");
@@ -44,16 +45,19 @@ export const ImageField: React.FC<{ id: string; value: string; onChange: (v: str
   return (
     <div className="imgfield">
       <div className="imgfield-row">
-        <div className="imgfield-thumb checker"><img src={resolveImage(value)} alt="" /></div>
+        <div className="imgfield-thumb checker">{value || !allowEmpty ? <img src={resolveImage(value)} alt="" /> : <span className="muted">sem foto</span>}</div>
         <div className="imgfield-actions">
-          <button type="button" className="primary small" onClick={() => input.current?.click()}>Enviar imagem</button>
+          <button type="button" className="primary small" onClick={() => input.current?.click()}>{allowEmpty ? "Enviar foto" : "Enviar imagem"}</button>
           <input id={id} ref={input} type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden onChange={(e) => pick(e.target.files?.[0])} />
           <div className="samples">
-            {SAMPLES.map((s) => (
+            {list.map((s) => (
               <button type="button" key={s.id} className={`chip ${value === `builtin:${s.id}` ? "on" : ""}`} onClick={() => onChange(`builtin:${s.id}`)} title={`Usar exemplo: ${s.label}`}>
                 <img src={BUILTIN_IMAGES[s.id]} alt="" /> {s.label}
               </button>
             ))}
+            {allowEmpty ? (
+              <button type="button" className={`chip ${!value ? "on" : ""}`} onClick={() => onChange("")}>{emptyLabel ?? "Sem imagem"}</button>
+            ) : null}
           </div>
         </div>
       </div>

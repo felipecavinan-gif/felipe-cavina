@@ -2,7 +2,7 @@
   "id": "cta-follow-dark",
   "name": "Botão Seguir (dark)",
   "category": "CTA / Redes sociais",
-  "description": "Versão escura para Instagram/TikTok.",
+  "description": "Versão escura para Instagram/TikTok. Troque a foto pela do seu perfil.",
   "style": "subscribe-cta",
   "fps": 30,
   "durationInFrames": 110,
@@ -13,6 +13,19 @@
     "4:5"
   ],
   "fields": [
+    {
+      "key": "avatar",
+      "label": "Foto do perfil (Instagram, YouTube…)",
+      "type": "image",
+      "default": "builtin:avatar",
+      "allowEmpty": true,
+      "options": [
+        {
+          "value": "builtin:avatar",
+          "label": "Exemplo"
+        }
+      ]
+    },
     {
       "key": "channelName",
       "label": "Nome do perfil",

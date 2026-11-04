@@ -11,6 +11,8 @@ export interface PresetField {
   max?: number;
   step?: number;
   help?: string;
+  /** Campo de imagem: permite ficar vazio (ex.: "sem foto, usar inicial"). */
+  allowEmpty?: boolean;
 }
 
 export type FormatId = "16:9" | "9:16" | "1:1" | "4:5";
