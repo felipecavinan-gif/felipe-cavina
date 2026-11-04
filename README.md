@@ -106,7 +106,7 @@ Crie `presets/meu-template.json`. Ele aparece na galeria ao recarregar a página
 
 | `camera-3-points` | Câmera 3D viaja por 3 pontos no espaço, cada um com um texto | label1..3, text1..3, layout (zigzag/corredor/escada/orbita), travelFrames, depth, bank, motionBlur, focusBlur, flick, showIndex |
 
-| `outline-flick` | Texto em fade com escala diminuindo, contorno desenhado na *palavra* e final em flicks/flashes | text, outlineShape (ellipse/double/box/underline/brackets), outlineAt, flickAt, flashAmount, invert, cinemaBlur |
+| `outline-flick` | Texto chega atravessando a tela, escala diminuindo suave, contorno desenhado na *palavra* e saída em blur | text, outlineShape (ellipse/double/box/underline/brackets), outlineAt, scaleFrom, introFrames, scaleTo, outroFrames, cinemaBlur |
 
 Os CTAs (`subscribe-cta`, `social-handle`) aceitam `avatar`: a foto do perfil (Instagram, YouTube…), ou vazio para usar a inicial.
 

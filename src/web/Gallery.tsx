@@ -31,7 +31,7 @@ const Card: React.FC<{ preset: Preset; format: FormatId }> = ({ preset, format }
 
 /** Ordem das classes na galeria. Categorias que não estão aqui vão para o final. */
 const CLASS_ORDER = [
-  "Contorno + flick", "Contorno + flick · cinema", "Câmera 3D · 3 pontos", "Texto flick", "Texto câmera 3D", "Texto zoom", "Câmera 3D", "Motion agressivo", "Cinematográfico", "Fundo animado",
+  "Contorno + blur", "Contorno + blur · cinema", "Câmera 3D · 3 pontos", "Texto flick", "Texto câmera 3D", "Texto zoom", "Câmera 3D", "Motion agressivo", "Cinematográfico", "Fundo animado",
   "Tipografia animada", "Títulos", "Lower thirds", "Números e dados", "Listas", "Citações", "CTA / Redes sociais",
 ];
 const rank = (c: string) => (CLASS_ORDER.indexOf(c) + 1 || 99);

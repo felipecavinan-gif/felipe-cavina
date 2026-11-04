@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig, Easing } from "remotion";
-import { Background, StyleProps, useUnit, clamp, noise, parseWords, fitSize } from "./common";
+import { Background, StyleProps, useUnit, clamp, parseWords, fitSize } from "./common";
 import { font } from "../fonts";
 
 /** Formas do contorno, desenhadas num quadro 0..100 com pathLength=100 (para animar o traço). */
@@ -13,8 +13,9 @@ const SHAPES: Record<string, string> = {
 };
 
 /**
- * Texto entra em fade enquanto a escala diminui continuamente (sempre em movimento),
- * um contorno é desenhado em volta da palavra-chave e a transição termina em vários flicks e flashes.
+ * Texto chega forte, como se atravessasse a tela (escala grande + muito blur), desacelera
+ * e segue diminuindo bem sutil; no meio, um contorno é desenhado na palavra-chave.
+ * O final é suave: blur e fade, sem flicks.
  */
 export const OutlineFlick: React.FC<StyleProps> = ({ v }) => {
   const frame = useCurrentFrame();
@@ -22,40 +23,34 @@ export const OutlineFlick: React.FC<StyleProps> = ({ v }) => {
   const u = useUnit();
   const words = parseWords(v.text);
   const D = durationInFrames;
-  const outlineStart = D * Number(v.outlineAt ?? 0.3);
-  const outlineLen = Math.max(6, Number(v.outlineFrames ?? 16));
-  const flickStart = Math.max(outlineStart + outlineLen + 2, D * Number(v.flickAt ?? 0.68));
+  const outlineStart = D * Number(v.outlineAt ?? 0.32);
+  const outlineLen = Math.max(6, Number(v.outlineFrames ?? 18));
+  const introLen = Math.max(6, Number(v.introFrames ?? 24));
+  const outLen = Math.max(6, Number(v.outroFrames ?? 16));
 
-  // Fade + escala diminuindo o tempo todo, com leve deriva
-  const fade = interpolate(frame, [0, Number(v.fadeFrames ?? 14)], [0, 1], { ...clamp, easing: Easing.out(Easing.quad) });
-  const scale = interpolate(frame, [0, D], [Number(v.scaleFrom ?? 1.45), Number(v.scaleTo ?? 0.92)], { easing: Easing.out(Easing.cubic) });
-  const drift = interpolate(frame, [0, D], [Number(v.drift ?? 1) * -40 * u, Number(v.drift ?? 1) * 40 * u]);
+  // 1) Chegada forte: escala grande caindo rápido e desacelerando (curva exponencial)
+  const intro = interpolate(frame, [0, introLen], [0, 1], { ...clamp, easing: Easing.bezier(0.25, 0.75, 0.3, 1) });
+  const introScale = interpolate(intro, [0, 1], [Number(v.scaleFrom ?? 3.2), 1]);
+  // 2) Depois segue diminuindo bem devagar até o fim
+  const slowScale = interpolate(frame, [0, D], [1, Number(v.scaleTo ?? 0.9)], { easing: Easing.out(Easing.quad) });
+  const scale = introScale * slowScale;
+  // 3) Saída suave: blur e fade
+  const out = interpolate(frame, [D - outLen, D - 1], [0, 1], { ...clamp, easing: Easing.in(Easing.quad) });
+
+  const cb = Number(v.cinemaBlur ?? 0);
+  const breathe = cb * 1.4 * u * (0.5 + 0.5 * Math.sin(frame / 10));
+  const fadeBlur = (1 - intro) * (28 + 22 * cb) * u + out * (16 + 10 * cb) * u + breathe;
+  const fade = interpolate(frame, [0, 3], [0.35, 1], clamp) * (1 - out);
+  const drift = interpolate(frame, [0, D], [Number(v.drift ?? 1) * -30 * u, Number(v.drift ?? 1) * 30 * u], { easing: Easing.out(Easing.quad) });
   const rot = interpolate(frame, [0, D], [Number(v.rotate ?? 0) * -1, Number(v.rotate ?? 0)]);
-  // Blur de cinema: entrada mais desfocada, foco "respirando" e brilho (bloom) em volta do texto
-  const cb = Number(v.cinemaBlur ?? 1);
-  const breathe = cb * 1.6 * u * (0.5 + 0.5 * Math.sin(frame / 9));
-  const fadeBlur = (1 - fade) * (14 + 22 * cb) * u + breathe;
-
-  // Fase final: flicks e flashes cada vez mais densos até sumir
-  const tf = frame - flickStart;
-  const flickLen = D - flickStart;
-  const density = interpolate(tf, [0, flickLen], [0.25, 0.85], clamp);
-  const inFlick = tf >= 0;
-  const off = inFlick && (noise("off", frame) < density || D - frame <= 2);
-  const flashOn = inFlick && noise("fl", frame) > 1 - Number(v.flashAmount ?? 0.35) && D - frame > 2;
-  const flashColor = noise("fc", frame) > 0.5 ? v.flashColor : v.accentColor;
-  const invert = inFlick && v.invert && noise("inv", frame) > 0.8;
-  const jx = inFlick ? (noise("jx", frame) - 0.5) * 50 * u : 0;
-  const jy = inFlick ? (noise("jy", frame) - 0.5) * 30 * u : 0;
-  const pop = inFlick ? 1 + (noise("pop", frame) - 0.3) * 0.12 : 1;
-  const flickBlur = inFlick && noise("fb", frame) > 0.55 ? (6 + noise("fbs", frame) * 16) * u * cb : 0;
+  const off = false, jx = 0, jy = 0, pop = 1, flickBlur = 0; // sem flicks: valores neutros
 
   const longest = words.reduce((a, w) => a + w.word.length + 1, 0);
   const portrait = useVideoConfig().height > width;
   const lines = Math.max(1, Math.ceil(longest / Number(v.charsPerLine ?? (portrait ? 8 : 16))));
   const size = fitSize(Number(v.fontSize ?? 130) * u, Math.ceil(longest / lines), width * 0.78, Number(v.charRatio ?? 0.6));
   const shape = SHAPES[String(v.outlineShape ?? "ellipse")] ?? SHAPES.ellipse;
-  const textColor = invert ? v.bgColor : v.textColor;
+  const textColor = v.textColor;
   const renderText = (bloom: boolean) => (
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", padding: 80 * u, opacity: (off ? 0 : fade) * (bloom ? Math.min(0.75, 0.45 * cb) : 1) }}>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "baseline", gap: `${size * 0.12}px ${size * 0.26}px`, maxWidth: width * 0.84, transform: `translate(${drift + jx}px, ${jy}px) rotate(${rot}deg) scale(${scale * pop})`, filter: `blur(${bloom ? fadeBlur + 22 * u * cb : fadeBlur + flickBlur}px)` }}>
@@ -71,7 +66,7 @@ export const OutlineFlick: React.FC<StyleProps> = ({ v }) => {
                 {w.word}
                 {p > 0 ? (
                   <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: "absolute", left: -padX, top: -padY, width: `calc(100% + ${padX * 2}px)`, height: `calc(100% + ${padY * 2}px)`, overflow: "visible" }}>
-                    <path d={shape} pathLength={100} fill="none" stroke={invert ? v.bgColor : v.outlineColor} strokeWidth={Number(v.outlineWidth ?? 7) * u} vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="100 100" strokeDashoffset={100 - p * 100} />
+                    <path d={shape} pathLength={100} fill="none" stroke={v.outlineColor} strokeWidth={Number(v.outlineWidth ?? 7) * u} vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="100 100" strokeDashoffset={100 - p * 100} />
                   </svg>
                 ) : null}
               </span>
@@ -82,10 +77,9 @@ export const OutlineFlick: React.FC<StyleProps> = ({ v }) => {
   );
 
   return (
-    <Background v={invert && !v.transparent ? { ...v, bgColor: v.textColor } : v}>
+    <Background v={v}>
       {cb > 0 ? renderText(true) : null}
       {renderText(false)}
-      {flashOn ? <AbsoluteFill style={{ background: flashColor, opacity: 0.85 }} /> : null}
     </Background>
   );
 };
