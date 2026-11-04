@@ -1,0 +1,239 @@
+{
+  "id": "suave-3pontos-orbita",
+  "name": "Órbita Suave",
+  "category": "Câmera 3D · suave",
+  "description": "Giro rápido em volta da cena entre os textos, com volta sutil e brilho.",
+  "style": "camera-3-points",
+  "fps": 30,
+  "durationInFrames": 220,
+  "formats": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "label1",
+      "label": "Ponto 1 · rótulo",
+      "type": "text",
+      "default": "dia 1",
+      "maxLength": 30
+    },
+    {
+      "key": "text1",
+      "label": "Ponto 1 · texto",
+      "type": "text",
+      "default": "ABERTURA",
+      "maxLength": 24
+    },
+    {
+      "key": "label2",
+      "label": "Ponto 2 · rótulo",
+      "type": "text",
+      "default": "dia 2",
+      "maxLength": 30
+    },
+    {
+      "key": "text2",
+      "label": "Ponto 2 · texto",
+      "type": "text",
+      "default": "WORKSHOPS",
+      "maxLength": 24
+    },
+    {
+      "key": "label3",
+      "label": "Ponto 3 · rótulo",
+      "type": "text",
+      "default": "dia 3",
+      "maxLength": 30
+    },
+    {
+      "key": "text3",
+      "label": "Ponto 3 · texto",
+      "type": "text",
+      "default": "FESTA",
+      "maxLength": 24
+    },
+    {
+      "key": "layout",
+      "label": "Caminho da câmera",
+      "type": "select",
+      "default": "orbita",
+      "options": [
+        {
+          "value": "zigzag",
+          "label": "Zigue-zague"
+        },
+        {
+          "value": "corredor",
+          "label": "Corredor (paredes)"
+        },
+        {
+          "value": "escada",
+          "label": "Escada (descendo)"
+        },
+        {
+          "value": "orbita",
+          "label": "Órbita (girando)"
+        }
+      ]
+    },
+    {
+      "key": "font",
+      "label": "Fonte",
+      "type": "font",
+      "default": "spacegrotesk",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho do texto",
+      "type": "number",
+      "default": 150,
+      "min": 50,
+      "max": 280,
+      "step": 1
+    },
+    {
+      "key": "travelFrames",
+      "label": "Tempo entre os textos (frames)",
+      "type": "number",
+      "default": 14,
+      "min": 6,
+      "max": 60,
+      "step": 1
+    },
+    {
+      "key": "depth",
+      "label": "Distância entre os pontos",
+      "type": "number",
+      "default": 1,
+      "min": 0.4,
+      "max": 2,
+      "step": 0.1
+    },
+    {
+      "key": "springDamping",
+      "label": "Suavidade da volta (mais alto = menos balanço)",
+      "type": "number",
+      "default": 14,
+      "min": 6,
+      "max": 30,
+      "step": 1
+    },
+    {
+      "key": "motionBlur",
+      "label": "Blur de movimento",
+      "type": "number",
+      "default": 1.3,
+      "min": 0,
+      "max": 3,
+      "step": 0.1
+    },
+    {
+      "key": "drift",
+      "label": "Deriva sutil parada (graus)",
+      "type": "number",
+      "default": 1.5,
+      "min": 0,
+      "max": 6,
+      "step": 0.1
+    },
+    {
+      "key": "bank",
+      "label": "Inclinação da câmera ao virar",
+      "type": "number",
+      "default": 8,
+      "min": 0,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "key": "focusBlur",
+      "label": "Desfoque de profundidade",
+      "type": "number",
+      "default": 6,
+      "min": 0,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "key": "flick",
+      "label": "Flick ao chegar",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "key": "showIndex",
+      "label": "Mostrar números 01 02 03",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "underline",
+      "label": "Sublinhado",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "key": "textColor",
+      "label": "Cor do texto",
+      "type": "color",
+      "default": "#e9fdff"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor de destaque",
+      "type": "color",
+      "default": "#ff2bd6"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo",
+      "type": "color",
+      "default": "#07040f"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": false
+    }
+  ],
+  "props": {
+    "motion": "whip",
+    "springStiffness": 170,
+    "uppercase": true,
+    "glow": true
+  }
+}

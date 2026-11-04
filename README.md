@@ -104,7 +104,7 @@ Crie `presets/meu-template.json`. Ele aparece na galeria ao recarregar a página
 
 | `text-flick-3d` | Só texto: frases em flick, câmera 3D e zoom atravessando a tela | small1..4, big1..4, cameraMode, cameraAmount, flickAmount, zoomScale, zoomFrames, flash, echo |
 
-| `camera-3-points` | Câmera 3D viaja por 3 pontos no espaço, cada um com um texto | label1..3, text1..3, layout (zigzag/corredor/escada/orbita), travelFrames, depth, bank, motionBlur, focusBlur, flick, showIndex |
+| `camera-3-points` | Câmera 3D viaja por 3 pontos no espaço, cada um com um texto | label1..3, text1..3, layout (zigzag/corredor/escada/orbita), motion (smooth/whip), springDamping, drift, travelFrames, depth, bank, motionBlur, focusBlur, flick, showIndex |
 
 | `outline-flick` | Texto chega atravessando a tela, escala diminuindo suave, contorno desenhado na *palavra* e saída em blur | text, outlineShape (ellipse/double/box/underline/brackets), outlineAt, outlineFrames, outlineWidth, outlineBlur, outlineOpacity, scaleFrom, introFrames, scaleTo, outroFrames, cinemaBlur |
 

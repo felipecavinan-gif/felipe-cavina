@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig, Easing } from "remotion";
+import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig, Easing } from "remotion";
 import { Background, StyleProps, useUnit, clamp, noise, fitSize } from "./common";
 import { font } from "../fonts";
 
@@ -49,7 +49,18 @@ export const TextFlick3D: React.FC<StyleProps> = ({ v }) => {
   if (mode === "orbit") { ry = Math.sin(sec * 0.9) * 24; rx = 8 + Math.cos(sec * 0.7) * 4; }
   else if (mode === "tilt") { rx = Math.sin(sec * 1.1) * 22; ry = Math.cos(sec * 0.8) * 8; }
   else if (mode === "dolly") { rx = 14; ry = -12 + Math.sin(sec * 0.6) * 6; rz = -2; }
-  ry += side * (1 - cur.enter) * 40; // cada frase entra girando de um lado
+  let whipBlur = 0;
+  if (mode === "whip") {
+    // vira rápido para a frase, passa um pouquinho e volta sutil; depois só uma deriva leve
+    const sp = (f: number) => spring({ frame: f - cur.i * seg, fps, config: { damping: 12, stiffness: 160, mass: 0.7 } });
+    const s0 = sp(frame), s1 = sp(frame - 1);
+    ry = side * 38 * (1 - s0) + Math.sin(sec * 0.7) * 2;
+    rx = 6 * (1 - s0) + Math.cos(sec * 0.5) * 1.5;
+    rz = -side * 3 * (1 - s0);
+    whipBlur = Math.min(12, Math.abs(s0 - s1) * 38 * 1.6) * u * Number(v.motionBlur ?? 1);
+  } else {
+    ry += side * (1 - cur.enter) * 40; // cada frase entra girando de um lado
+  }
   rx *= camAmt; ry *= camAmt; rz *= camAmt;
   const persp = 1100 * u;
   const flash = v.flash && cur.t < 2 ? interpolate(cur.t, [0, 2], [0.7, 0]) : 0;
@@ -61,7 +72,7 @@ export const TextFlick3D: React.FC<StyleProps> = ({ v }) => {
     const align = v.align === "left" ? "flex-start" : "center";
     return (
       <AbsoluteFill key={`g${ghost}`} style={{ justifyContent: "center", alignItems: "center", opacity: s.op * (ghost ? 0.28 / ghost : 1) }}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: align, transform: `perspective(${persp}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) translateX(${s.jitter}px) scale(${s.scale})`, filter: `blur(${s.blur + ghost * 4 * u}px)` }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: align, transform: `perspective(${persp}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) translateX(${s.jitter}px) scale(${s.scale})`, filter: `blur(${s.blur + whipBlur + ghost * 4 * u}px)` }}>
           {p.small ? (
             <div style={{ fontFamily: font(v.smallFont ?? v.font), fontWeight: Number(v.smallWeight ?? 700), fontSize: smallSize, color: v.smallColor ?? v.textColor, lineHeight: 1, marginBottom: smallSize * 0.1, marginLeft: v.align === "left" ? bigSize * 0.08 : 0, whiteSpace: "nowrap", letterSpacing: v.smallTracking ? `${v.smallTracking}em` : undefined, textTransform: v.smallUppercase ? "uppercase" : "none" }}>
               {p.small}

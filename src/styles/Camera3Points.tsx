@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig, Easing } from "remotion";
+import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig, Easing } from "remotion";
 import { Background, StyleProps, useUnit, clamp, noise, fitSize } from "./common";
 import { font } from "../fonts";
 
@@ -32,7 +32,7 @@ const LAYOUTS: Record<string, Pt[]> = {
 /** A câmera 3D viaja entre 3 pontos no espaço; em cada um há um texto, os outros ficam visíveis ao fundo. */
 export const Camera3Points: React.FC<StyleProps> = ({ v }) => {
   const frame = useCurrentFrame();
-  const { width, height, durationInFrames } = useVideoConfig();
+  const { width, height, durationInFrames, fps } = useVideoConfig();
   const u = useUnit();
   const sx = width / 1920, sy = height / 1080;
   const texts = [1, 2, 3].map((i) => ({ label: String(v[`label${i}`] ?? ""), text: String(v[`text${i}`] ?? "") }));
@@ -53,14 +53,54 @@ export const Camera3Points: React.FC<StyleProps> = ({ v }) => {
   const start: Pt = { ...along(pts[0], 2400 * u), ry: pts[0].ry + 25 };
   const exit: Pt = along(pts[2], -1400 * u);
   const keys: [number, Pt][] = [[0, start], [k1, pts[0]], [k1 + hold, pts[0]], [k2, pts[1]], [k2 + hold, pts[1]], [k3, pts[2]], [kEnd, pts[2]], [durationInFrames, exit]];
-  let a = keys[0], b = keys[1];
-  for (let i = 0; i < keys.length - 1; i++) if (frame >= keys[i][0]) { a = keys[i]; b = keys[i + 1]; }
-  const p = interpolate(frame, [a[0], Math.max(a[0] + 1, b[0])], [0, 1], { ...clamp, easing: ease });
-  const lerp = (x: number, y: number) => x + (y - x) * p;
-  const cam = { x: lerp(a[1].x, b[1].x), y: lerp(a[1].y, b[1].y), z: lerp(a[1].z, b[1].z), ry: lerp(a[1].ry, b[1].ry), rz: lerp(a[1].rz, b[1].rz) };
-  const moving = a[1] !== b[1] ? Math.sin(p * Math.PI) : 0; // 0 parado, 1 no meio da viagem
-  const bank = moving * Number(v.bank ?? 6) * (b[1].x > a[1].x ? -1 : 1);
-  const motionBlur = moving * Number(v.motionBlur ?? 1) * 10 * u;
+  const whip = v.motion === "whip";
+
+  /** Posição da câmera num quadro. "smooth": viagem com ease. "whip": vira rápido, passa um pouco e volta sutil (mola). */
+  const camAt = (f: number): Pt => {
+    if (!whip) {
+      let a = keys[0], b = keys[1];
+      for (let i = 0; i < keys.length - 1; i++) if (f >= keys[i][0]) { a = keys[i]; b = keys[i + 1]; }
+      const p = interpolate(f, [a[0], Math.max(a[0] + 1, b[0])], [0, 1], { ...clamp, easing: ease });
+      const lerp = (x: number, y: number) => x + (y - x) * p;
+      return { x: lerp(a[1].x, b[1].x), y: lerp(a[1].y, b[1].y), z: lerp(a[1].z, b[1].z), ry: lerp(a[1].ry, b[1].ry), rz: lerp(a[1].rz, b[1].rz) };
+    }
+    const cfg = { damping: Number(v.springDamping ?? 13), stiffness: Number(v.springStiffness ?? 170), mass: 0.7 };
+    // cada movimento começa no seu instante e soma o deslocamento com uma mola (overshoot pequeno)
+    const moves: [number, Pt, Pt][] = [[0, start, pts[0]], [k1 + hold, pts[0], pts[1]], [k2 + hold, pts[1], pts[2]]];
+    const c: Pt = { ...start };
+    for (const [t0, from, to] of moves) {
+      const sp = spring({ frame: f - t0, fps, config: cfg });
+      (["x", "y", "z", "ry", "rz"] as const).forEach((k) => { c[k] += (to[k] - from[k]) * sp; });
+    }
+    // saída atravessando o último texto
+    const o = interpolate(f, [kEnd, durationInFrames], [0, 1], { ...clamp, easing: Easing.in(Easing.cubic) });
+    (["x", "y", "z", "ry", "rz"] as const).forEach((k) => { c[k] += (exit[k] - pts[2][k]) * o; });
+    // deriva bem sutil enquanto segura em cada texto
+    const sec = f / fps;
+    c.ry += Math.sin(sec * 0.7) * Number(v.drift ?? 1.5);
+    c.rz += Math.sin(sec * 0.5 + 1) * Number(v.drift ?? 1.5) * 0.3;
+    c.z += Math.sin(sec * 0.4) * 30 * u;
+    return c;
+  };
+
+  const cam = camAt(frame);
+  const prev = camAt(Math.max(0, frame - 1));
+  // velocidade da câmera → inclinação e blur de movimento (só aparecem enquanto ela se move)
+  const speed = Math.hypot(cam.x - prev.x, cam.y - prev.y, cam.z - prev.z) / (40 * u) + Math.abs(cam.ry - prev.ry) * 0.6;
+  const moving = whip ? Math.min(1, speed) : 0;
+  let bank: number, motionBlur: number;
+  if (whip) {
+    bank = Math.max(-1, Math.min(1, (cam.x - prev.x) / (60 * u))) * -Number(v.bank ?? 6);
+    motionBlur = Math.min(14, speed * 2.2) * Number(v.motionBlur ?? 1) * u;
+  } else {
+    let a = keys[0], b = keys[1];
+    for (let i = 0; i < keys.length - 1; i++) if (frame >= keys[i][0]) { a = keys[i]; b = keys[i + 1]; }
+    const p = interpolate(frame, [a[0], Math.max(a[0] + 1, b[0])], [0, 1], { ...clamp, easing: ease });
+    const mv = a[1] !== b[1] ? Math.sin(p * Math.PI) : 0;
+    bank = mv * Number(v.bank ?? 6) * (b[1].x > a[1].x ? -1 : 1);
+    motionBlur = mv * Number(v.motionBlur ?? 1) * 10 * u;
+  }
+  void moving;
   const persp = 1000 * u;
   const out = interpolate(frame, [durationInFrames - 6, durationInFrames - 1], [1, 0], clamp);
 
