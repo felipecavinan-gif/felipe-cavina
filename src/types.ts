@@ -66,7 +66,7 @@ export function buildInput(p: Preset, values: Values, format: FormatId): RenderI
     style: p.style,
     values: { ...(p.props ?? {}), ...values },
     fps: p.fps,
-    durationInFrames: p.durationInFrames,
+    durationInFrames: Number(values._duration) > 0 ? Math.round(Number(values._duration) * p.fps) : p.durationInFrames,
     width: dim.width,
     height: dim.height,
   };

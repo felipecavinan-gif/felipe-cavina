@@ -74,6 +74,8 @@ function sanitize(p: Preset, input: unknown): Values {
       } else if (typeof x === "string") v[f.key] = x.slice(0, f.maxLength ?? 500);
     }
   }
+  const dur = Number((input as Record<string, unknown> | undefined)?._duration);
+  if (Number.isFinite(dur) && dur >= 1 && dur <= 30) v._duration = dur;
   return v;
 }
 

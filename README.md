@@ -110,7 +110,9 @@ Crie `presets/meu-template.json`. Ele aparece na galeria ao recarregar a página
 
 Os CTAs (`subscribe-cta`, `social-handle`) aceitam `avatar`: a foto do perfil (Instagram, YouTube…), ou vazio para usar a inicial.
 
-| `lettering` | Lettering: 2 palavras pequenas + 1 grande, fundo transparente | small1, small2, big, layout (top/bottom/split), motion (shrink/grow/zoom/rise/tracking), flick, stagger, blurAmount, scaleFrom, scaleTo |
+| `lettering` | Lettering: 2 palavras pequenas + 1 grande, fundo transparente | small1, small2, big, layout (top/bottom/split), motion (shrink/grow/zoom/rise/tracking/pullback), speed, posX, posY, lineGap, flick, flickOut, stagger, blurAmount, scaleFrom, scaleTo |
+
+No editor, o controle **Duração** (1 a 15 s) vale para qualquer template (valor especial `_duration`, em segundos).
 
 Presets com `"kind": "letterings"` aparecem na aba **Letterings** da galeria (os demais, na aba Templates).
 
@@ -141,6 +143,9 @@ Com "Fundo transparente" ligado, a plataforma já sugere MOV.
 **PNG sem fundo:** o botão "Baixar PNG sem fundo" exporta o quadro em que o preview está pausado, com fundo transparente e todos os elementos e textos.
 
 ## Revisão visual
+
+Para testar um quadro com valores próprios: `npx tsx scripts/still-with-values.ts <preset> 9:16 <quadro> saida.png '{"speed":2}'`
+
 
 ```bash
 npx tsx scripts/preview-all.ts out/previews 16:9,9:16

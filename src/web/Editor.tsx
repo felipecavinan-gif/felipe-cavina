@@ -15,32 +15,32 @@ const Field: React.FC<{ f: PresetField; value: any; onChange: (v: any) => void }
     case "image":
       return <ImageField id={`f-${f.key}`} value={value} onChange={onChange} samples={f.options} allowEmpty={f.allowEmpty} emptyLabel={f.help ? undefined : "Sem foto (usar inicial)"} />;
     case "textarea":
-      return <textarea rows={3} maxLength={f.maxLength} value={value} onChange={(e) => onChange(e.target.value)} />;
+      return <textarea id={`f-${f.key}`} rows={3} maxLength={f.maxLength} value={value} onChange={(e) => onChange(e.target.value)} />;
     case "color":
       return (
         <div className="color">
-          <input type="color" value={String(value).slice(0, 7)} onChange={(e) => onChange(e.target.value)} />
+          <input id={`f-${f.key}`} type="color" value={String(value).slice(0, 7)} onChange={(e) => onChange(e.target.value)} />
           <input type="text" value={value} onChange={(e) => onChange(e.target.value)} />
         </div>
       );
     case "number":
-      return <input type="number" min={f.min} max={f.max} step={f.step ?? 1} value={value} onChange={(e) => onChange(e.target.value === "" ? "" : Number(e.target.value))} />;
+      return <input id={`f-${f.key}`} type="number" min={f.min} max={f.max} step={f.step ?? 1} value={value} onChange={(e) => onChange(e.target.value === "" ? "" : Number(e.target.value))} />;
     case "toggle":
       return (
         <label className="toggle">
-          <input type="checkbox" checked={!!value} onChange={(e) => onChange(e.target.checked)} />
+          <input id={`f-${f.key}`} type="checkbox" checked={!!value} onChange={(e) => onChange(e.target.checked)} />
           <span>{value ? "Sim" : "Não"}</span>
         </label>
       );
     case "select":
     case "font":
       return (
-        <select value={value} onChange={(e) => onChange(e.target.value)}>
+        <select id={`f-${f.key}`} value={value} onChange={(e) => onChange(e.target.value)}>
           {f.options?.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
         </select>
       );
     default:
-      return <input type="text" maxLength={f.maxLength} value={value} onChange={(e) => onChange(e.target.value)} />;
+      return <input id={`f-${f.key}`} type="text" maxLength={f.maxLength} value={value} onChange={(e) => onChange(e.target.value)} />;
   }
 };
 
@@ -146,7 +146,6 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
   };
 
   const busy = render && (render.status === "queued" || render.status === "rendering");
-  const secs = (preset.durationInFrames / preset.fps).toFixed(1);
 
   return (
     <main className="editor">
@@ -158,7 +157,7 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
         <div className="fields">
           {preset.fields.map((f) => (
             <div className="field" key={f.key}>
-              <label>{f.label}</label>
+              <label htmlFor={`f-${f.key}`}>{f.label}</label>
               <Field f={f} value={values[f.key]} onChange={(v) => set(f.key, v)} />
               {f.help && <small className="muted">{f.help}</small>}
             </div>
@@ -174,7 +173,12 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
               <button key={f} title={FORMATS[f].label} className={f === format ? "on" : ""} onClick={() => setFormat(f)}>{f}</button>
             ))}
           </div>
-          <span className="muted">{FORMATS[format].width}×{FORMATS[format].height} · {preset.fps}fps · {secs}s</span>
+          <label className="dur">
+            Duração
+            <input id="duration" type="range" min={1} max={15} step={0.5} value={Number(values._duration) || preset.durationInFrames / preset.fps} onChange={(e) => set("_duration", Number(e.target.value))} />
+            <span>{(Number(values._duration) || preset.durationInFrames / preset.fps).toFixed(1)}s</span>
+          </label>
+          <span className="muted">{FORMATS[format].width}×{FORMATS[format].height} · {preset.fps}fps</span>
         </div>
         <div className={`stage-preview fmt-${format.replace(":", "x")}`}>
           <Preview ref={player} preset={preset} values={values} format={format} />

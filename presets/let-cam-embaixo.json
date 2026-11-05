@@ -1,0 +1,374 @@
+{
+  "id": "let-cam-embaixo",
+  "name": "Recuo Pequenas Embaixo",
+  "category": "Câmera se afastando",
+  "kind": "letterings",
+  "description": "Palavra grande em cima, pequenas embaixo, recuo com giro.",
+  "style": "lettering",
+  "fps": 30,
+  "durationInFrames": 100,
+  "formats": [
+    "9:16",
+    "16:9",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "small1",
+      "label": "Palavra pequena 1",
+      "type": "text",
+      "default": "vale",
+      "maxLength": 20
+    },
+    {
+      "key": "small2",
+      "label": "Palavra pequena 2",
+      "type": "text",
+      "default": "a pena",
+      "maxLength": 20
+    },
+    {
+      "key": "big",
+      "label": "Palavra grande",
+      "type": "text",
+      "default": "AGORA",
+      "maxLength": 16
+    },
+    {
+      "key": "layout",
+      "label": "Disposição",
+      "type": "select",
+      "default": "bottom",
+      "options": [
+        {
+          "value": "top",
+          "label": "Pequenas em cima"
+        },
+        {
+          "value": "bottom",
+          "label": "Pequenas embaixo"
+        },
+        {
+          "value": "split",
+          "label": "Pequenas cruzadas (cima/baixo)"
+        }
+      ]
+    },
+    {
+      "key": "align",
+      "label": "Alinhamento",
+      "type": "select",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Centro"
+        },
+        {
+          "value": "left",
+          "label": "Esquerda"
+        },
+        {
+          "value": "right",
+          "label": "Direita"
+        }
+      ]
+    },
+    {
+      "key": "posX",
+      "label": "Posição horizontal (%)",
+      "type": "number",
+      "default": 0,
+      "min": -45,
+      "max": 45,
+      "step": 1
+    },
+    {
+      "key": "posY",
+      "label": "Posição vertical (%)",
+      "type": "number",
+      "default": 0,
+      "min": -45,
+      "max": 45,
+      "step": 1
+    },
+    {
+      "key": "motion",
+      "label": "Movimento",
+      "type": "select",
+      "default": "pullback",
+      "options": [
+        {
+          "value": "shrink",
+          "label": "Blur + escala diminuindo"
+        },
+        {
+          "value": "grow",
+          "label": "Crescendo (pequeno → grande)"
+        },
+        {
+          "value": "zoom",
+          "label": "Zoom atravessando"
+        },
+        {
+          "value": "rise",
+          "label": "Subindo"
+        },
+        {
+          "value": "tracking",
+          "label": "Letras se abrindo"
+        },
+        {
+          "value": "pullback",
+          "label": "Câmera 3D se afastando"
+        }
+      ]
+    },
+    {
+      "key": "speed",
+      "label": "Velocidade do movimento",
+      "type": "number",
+      "default": 1,
+      "min": 0.3,
+      "max": 3,
+      "step": 0.1
+    },
+    {
+      "key": "camNear",
+      "label": "Câmera: começa perto (quanto)",
+      "type": "number",
+      "default": 420,
+      "min": 0,
+      "max": 1200,
+      "step": 1
+    },
+    {
+      "key": "camFar",
+      "label": "Câmera: termina longe (quanto)",
+      "type": "number",
+      "default": -160,
+      "min": -800,
+      "max": 200,
+      "step": 1
+    },
+    {
+      "key": "camTurn",
+      "label": "Câmera: giro inicial (graus)",
+      "type": "number",
+      "default": 14,
+      "min": -45,
+      "max": 45,
+      "step": 1
+    },
+    {
+      "key": "camTilt",
+      "label": "Câmera: inclinação inicial (graus)",
+      "type": "number",
+      "default": -10,
+      "min": -30,
+      "max": 30,
+      "step": 1
+    },
+    {
+      "key": "flick",
+      "label": "Flick",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "flickOut",
+      "label": "Flick também ao sumir",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "key": "stagger",
+      "label": "Entrada em cascata",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "key": "font",
+      "label": "Fonte da palavra grande",
+      "type": "font",
+      "default": "bebas",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "smallFont",
+      "label": "Fonte das pequenas",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "bigSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 300,
+      "min": 60,
+      "max": 360,
+      "step": 1
+    },
+    {
+      "key": "lineGap",
+      "label": "Espaço entre as linhas (negativo aproxima)",
+      "type": "number",
+      "default": -0.04,
+      "min": -0.25,
+      "max": 0.3,
+      "step": 0.01
+    },
+    {
+      "key": "smallRatio",
+      "label": "Proporção das pequenas",
+      "type": "number",
+      "default": 0.14,
+      "min": 0.12,
+      "max": 0.7,
+      "step": 0.01
+    },
+    {
+      "key": "blurAmount",
+      "label": "Intensidade do blur",
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 3,
+      "step": 0.1
+    },
+    {
+      "key": "scaleFrom",
+      "label": "Escala inicial",
+      "type": "number",
+      "default": 1.12,
+      "min": 0.3,
+      "max": 4,
+      "step": 0.01
+    },
+    {
+      "key": "scaleTo",
+      "label": "Escala final",
+      "type": "number",
+      "default": 0.97,
+      "min": 0.5,
+      "max": 2,
+      "step": 0.01
+    },
+    {
+      "key": "introFrames",
+      "label": "Duração da entrada (frames)",
+      "type": "number",
+      "default": 18,
+      "min": 4,
+      "max": 40,
+      "step": 1
+    },
+    {
+      "key": "outroFrames",
+      "label": "Duração da saída (frames)",
+      "type": "number",
+      "default": 18,
+      "min": 4,
+      "max": 40,
+      "step": 1
+    },
+    {
+      "key": "bigColor",
+      "label": "Cor da palavra grande",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "smallColor",
+      "label": "Cor das pequenas",
+      "type": "color",
+      "default": "#ff3d5a"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo (só se desligar transparente)",
+      "type": "color",
+      "default": "#111111"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": true
+    }
+  ],
+  "props": {
+    "bigWeight": 400,
+    "smallWeight": 800,
+    "uppercase": false,
+    "smallUppercase": true,
+    "smallItalic": false,
+    "bigItalic": false,
+    "smallTracking": 0.3,
+    "bigTracking": -0.02,
+    "charRatio": 0.45,
+    "staggerFrames": 4,
+    "trackFrom": 0.35,
+    "zoomOut": 2.6
+  }
+}
