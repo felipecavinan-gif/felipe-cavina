@@ -31,13 +31,24 @@ const Card: React.FC<{ preset: Preset; format: FormatId }> = ({ preset, format }
 
 /** Ordem das classes na galeria. Categorias que não estão aqui vão para o final. */
 const CLASS_ORDER = [
-  "Contorno + blur", "Contorno + blur · cinema", "Câmera 3D · 3 pontos", "Câmera 3D · suave", "Texto flick", "Texto câmera 3D", "Texto zoom", "Câmera 3D", "Motion agressivo", "Cinematográfico", "Fundo animado",
+  "Blur suave", "Crescendo", "Flick", "Zoom", "Tracking & cascata", "Contorno + blur", "Contorno + blur · cinema", "Câmera 3D · 3 pontos", "Câmera 3D · suave", "Texto flick", "Texto câmera 3D", "Texto zoom", "Câmera 3D", "Motion agressivo", "Cinematográfico", "Fundo animado",
   "Tipografia animada", "Títulos", "Lower thirds", "Números e dados", "Listas", "Citações", "CTA / Redes sociais",
 ];
 const rank = (c: string) => (CLASS_ORDER.indexOf(c) + 1 || 99);
 
-export const Gallery: React.FC<{ presets: Preset[] }> = ({ presets }) => {
+const TABS = [
+  { id: "templates", label: "Templates" },
+  { id: "letterings", label: "Letterings" },
+] as const;
+type TabId = (typeof TABS)[number]["id"];
+
+export const Gallery: React.FC<{ presets: Preset[] }> = ({ presets: all }) => {
+  const [tab, setTabState] = useState<TabId>(() => {
+    try { return (localStorage.getItem("mp:tab") as TabId) || "templates"; } catch { return "templates"; }
+  });
+  const presets = useMemo(() => all.filter((p) => (p.kind ?? "templates") === tab), [all, tab]);
   const [cat, setCat] = useState("Todos");
+  const setTab = (t: TabId) => { setTabState(t); setCat("Todos"); try { localStorage.setItem("mp:tab", t); } catch {} };
   const [q, setQ] = useState("");
   const [format, setFormat] = useState<FormatId>("16:9");
   const cats = useMemo(() => ["Todos", ...Array.from(new Set(presets.map((p) => p.category))).sort((a, b) => rank(a) - rank(b))], [presets]);
@@ -49,6 +60,13 @@ export const Gallery: React.FC<{ presets: Preset[] }> = ({ presets }) => {
 
   return (
     <main className="gallery">
+      <div className="tabs" role="tablist">
+        {TABS.map((t) => (
+          <button key={t.id} role="tab" aria-selected={tab === t.id} className={`tab ${tab === t.id ? "on" : ""}`} onClick={() => setTab(t.id)}>
+            {t.label} <span>{all.filter((p) => (p.kind ?? "templates") === t.id).length}</span>
+          </button>
+        ))}
+      </div>
       <div className="filters">
         <input className="search" placeholder="Buscar template…" value={q} onChange={(e) => setQ(e.target.value)} />
         <div className="chips">

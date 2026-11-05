@@ -33,6 +33,7 @@ import { ImpactFrame } from "./ImpactFrame";
 import { TextFlick3D } from "./TextFlick3D";
 import { Camera3Points } from "./Camera3Points";
 import { OutlineFlick } from "./OutlineFlick";
+import { Lettering } from "./Lettering";
 
 /** Registro de estilos. Um preset JSON aponta para uma destas chaves no campo "style". */
 export const STYLES: Record<string, React.FC<StyleProps>> = {
@@ -68,4 +69,5 @@ export const STYLES: Record<string, React.FC<StyleProps>> = {
   "text-flick-3d": TextFlick3D,
   "camera-3-points": Camera3Points,
   "outline-flick": OutlineFlick,
+  lettering: Lettering,
 };

@@ -110,6 +110,10 @@ Crie `presets/meu-template.json`. Ele aparece na galeria ao recarregar a página
 
 Os CTAs (`subscribe-cta`, `social-handle`) aceitam `avatar`: a foto do perfil (Instagram, YouTube…), ou vazio para usar a inicial.
 
+| `lettering` | Lettering: 2 palavras pequenas + 1 grande, fundo transparente | small1, small2, big, layout (top/bottom/split), motion (shrink/grow/zoom/rise/tracking), flick, stagger, blurAmount, scaleFrom, scaleTo |
+
+Presets com `"kind": "letterings"` aparecem na aba **Letterings** da galeria (os demais, na aba Templates).
+
 Todos aceitam `font`, `bgColor` e `transparent`, e se adaptam a 16:9, 9:16, 1:1 e 4:5.
 
 ### Criar um novo estilo (programando)

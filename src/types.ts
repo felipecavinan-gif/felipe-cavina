@@ -29,6 +29,8 @@ export interface Preset {
   durationInFrames: number;
   formats: FormatId[];
   fields: PresetField[];
+  /** Aba da galeria: "templates" (padrão) ou "letterings" */
+  kind?: "templates" | "letterings";
   /** Valores fixos passados ao estilo, que o usuário não edita */
   props?: Record<string, unknown>;
 }

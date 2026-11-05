@@ -1,0 +1,292 @@
+{
+  "id": "let-so-hoje",
+  "name": "Só Hoje",
+  "category": "Blur suave",
+  "kind": "letterings",
+  "description": "Pequenas embaixo, palavra grande dominante.",
+  "style": "lettering",
+  "fps": 30,
+  "durationInFrames": 90,
+  "formats": [
+    "9:16",
+    "16:9",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "small1",
+      "label": "Palavra pequena 1",
+      "type": "text",
+      "default": "vale",
+      "maxLength": 20
+    },
+    {
+      "key": "small2",
+      "label": "Palavra pequena 2",
+      "type": "text",
+      "default": "a pena",
+      "maxLength": 20
+    },
+    {
+      "key": "big",
+      "label": "Palavra grande",
+      "type": "text",
+      "default": "HOJE",
+      "maxLength": 16
+    },
+    {
+      "key": "layout",
+      "label": "Disposição",
+      "type": "select",
+      "default": "bottom",
+      "options": [
+        {
+          "value": "top",
+          "label": "Pequenas em cima"
+        },
+        {
+          "value": "bottom",
+          "label": "Pequenas embaixo"
+        },
+        {
+          "value": "split",
+          "label": "Pequenas cruzadas (cima/baixo)"
+        }
+      ]
+    },
+    {
+      "key": "align",
+      "label": "Alinhamento",
+      "type": "select",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Centro"
+        },
+        {
+          "value": "left",
+          "label": "Esquerda"
+        },
+        {
+          "value": "right",
+          "label": "Direita"
+        }
+      ]
+    },
+    {
+      "key": "motion",
+      "label": "Movimento",
+      "type": "select",
+      "default": "shrink",
+      "options": [
+        {
+          "value": "shrink",
+          "label": "Blur + escala diminuindo"
+        },
+        {
+          "value": "grow",
+          "label": "Crescendo (pequeno → grande)"
+        },
+        {
+          "value": "zoom",
+          "label": "Zoom atravessando"
+        },
+        {
+          "value": "rise",
+          "label": "Subindo"
+        },
+        {
+          "value": "tracking",
+          "label": "Letras se abrindo"
+        }
+      ]
+    },
+    {
+      "key": "flick",
+      "label": "Flick ao aparecer e sumir",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "key": "stagger",
+      "label": "Entrada em cascata",
+      "type": "toggle",
+      "default": false
+    },
+    {
+      "key": "font",
+      "label": "Fonte da palavra grande",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "smallFont",
+      "label": "Fonte das pequenas",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "bigSize",
+      "label": "Tamanho",
+      "type": "number",
+      "default": 260,
+      "min": 60,
+      "max": 360,
+      "step": 1
+    },
+    {
+      "key": "smallRatio",
+      "label": "Proporção das pequenas",
+      "type": "number",
+      "default": 0.2,
+      "min": 0.12,
+      "max": 0.7,
+      "step": 0.01
+    },
+    {
+      "key": "blurAmount",
+      "label": "Intensidade do blur",
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 3,
+      "step": 0.1
+    },
+    {
+      "key": "scaleFrom",
+      "label": "Escala inicial",
+      "type": "number",
+      "default": 1.12,
+      "min": 0.3,
+      "max": 4,
+      "step": 0.01
+    },
+    {
+      "key": "scaleTo",
+      "label": "Escala final",
+      "type": "number",
+      "default": 0.97,
+      "min": 0.5,
+      "max": 2,
+      "step": 0.01
+    },
+    {
+      "key": "introFrames",
+      "label": "Duração da entrada (frames)",
+      "type": "number",
+      "default": 18,
+      "min": 4,
+      "max": 40,
+      "step": 1
+    },
+    {
+      "key": "outroFrames",
+      "label": "Duração da saída (frames)",
+      "type": "number",
+      "default": 18,
+      "min": 4,
+      "max": 40,
+      "step": 1
+    },
+    {
+      "key": "bigColor",
+      "label": "Cor da palavra grande",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "smallColor",
+      "label": "Cor das pequenas",
+      "type": "color",
+      "default": "#ffd400"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo (só se desligar transparente)",
+      "type": "color",
+      "default": "#111111"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": true
+    }
+  ],
+  "props": {
+    "bigWeight": 900,
+    "smallWeight": 600,
+    "uppercase": true,
+    "smallUppercase": true,
+    "smallItalic": false,
+    "bigItalic": false,
+    "smallTracking": 0.25,
+    "bigTracking": -0.02,
+    "charRatio": 0.6,
+    "staggerFrames": 4,
+    "trackFrom": 0.35,
+    "zoomOut": 2.6
+  }
+}
