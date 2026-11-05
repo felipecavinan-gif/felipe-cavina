@@ -34,6 +34,7 @@ import { TextFlick3D } from "./TextFlick3D";
 import { Camera3Points } from "./Camera3Points";
 import { OutlineFlick } from "./OutlineFlick";
 import { Lettering } from "./Lettering";
+import { Captions } from "./Captions";
 
 /** Registro de estilos. Um preset JSON aponta para uma destas chaves no campo "style". */
 export const STYLES: Record<string, React.FC<StyleProps>> = {
@@ -70,4 +71,5 @@ export const STYLES: Record<string, React.FC<StyleProps>> = {
   "camera-3-points": Camera3Points,
   "outline-flick": OutlineFlick,
   lettering: Lettering,
+  captions: Captions,
 };

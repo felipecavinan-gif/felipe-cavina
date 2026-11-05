@@ -71,6 +71,8 @@ function sanitize(p: Preset, input: unknown): Values {
       } else if (f.type === "image") {
         if (f.allowEmpty && x === "") v[f.key] = "";
         else if (typeof x === "string" && (/^data:image\/(png|jpeg|webp|svg\+xml);base64,/.test(x) || /^builtin:[a-z]+$/.test(x) || /^https?:\/\//.test(x)) && x.length < 20e6) v[f.key] = x;
+      } else if (f.type === "srt") {
+        if (typeof x === "string") v[f.key] = x.slice(0, 400_000);
       } else if (typeof x === "string") v[f.key] = x.slice(0, f.maxLength ?? 500);
     }
   }

@@ -9,7 +9,10 @@ import { font } from "../fonts";
  */
 export const Lettering: React.FC<StyleProps> = ({ v }) => {
   const frame = useCurrentFrame();
-  const { width, durationInFrames: D } = useVideoConfig();
+  const cfg = useVideoConfig();
+  const width = cfg.width;
+  // dentro das legendas, cada lettering dura só o tempo da sua fala (_seqDur)
+  const D = Number(v._seqDur) > 0 ? Number(v._seqDur) : cfg.durationInFrames;
   const u = useUnit();
   // Velocidade: entradas/saídas mais rápidas e mais movimento no mesmo tempo
   const speed = Math.max(0.2, Number(v.speed ?? 1));

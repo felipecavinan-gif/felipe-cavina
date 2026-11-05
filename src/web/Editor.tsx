@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import type { PlayerRef } from "@remotion/player";
 import { ImageField } from "./ImageField";
+import { SrtField } from "./SrtField";
 import { FORMATS, defaultValues, type FormatId, type Preset, type PresetField, type Values } from "../types";
 import { Preview } from "./Preview";
 import { STANDALONE, fetchExports, getJob, startRender, renderStillServer } from "./api";
@@ -12,6 +13,8 @@ declare global {
 
 const Field: React.FC<{ f: PresetField; value: any; onChange: (v: any) => void }> = ({ f, value, onChange }) => {
   switch (f.type) {
+    case "srt":
+      return <SrtField id={`f-${f.key}`} value={value} onChange={onChange} />;
     case "image":
       return <ImageField id={`f-${f.key}`} value={value} onChange={onChange} samples={f.options} allowEmpty={f.allowEmpty} emptyLabel={f.help ? undefined : "Sem foto (usar inicial)"} />;
     case "textarea":
@@ -173,11 +176,13 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
               <button key={f} title={FORMATS[f].label} className={f === format ? "on" : ""} onClick={() => setFormat(f)}>{f}</button>
             ))}
           </div>
+          {!preset.fields.some((f) => f.type === "srt") ? (
           <label className="dur">
             Duração
             <input id="duration" type="range" min={1} max={15} step={0.5} value={Number(values._duration) || preset.durationInFrames / preset.fps} onChange={(e) => set("_duration", Number(e.target.value))} />
             <span>{(Number(values._duration) || preset.durationInFrames / preset.fps).toFixed(1)}s</span>
           </label>
+          ) : <span className="muted">Duração: igual à legenda</span>}
           <span className="muted">{FORMATS[format].width}×{FORMATS[format].height} · {preset.fps}fps</span>
         </div>
         <div className={`stage-preview fmt-${format.replace(":", "x")}`}>

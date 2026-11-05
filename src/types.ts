@@ -1,4 +1,5 @@
-export type FieldType = "text" | "textarea" | "color" | "number" | "select" | "toggle" | "font" | "image";
+import { srtDuration } from "./srt";
+export type FieldType = "text" | "textarea" | "color" | "number" | "select" | "toggle" | "font" | "image" | "srt";
 
 export interface PresetField {
   key: string;
@@ -30,7 +31,7 @@ export interface Preset {
   formats: FormatId[];
   fields: PresetField[];
   /** Aba da galeria: "templates" (padrão) ou "letterings" */
-  kind?: "templates" | "letterings";
+  kind?: "templates" | "letterings" | "legendas";
   /** Valores fixos passados ao estilo, que o usuário não edita */
   props?: Record<string, unknown>;
 }
@@ -62,11 +63,13 @@ export function defaultValues(p: Preset): Values {
 
 export function buildInput(p: Preset, values: Values, format: FormatId): RenderInput {
   const dim = FORMATS[format];
+  // legendas: a duração vem do próprio arquivo .srt
+  const srtSec = p.fields.some((f) => f.type === "srt") ? srtDuration(values.srt) : 0;
   return {
     style: p.style,
     values: { ...(p.props ?? {}), ...values },
     fps: p.fps,
-    durationInFrames: Number(values._duration) > 0 ? Math.round(Number(values._duration) * p.fps) : p.durationInFrames,
+    durationInFrames: srtSec > 0 ? Math.ceil(srtSec * p.fps) : Number(values._duration) > 0 ? Math.round(Number(values._duration) * p.fps) : p.durationInFrames,
     width: dim.width,
     height: dim.height,
   };

@@ -116,6 +116,10 @@ No editor, o controle **Duração** (1 a 15 s) vale para qualquer template (valo
 
 Presets com `"kind": "letterings"` aparecem na aba **Letterings** da galeria (os demais, na aba Templates).
 
+| `captions` | Legendas a partir de um .srt: falas no estilo escolhido e algumas viram lettering | srt, captionStyle (clean/karaoke/editorial/impact), letteringMode (auto/marked/off), letteringMaxWords, letteringEvery, fontSize, bottom, letteringY |
+
+Na aba **Legendas (SRT)**: carregue o .srt do vídeo (ou cole o texto). A duração do vídeo exportado acompanha a legenda. Palavras entre *asteriscos* fazem aquela fala virar lettering.
+
 Todos aceitam `font`, `bgColor` e `transparent`, e se adaptam a 16:9, 9:16, 1:1 e 4:5.
 
 ### Criar um novo estilo (programando)
@@ -134,6 +138,8 @@ Para adicionar uma, coloque o `.woff2` lá e registre em `src/fonts.ts`.
 | Formato | Uso |
 |---|---|
 | MP4 (H.264) | Vídeo com fundo, compatível com tudo |
+| Sequência PNG em ZIP | **Sem fundo e universal** (Mac, Windows, celular); importe como sequência de imagens |
+| MP4 com fundo verde | Universal; remova o verde com chroma key no editor |
 | MOV ProRes 4444 | **Com transparência**: para Premiere, Final Cut, DaVinci, After Effects |
 | WebM VP9 | Com transparência, arquivo leve (web, CapCut desktop) |
 | GIF | Prévia rápida |

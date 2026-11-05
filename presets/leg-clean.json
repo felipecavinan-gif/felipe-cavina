@@ -1,0 +1,186 @@
+{
+  "id": "leg-clean",
+  "name": "Legenda Clean",
+  "category": "Legendas",
+  "kind": "legendas",
+  "description": "Legenda branca e limpa embaixo; falas curtas viram lettering com blur e escala diminuindo.",
+  "style": "captions",
+  "fps": 30,
+  "durationInFrames": 510,
+  "formats": [
+    "9:16",
+    "16:9",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "srt",
+      "label": "Legenda (.srt do seu vídeo)",
+      "type": "srt",
+      "default": "1\n00:00:00,300 --> 00:00:02,400\nHoje eu vou te mostrar como editar mais rápido\n\n2\n00:00:02,400 --> 00:00:04,000\nsem perder *qualidade*\n\n3\n00:00:04,100 --> 00:00:06,600\nO segredo está em usar modelos prontos\n\n4\n00:00:06,600 --> 00:00:08,200\ne repetir o que *funciona*\n\n5\n00:00:08,300 --> 00:00:10,900\nVocê troca o texto, exporta e coloca no vídeo\n\n6\n00:00:10,900 --> 00:00:12,400\nsimples assim\n\n7\n00:00:12,500 --> 00:00:15,000\nEntão salva esse vídeo para não esquecer\n\n8\n00:00:15,000 --> 00:00:16,800\ne bora *editar*\n"
+    },
+    {
+      "key": "captionStyle",
+      "label": "Estilo da legenda",
+      "type": "select",
+      "default": "clean",
+      "options": [
+        {
+          "value": "clean",
+          "label": "Clean"
+        },
+        {
+          "value": "karaoke",
+          "label": "Palavra destacada"
+        },
+        {
+          "value": "editorial",
+          "label": "Editorial"
+        },
+        {
+          "value": "impact",
+          "label": "Impacto"
+        }
+      ]
+    },
+    {
+      "key": "letteringMode",
+      "label": "Letterings",
+      "type": "select",
+      "default": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Automático (falas curtas e *marcadas*)"
+        },
+        {
+          "value": "marked",
+          "label": "Só as falas com *palavra marcada*"
+        },
+        {
+          "value": "off",
+          "label": "Sem letterings"
+        }
+      ]
+    },
+    {
+      "key": "letteringMaxWords",
+      "label": "Automático: falas com até quantas palavras",
+      "type": "number",
+      "default": 4,
+      "min": 1,
+      "max": 10,
+      "step": 1
+    },
+    {
+      "key": "letteringEvery",
+      "label": "Automático: intervalo mínimo entre letterings (falas)",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 10,
+      "step": 1
+    },
+    {
+      "key": "font",
+      "label": "Fonte da legenda",
+      "type": "font",
+      "default": "montserrat",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho da legenda",
+      "type": "number",
+      "default": 70,
+      "min": 30,
+      "max": 120,
+      "step": 1
+    },
+    {
+      "key": "bottom",
+      "label": "Altura da legenda (% de baixo)",
+      "type": "number",
+      "default": 18,
+      "min": 2,
+      "max": 60,
+      "step": 1
+    },
+    {
+      "key": "letteringY",
+      "label": "Posição vertical do lettering (%)",
+      "type": "number",
+      "default": -8,
+      "min": -40,
+      "max": 40,
+      "step": 1
+    },
+    {
+      "key": "textColor",
+      "label": "Cor da legenda",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor de destaque",
+      "type": "color",
+      "default": "#ffd400"
+    },
+    {
+      "key": "letteringColor",
+      "label": "Cor da palavra grande do lettering",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "letteringSmallColor",
+      "label": "Cor das pequenas do lettering",
+      "type": "color",
+      "default": "#ffd400"
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo (só se desligar transparente)",
+      "type": "color",
+      "default": "#111111"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": true
+    }
+  ],
+  "props": {}
+}
