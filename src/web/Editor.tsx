@@ -65,7 +65,7 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
 
   useEffect(() => { if (STANDALONE) setExports(WEB_EXPORTS); else fetchExports().then(setExports); }, []);
   useEffect(() => { try { localStorage.setItem(storageKey, JSON.stringify(values)); } catch {} }, [values, storageKey]);
-  useEffect(() => { setExportType(values.transparent ? (STANDALONE ? "webm-alpha" : "mov-alpha") : "mp4"); }, [values.transparent]);
+  useEffect(() => { setExportType(values.transparent ? (STANDALONE ? "png-zip" : "mov-alpha") : "mp4"); }, [values.transparent]);
   useEffect(() => () => window.clearInterval(poll.current), []);
 
   const set = (k: string, v: any) => setValues((s) => ({ ...s, [k]: v }));
@@ -201,7 +201,9 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
           {render?.status === "error" && <span className="err">Erro: {render.error}</span>}
           {png.error && <span className="err">PNG: {png.error}</span>}
           {png.done && !png.busy && <span className="muted">{png.done} Pause o preview no momento que quiser antes de baixar.</span>}
-          {values.transparent && exportType === "mp4" && <span className="warn">MP4 não suporta transparência: use MOV ou WebM.</span>}
+          {values.transparent && exportType === "mp4" && <span className="warn">MP4 não tem transparência: o fundo sai preto. Para sem fundo, use a sequência PNG (ZIP).</span>}
+          {exportType === "png-zip" && <span className="muted">Abre em Mac, Windows e celular. Importe no editor como sequência de imagens.</span>}
+          {exportType === "webm-alpha" && <span className="warn">WebM não abre no QuickTime do Mac. Para algo universal, use MP4 ou a sequência PNG.</span>}
         </div>
       </section>
     </main>
