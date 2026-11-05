@@ -5,19 +5,20 @@ import { Lettering } from "./Lettering";
 import { parseSrt, type Cue } from "../srt";
 import { font } from "../fonts";
 
-type Kind = "clean" | "karaoke" | "editorial" | "impact";
+type Kind = "cascata" | "blur" | "escala" | "flick";
 
-/** Visual de cada estilo: legenda padrão + como fica o lettering. */
-const LOOK: Record<Kind, { font: string; weight: number; upper: boolean; italic: boolean; size: number; lettering: Record<string, unknown> }> = {
-  clean: { font: "montserrat", weight: 800, upper: false, italic: false, size: 64,
-    lettering: { motion: "shrink", font: "montserrat", smallFont: "montserrat", bigWeight: 900, smallWeight: 600, smallUppercase: true, smallTracking: 0.25, smallRatio: 0.2, uppercase: true, bigSize: 230 } },
-  karaoke: { font: "poppins", weight: 800, upper: false, italic: false, size: 66,
-    lettering: { motion: "grow", font: "poppins", smallFont: "poppins", bigWeight: 800, smallWeight: 700, smallRatio: 0.28, scaleFrom: 0.75, scaleTo: 1.05, bigSize: 230 } },
-  editorial: { font: "playfair", weight: 600, upper: false, italic: true, size: 60,
-    lettering: { motion: "pullback", font: "playfair", smallFont: "playfair", bigWeight: 700, smallWeight: 700, smallItalic: true, smallRatio: 0.32, align: "left", bigSize: 220, flick: true, flickOut: false } },
-  impact: { font: "montserrat", weight: 900, upper: true, italic: false, size: 70,
-    lettering: { motion: "zoom", font: "bebas", smallFont: "montserrat", bigWeight: 400, smallWeight: 800, smallUppercase: true, smallRatio: 0.15, charRatio: 0.45, uppercase: true, bigSize: 300, flick: true } },
+/** Visual de cada estilo: tipografia das palavras + como fica o lettering ocasional. */
+const LOOK: Record<Kind, { font: string; weight: number; upper: boolean; italic: boolean; size: number; hiFont: string; hiItalic: boolean; hiWeight: number; lettering: Record<string, unknown> }> = {
+  cascata: { font: "montserrat", weight: 600, upper: false, italic: false, size: 62, hiFont: "playfair", hiItalic: true, hiWeight: 700,
+    lettering: { motion: "rise", stagger: true, staggerFrames: 4, font: "montserrat", smallFont: "montserrat", bigWeight: 900, smallWeight: 700, smallRatio: 0.24, uppercase: true, bigSize: 240 } },
+  blur: { font: "playfair", weight: 500, upper: false, italic: false, size: 64, hiFont: "playfair", hiItalic: true, hiWeight: 700,
+    lettering: { motion: "shrink", font: "playfair", smallFont: "playfair", bigWeight: 700, smallWeight: 700, smallItalic: true, smallRatio: 0.32, bigSize: 230, blurAmount: 1.3 } },
+  escala: { font: "poppins", weight: 600, upper: false, italic: false, size: 62, hiFont: "bebas", hiItalic: false, hiWeight: 400,
+    lettering: { motion: "pullback", flick: true, flickOut: false, font: "poppins", smallFont: "poppins", bigWeight: 800, smallWeight: 700, smallRatio: 0.28, bigSize: 240 } },
+  flick: { font: "spacegrotesk", weight: 500, upper: true, italic: false, size: 54, hiFont: "jetbrains", hiItalic: false, hiWeight: 700,
+    lettering: { motion: "zoom", flick: true, font: "bebas", smallFont: "spacegrotesk", bigWeight: 400, smallWeight: 700, smallUppercase: true, smallTracking: 0.2, smallRatio: 0.16, charRatio: 0.45, uppercase: true, bigSize: 300 } },
 };
+const LEGACY: Record<string, Kind> = { clean: "cascata", karaoke: "escala", editorial: "blur", impact: "flick" };
 
 /** Divide uma fala em lettering: a palavra *marcada* (ou a mais longa) fica grande, o resto vira as duas linhas pequenas. */
 function toLettering(text: string) {
@@ -44,59 +45,82 @@ function pickLetterings(cues: Cue[], mode: string, maxWords: number, every: numb
   return set;
 }
 
-const Line: React.FC<{ cue: Cue; kind: Kind; v: any; fps: number; startFrame: number }> = ({ cue, kind, v, fps, startFrame }) => {
-  const frame = useCurrentFrame(); // relativo ao começo da fala
+/** Um bloco curto de palavras: cada palavra entra no seu tempo com o efeito do estilo. */
+const Chunk: React.FC<{ words: string[]; len: number; kind: Kind; v: any }> = ({ words, len, kind, v }) => {
+  const frame = useCurrentFrame(); // relativo ao começo do bloco
   const { width } = useVideoConfig();
   const u = useUnit();
   const look = LOOK[kind];
-  const len = Math.round((cue.end - cue.start) * fps);
-  const words = cue.text.replace(/\*/g, "").split(/\s+/).filter(Boolean);
   const size = Number(v.fontSize ?? look.size) * u;
-  const inn = interpolate(frame, [0, 5], [0, 1], { ...clamp, easing: Easing.out(Easing.cubic) });
-  const out = interpolate(frame, [len - 4, len], [0, 1], clamp);
-  // tempo estimado de cada palavra (proporcional ao tamanho) para destacar a palavra falada
-  const total = words.reduce((a, w) => a + w.length + 1, 0);
+  const clean = words.map((w) => w.replace(/\*/g, ""));
+  // tempo de cada palavra proporcional ao tamanho (como a fala), todas visíveis até ~70% do bloco
+  const total = clean.reduce((a, w) => a + w.length + 1, 0);
   let acc = 0;
-  const starts = words.map((w) => { const s = (acc / total) * len; acc += w.length + 1; return s; });
-  const active = starts.reduce((ai, s, i) => (frame >= s ? i : ai), 0);
-  const color = v.textColor ?? "#ffffff";
-  const accent = v.accentColor ?? "#ffd400";
-  const shadow = `0 ${3 * u}px ${12 * u}px rgba(0,0,0,.55), 0 0 ${2 * u}px rgba(0,0,0,.6)`;
-  void startFrame;
-
-  const wordEl = (w: string, i: number) => {
-    const base: React.CSSProperties = { display: "inline-block", marginRight: "0.28em", whiteSpace: "nowrap" };
-    if (kind === "karaoke") {
-      const on = i === active;
-      return <span key={i} style={{ ...base, color: on ? (v.highlightText ?? "#111") : color, background: on ? accent : "transparent", borderRadius: "0.18em", padding: "0 0.12em", textShadow: on ? "none" : shadow }}>{w}</span>;
-    }
-    if (kind === "impact") {
-      const t = frame - starts[i];
-      const s = interpolate(t, [0, 3], [1.35, 1], { ...clamp, easing: Easing.out(Easing.back(2)) });
-      return <span key={i} style={{ ...base, opacity: t >= 0 ? 1 : 0, transform: `scale(${s})`, color: i === active ? accent : color, textShadow: shadow }}>{w}</span>;
-    }
-    return <span key={i} style={{ ...base, textShadow: shadow }}>{w}</span>;
-  };
+  const reveal = Math.max(4, len * 0.7) / Math.max(0.3, Number(v.wordSpeed ?? 1));
+  const starts = clean.map((w) => { const st = (acc / total) * reveal; acc += w.length + 1; return st; });
+  // destaque: a palavra mais longa (ou *marcada*) fica maior e na cor de destaque
+  let hi = words.findIndex((w) => /^\*.+\*/.test(w));
+  if (hi < 0 && v.emphasis !== false) hi = clean.reduce((b, w, i) => (w.replace(/[^\p{L}\p{N}%]/gu, "").length > clean[b].replace(/[^\p{L}\p{N}%]/gu, "").length ? i : b), 0);
+  if (hi >= 0 && clean[hi].replace(/[^\p{L}\p{N}%]/gu, "").length < 4) hi = -1;
+  const drift = interpolate(frame, [0, len], [1.05, 0.98], { easing: Easing.out(Easing.quad) });
+  const out = interpolate(frame, [len - 5, len], [0, 1], clamp);
+  const shadow = v.shadow === false ? "none" : `0 ${2 * u}px ${10 * u}px rgba(0,0,0,.35)`;
+  const D = 8; // duração da entrada de cada palavra
 
   return (
-    <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: `${Number(v.bottom ?? 18)}%` }}>
-      <div style={{
-        maxWidth: width * 0.86, textAlign: "center", fontFamily: font(v.font ?? look.font), fontWeight: look.weight, fontStyle: look.italic ? "italic" : "normal",
-        fontSize: size, lineHeight: 1.18, color, textTransform: (v.uppercase ?? look.upper) ? "uppercase" : "none",
-        opacity: inn * (1 - out),
-        transform: `translateY(${(1 - inn) * 14 * u}px) scale(${kind === "editorial" ? 1 : 0.96 + 0.04 * inn})`,
-        filter: kind === "editorial" ? `blur(${(1 - inn) * 8 * u + out * 6 * u}px)` : undefined,
-      }}>
-        {words.map(wordEl)}
+    <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: `${Number(v.bottom ?? 28)}%` }}>
+      <div style={{ maxWidth: width * 0.84, display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "baseline", columnGap: size * 0.26, rowGap: size * 0.02,
+        transform: `scale(${drift})`, opacity: 1 - out, filter: `blur(${out * 10 * u}px)` }}>
+        {clean.map((w, i) => {
+          const t = frame - starts[i];
+          const p = interpolate(t, [0, D], [0, 1], { ...clamp, easing: Easing.out(Easing.cubic) });
+          let tr = "", blur = 0, op = p;
+          if (kind === "cascata") { tr = `translateY(${(1 - p) * 0.55 * size}px)`; blur = (1 - p) * 10 * u; }
+          else if (kind === "blur") { tr = `scale(${1 + (1 - p) * 0.08})`; blur = (1 - p) * 18 * u; }
+          else if (kind === "escala") { tr = `scale(${1 + (1 - p) * 0.7})`; blur = (1 - p) * 12 * u; }
+          else { const pat = [1, 0, 1, 0, 0, 1, 1]; op = t < 0 ? 0 : t < pat.length ? pat[Math.floor(t)] : 1; blur = t < 4 ? 6 * u : 0; }
+          const isHi = i === hi;
+          return (
+            <span key={i} style={{ display: "inline-block", whiteSpace: "nowrap", opacity: op, transform: tr, filter: blur ? `blur(${blur}px)` : undefined,
+              // destaque minimalista: só troca a fonte (como um lettering), com leve aumento
+              fontFamily: font(isHi ? v.emphasisFont ?? look.hiFont : v.font ?? look.font), fontWeight: isHi ? look.hiWeight : look.weight,
+              fontStyle: (isHi ? look.hiItalic : look.italic) ? "italic" : "normal",
+              fontSize: isHi ? size * Number(v.emphasisScale ?? 1.25) : size, lineHeight: 1.05,
+              color: isHi ? v.accentColor ?? "#ffffff" : v.textColor ?? "#ffffff",
+              textTransform: (v.uppercase ?? look.upper) && !(isHi && look.hiItalic) ? "uppercase" : "none", textShadow: shadow }}>
+              {w}
+            </span>
+          );
+        })}
       </div>
     </AbsoluteFill>
   );
 };
 
+/** Quebra uma fala em blocos de até N palavras, dividindo o tempo pelo tamanho de cada bloco. */
+function chunkCue(c: Cue, maxWords: number, fps: number) {
+  const words = c.text.split(/\s+/).filter(Boolean);
+  const groups: string[][] = [];
+  for (let i = 0; i < words.length; i += maxWords) groups.push(words.slice(i, i + maxWords));
+  // evita sobrar uma palavra sozinha no fim
+  if (groups.length > 1 && groups[groups.length - 1].length === 1) groups[groups.length - 2].push(...groups.pop()!);
+  const total = words.reduce((a, w) => a + w.length + 1, 0);
+  const startF = Math.round(c.start * fps), endF = Math.round(c.end * fps);
+  let at = startF;
+  return groups.map((g, gi) => {
+    const share = g.reduce((a, w) => a + w.length + 1, 0) / total;
+    const len = gi === groups.length - 1 ? endF - at : Math.max(4, Math.round((endF - startF) * share));
+    const r = { words: g, from: at, len: Math.max(4, len) };
+    at += len;
+    return r;
+  });
+}
+
 /** Legendas a partir de um .srt: falas no estilo padrão e algumas falas viram lettering. Fundo transparente. */
 export const Captions: React.FC<StyleProps> = ({ v }) => {
   const { fps } = useVideoConfig();
-  const kind = (String(v.captionStyle ?? "clean") as Kind) in LOOK ? (String(v.captionStyle ?? "clean") as Kind) : "clean";
+  const raw = String(v.captionStyle ?? "cascata");
+  const kind: Kind = (raw in LOOK ? raw : LEGACY[raw] ?? "cascata") as Kind;
   const cues = React.useMemo(() => parseSrt(v.srt), [v.srt]);
   const letterings = React.useMemo(() => pickLetterings(cues, String(v.letteringMode ?? "auto"), Number(v.letteringMaxWords ?? 4), Number(v.letteringEvery ?? 3)), [cues, v.letteringMode, v.letteringMaxWords, v.letteringEvery]);
   const look = LOOK[kind];
@@ -116,7 +140,9 @@ export const Captions: React.FC<StyleProps> = ({ v }) => {
           };
           return <Sequence key={i} from={from} durationInFrames={dur} layout="none"><Lettering v={lv} /></Sequence>;
         }
-        return <Sequence key={i} from={from} durationInFrames={dur} layout="none"><Line cue={c} kind={kind} v={v} fps={fps} startFrame={from} /></Sequence>;
+        return chunkCue(c, Math.max(1, Number(v.wordsPerBlock ?? 4)), fps).map((ch, k) => (
+          <Sequence key={`${i}-${k}`} from={ch.from} durationInFrames={ch.len} layout="none"><Chunk words={ch.words} len={ch.len} kind={kind} v={v} /></Sequence>
+        ));
       })}
     </Background>
   );

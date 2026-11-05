@@ -116,7 +116,7 @@ No editor, o controle **Duração** (1 a 15 s) vale para qualquer template (valo
 
 Presets com `"kind": "letterings"` aparecem na aba **Letterings** da galeria (os demais, na aba Templates).
 
-| `captions` | Legendas a partir de um .srt: falas no estilo escolhido e algumas viram lettering | srt, captionStyle (clean/karaoke/editorial/impact), letteringMode (auto/marked/off), letteringMaxWords, letteringEvery, fontSize, bottom, letteringY |
+| `captions` | Legendas a partir de um .srt: palavra por palavra (estilo lettering minimalista) e, de vez em quando, um lettering | srt, captionStyle (cascata/blur/escala/flick), wordsPerBlock, wordSpeed, emphasis, emphasisFont, letteringMode (auto/marked/off), letteringMaxWords, letteringEvery, fontSize, bottom, letteringY |
 
 Na aba **Legendas (SRT)**: carregue o .srt do vídeo (ou cole o texto). A duração do vídeo exportado acompanha a legenda. Palavras entre *asteriscos* fazem aquela fala virar lettering.
 

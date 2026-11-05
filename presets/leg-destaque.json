@@ -1,9 +1,9 @@
 {
   "id": "leg-destaque",
-  "name": "Palavra Destacada",
+  "name": "Escala",
   "category": "Legendas",
   "kind": "legendas",
-  "description": "A palavra falada ganha uma caixa colorida (estilo karaokê); letterings crescendo.",
+  "description": "Cada palavra chega maior e assenta; o destaque vira uma palavra condensada. Letterings com câmera se afastando.",
   "style": "captions",
   "fps": 30,
   "durationInFrames": 510,
@@ -24,29 +24,47 @@
       "key": "captionStyle",
       "label": "Estilo da legenda",
       "type": "select",
-      "default": "karaoke",
+      "default": "escala",
       "options": [
         {
-          "value": "clean",
-          "label": "Clean"
+          "value": "cascata",
+          "label": "Cascata (palavras subindo)"
         },
         {
-          "value": "karaoke",
-          "label": "Palavra destacada"
+          "value": "blur",
+          "label": "Blur (palavras saindo do desfoque)"
         },
         {
-          "value": "editorial",
-          "label": "Editorial"
+          "value": "escala",
+          "label": "Escala (palavras diminuindo)"
         },
         {
-          "value": "impact",
-          "label": "Impacto"
+          "value": "flick",
+          "label": "Flick (palavras piscando)"
         }
       ]
     },
     {
+      "key": "wordsPerBlock",
+      "label": "Palavras por vez na tela",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 8,
+      "step": 1
+    },
+    {
+      "key": "wordSpeed",
+      "label": "Velocidade das palavras",
+      "type": "number",
+      "default": 1,
+      "min": 0.4,
+      "max": 3,
+      "step": 0.1
+    },
+    {
       "key": "letteringMode",
-      "label": "Letterings",
+      "label": "Letterings no meio da legenda",
       "type": "select",
       "default": "auto",
       "options": [
@@ -119,10 +137,61 @@
       ]
     },
     {
+      "key": "emphasisFont",
+      "label": "Fonte da palavra em destaque",
+      "type": "font",
+      "default": "bebas",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "emphasis",
+      "label": "Destacar a palavra principal de cada bloco",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "emphasisScale",
+      "label": "Tamanho do destaque",
+      "type": "number",
+      "default": 1.45,
+      "min": 1,
+      "max": 2,
+      "step": 0.05
+    },
+    {
       "key": "fontSize",
       "label": "Tamanho da legenda",
       "type": "number",
-      "default": 72,
+      "default": 62,
       "min": 30,
       "max": 120,
       "step": 1
@@ -131,7 +200,7 @@
       "key": "bottom",
       "label": "Altura da legenda (% de baixo)",
       "type": "number",
-      "default": 18,
+      "default": 26,
       "min": 2,
       "max": 60,
       "step": 1
@@ -153,15 +222,9 @@
     },
     {
       "key": "accentColor",
-      "label": "Cor de destaque",
+      "label": "Cor da palavra em destaque",
       "type": "color",
-      "default": "#7cf5c4"
-    },
-    {
-      "key": "highlightText",
-      "label": "Cor do texto destacado",
-      "type": "color",
-      "default": "#111111"
+      "default": "#ffffff"
     },
     {
       "key": "letteringColor",
@@ -173,7 +236,13 @@
       "key": "letteringSmallColor",
       "label": "Cor das pequenas do lettering",
       "type": "color",
-      "default": "#7cf5c4"
+      "default": "#cfe8ff"
+    },
+    {
+      "key": "shadow",
+      "label": "Sombra suave",
+      "type": "toggle",
+      "default": true
     },
     {
       "key": "bgColor",
