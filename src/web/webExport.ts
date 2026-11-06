@@ -2,11 +2,13 @@ import { renderMediaOnWeb, canRenderMediaOnWeb, renderStillOnWeb } from "@remoti
 import { PresetVideo } from "../remotion/PresetVideo";
 import { buildInput, type FormatId, type Preset, type Values } from "../types";
 import { makeZip } from "./zip";
+import { makeApng } from "./apng";
 
-export type WebExportType = "mp4" | "mp4-green" | "png-zip" | "webm-alpha";
+export type WebExportType = "mp4" | "apng" | "mp4-green" | "png-zip" | "webm-alpha";
 
 export const WEB_EXPORTS: { id: WebExportType; label: string }[] = [
   { id: "mp4", label: "Vídeo MP4 (abre em qualquer aparelho)" },
+  { id: "apng", label: "PNG animado sem fundo (um arquivo .png)" },
   { id: "mp4-green", label: "Vídeo MP4 com fundo verde (para chroma key)" },
   { id: "webm-alpha", label: "Vídeo WebM sem fundo (não abre no QuickTime)" },
   { id: "png-zip", label: "Imagens PNG sem fundo (pasta ZIP)" },
@@ -18,11 +20,12 @@ export async function renderInBrowser(
   onProgress: (p: number) => void, signal?: AbortSignal,
 ): Promise<{ blob: Blob; filename: string }> {
   // MP4 com fundo verde: desliga a transparência e pinta o fundo de verde puro (para chroma key)
-  const vals = type === "mp4-green" ? { ...values, transparent: false, bgColor: "#00ff00" } : type === "png-zip" ? { ...values, transparent: true } : type === "mp4" ? { ...values, transparent: false } : values;
+  const vals = type === "mp4-green" ? { ...values, transparent: false, bgColor: "#00ff00" } : (type === "png-zip" || type === "apng") ? { ...values, transparent: true } : type === "mp4" ? { ...values, transparent: false } : values;
   const input = buildInput(preset, vals, format);
   const isMp4 = type === "mp4" || type === "mp4-green";
   const container = isMp4 ? "mp4" : "webm";
-  const transparent = type === "webm-alpha" || type === "png-zip";
+  const capture = type === "png-zip" || type === "apng";
+  const transparent = type === "webm-alpha" || capture;
   const videoCodec: "h264" | "vp8" | "vp9" = isMp4 ? "h264" : "vp9";
   const composition = {
     id: "Preset", component: PresetVideo, durationInFrames: input.durationInFrames,
@@ -36,7 +39,7 @@ export async function renderInBrowser(
   // Sequência PNG: guarda cada quadro (com transparência) enquanto o navegador renderiza
   const pngs: Blob[] = [];
   let canvas: OffscreenCanvas | null = null;
-  const onFrame = type === "png-zip"
+  const onFrame = capture
     ? async (frame: VideoFrame) => {
         canvas ??= new OffscreenCanvas(frame.displayWidth, frame.displayHeight);
         const ctx = canvas.getContext("2d")!;
@@ -55,6 +58,9 @@ export async function renderInBrowser(
     licenseKey: "free-license",
   } as never);
   const base = `${preset.id}-${format.replace(":", "x")}`;
+  if (type === "apng") {
+    return { blob: await makeApng(pngs, input.fps), filename: `${base}-sem-fundo.png` };
+  }
   if (type === "png-zip") {
     const pad = String(pngs.length).length < 4 ? 4 : String(pngs.length).length;
     const readme = [
