@@ -6,10 +6,10 @@ import { makeZip } from "./zip";
 export type WebExportType = "mp4" | "mp4-green" | "png-zip" | "webm-alpha";
 
 export const WEB_EXPORTS: { id: WebExportType; label: string }[] = [
-  { id: "mp4", label: "MP4 (abre em qualquer aparelho)" },
-  { id: "png-zip", label: "Sem fundo: sequência PNG em ZIP (universal)" },
-  { id: "mp4-green", label: "MP4 com fundo verde (chroma key)" },
-  { id: "webm-alpha", label: "WebM sem fundo (Chrome/Premiere, não abre no QuickTime)" },
+  { id: "mp4", label: "Vídeo MP4 (abre em qualquer aparelho)" },
+  { id: "mp4-green", label: "Vídeo MP4 com fundo verde (para chroma key)" },
+  { id: "webm-alpha", label: "Vídeo WebM sem fundo (não abre no QuickTime)" },
+  { id: "png-zip", label: "Imagens PNG sem fundo (pasta ZIP)" },
 ];
 
 /** Renderiza o vídeo no próprio navegador (sem servidor) e devolve o arquivo. */
@@ -18,7 +18,7 @@ export async function renderInBrowser(
   onProgress: (p: number) => void, signal?: AbortSignal,
 ): Promise<{ blob: Blob; filename: string }> {
   // MP4 com fundo verde: desliga a transparência e pinta o fundo de verde puro (para chroma key)
-  const vals = type === "mp4-green" ? { ...values, transparent: false, bgColor: "#00ff00" } : type === "png-zip" ? { ...values, transparent: true } : values;
+  const vals = type === "mp4-green" ? { ...values, transparent: false, bgColor: "#00ff00" } : type === "png-zip" ? { ...values, transparent: true } : type === "mp4" ? { ...values, transparent: false } : values;
   const input = buildInput(preset, vals, format);
   const isMp4 = type === "mp4" || type === "mp4-green";
   const container = isMp4 ? "mp4" : "webm";
