@@ -113,3 +113,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 
 .srtfield { display: flex; flex-direction: column; gap: 8px; }
 .srtfield textarea { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; line-height: 1.45; }
+
+.premiere { width: 100%; max-width: 760px; border: 1px solid var(--line); background: var(--panel); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+.premiere-head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.premiere-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.premiere-row select { background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; }

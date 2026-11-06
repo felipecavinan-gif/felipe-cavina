@@ -7,6 +7,6 @@ const scriptRe = /<script\b[^>]*>[\s\S]*?<\/script>/g;
 const scripts = [...html.matchAll(scriptRe)].map((m) => m[0]).join("\n");
 const rest = html.replace(scriptRe, "");
 const styles = [...rest.matchAll(/<style\b[^>]*>[\s\S]*?<\/style>/g)].map((m) => m[0]).join("\n");
-const page = `<title>Motion Presets</title>\n${styles}\n<div id="root"></div>\n${scripts}\n`;
+const page = `<title>Anakin</title>\n${styles}\n<div id="root"></div>\n${scripts}\n`;
 fs.writeFileSync(out, page);
 console.log(out, (page.length / 1e6).toFixed(2), "MB");

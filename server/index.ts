@@ -2,18 +2,23 @@ import express from "express";
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
+import os from "node:os";
+import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { bundle } from "@remotion/bundler";
 import { renderMedia, renderStill, selectComposition } from "@remotion/renderer";
-import { FORMATS, buildInput, defaultValues, type FormatId, type Preset, type Values } from "../src/types";
+import { FORMATS, buildInput, defaultValues, type CustomFrame, type FormatId, type Preset, type Values } from "../src/types";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const PRESETS_DIR = path.join(ROOT, "presets");
 const OUT_DIR = path.join(ROOT, "out");
+/** Pasta onde todo vídeo exportado fica salvo (Filmes/Anakin no Mac, Vídeos/Anakin no Windows). */
+const LIBRARY_DIR = process.env.MOTION_LIBRARY_DIR || path.join(os.homedir(), process.platform === "darwin" ? "Movies" : "Videos", "Anakin");
 const PORT = Number(process.env.PORT ?? 3001);
 const BROWSER = process.env.REMOTION_BROWSER_EXECUTABLE || undefined;
 const CONCURRENCY = process.env.RENDER_CONCURRENCY ? Number(process.env.RENDER_CONCURRENCY) : null;
 fs.mkdirSync(OUT_DIR, { recursive: true });
+fs.mkdirSync(LIBRARY_DIR, { recursive: true });
 
 // ---------- Presets (lidos do disco a cada requisição: basta soltar um JSON novo na pasta) ----------
 function loadPresets(): Preset[] {
@@ -32,8 +37,8 @@ function loadPresets(): Preset[] {
 
 // ---------- Export formats ----------
 const EXPORTS = {
-  mp4: { label: "MP4 (H.264)", ext: "mp4", opts: { codec: "h264", crf: 18 } },
-  "mov-alpha": { label: "MOV ProRes 4444 (transparente)", ext: "mov", opts: { codec: "prores", proResProfile: "4444", pixelFormat: "yuva444p10le", imageFormat: "png" } },
+  mp4: { label: "MP4 (abre em qualquer aparelho)", ext: "mp4", opts: { codec: "h264", crf: 18, pixelFormat: "yuv420p" } },
+  "mov-alpha": { label: "MOV sem fundo (ProRes 4444: abre no Finder, QuickTime e Premiere)", ext: "mov", opts: { codec: "prores", proResProfile: "4444", pixelFormat: "yuva444p10le", imageFormat: "png" } },
   "webm-alpha": { label: "WebM VP9 (transparente)", ext: "webm", opts: { codec: "vp9", pixelFormat: "yuva420p", imageFormat: "png" } },
   gif: { label: "GIF", ext: "gif", opts: { codec: "gif", everyNthFrame: 2 } },
 } as const;
@@ -50,7 +55,7 @@ function getBundle() {
 }
 
 // ---------- Jobs ----------
-type Job = { id: string; status: "queued" | "rendering" | "done" | "error"; progress: number; file?: string; filename?: string; error?: string; created: number };
+type Job = { id: string; status: "queued" | "rendering" | "done" | "error"; progress: number; file?: string; filename?: string; error?: string; created: number; seconds?: number };
 const jobs = new Map<string, Job>();
 let queue: Promise<unknown> = Promise.resolve();
 
@@ -81,21 +86,26 @@ function sanitize(p: Preset, input: unknown): Values {
   return v;
 }
 
-async function runJob(job: Job, preset: Preset, values: Values, format: FormatId, exp: ExportId) {
+async function runJob(job: Job, preset: Preset, values: Values, format: FormatId, exp: ExportId, custom?: CustomFrame) {
   job.status = "rendering";
   try {
     const serveUrl = await getBundle();
-    const inputProps = buildInput(preset, values, format);
+    const inputProps = buildInput(preset, values, format, custom);
     const composition = await selectComposition({ serveUrl, id: "Preset", inputProps, browserExecutable: BROWSER });
     const e = EXPORTS[exp];
-    const file = path.join(OUT_DIR, `${job.id}.${e.ext}`);
+    // nome legível e único, salvo na pasta da biblioteca (fica no Finder)
+    const stamp = new Date().toISOString().slice(0, 19).replace(/[T:]/g, "-");
+    const size = custom ? `${inputProps.width}x${inputProps.height}` : format.replace(":", "x");
+    const filename = `${preset.id}-${size}-${stamp}.${e.ext}`;
+    const file = path.join(LIBRARY_DIR, filename);
+    job.seconds = inputProps.durationInFrames / inputProps.fps;
     await renderMedia({
       serveUrl, composition, inputProps, outputLocation: file, browserExecutable: BROWSER,
       concurrency: CONCURRENCY, ...(e.opts as object),
       onProgress: ({ progress }: { progress: number }) => { job.progress = progress; },
     } as unknown as Parameters<typeof renderMedia>[0]);
     job.file = file;
-    job.filename = `${preset.id}-${format.replace(":", "x")}.${e.ext}`;
+    job.filename = filename;
     job.status = "done";
     job.progress = 1;
   } catch (err) {
@@ -109,7 +119,6 @@ async function runJob(job: Job, preset: Preset, values: Values, format: FormatId
 setInterval(() => {
   for (const [id, j] of jobs) {
     if (Date.now() - j.created > 3600_000) {
-      if (j.file) fs.rm(j.file, { force: true }, () => {});
       jobs.delete(id);
     }
   }
@@ -123,15 +132,20 @@ app.get("/api/presets", (_req, res) => res.json(loadPresets()));
 app.get("/api/exports", (_req, res) => res.json(Object.entries(EXPORTS).map(([id, e]) => ({ id, label: e.label }))));
 
 app.post("/api/render", (req, res) => {
-  const { presetId, values, format = "16:9", exportType = "mp4" } = req.body ?? {};
+  const { presetId, values, format = "16:9", exportType = "mp4", custom } = req.body ?? {};
   const preset = loadPresets().find((p) => p.id === presetId);
   if (!preset) return res.status(404).json({ error: "Preset não encontrado" });
-  if (!(format in FORMATS) || !preset.formats.includes(format)) return res.status(400).json({ error: "Formato inválido" });
+  let frame: CustomFrame | undefined;
+  if (custom) {
+    const w = Number(custom.width), h = Number(custom.height), f = Number(custom.fps);
+    if (!(w >= 16 && w <= 7680 && h >= 16 && h <= 7680 && f >= 1 && f <= 120)) return res.status(400).json({ error: "Tamanho ou fps inválido" });
+    frame = { width: w, height: h, fps: f };
+  } else if (!(format in FORMATS) || !preset.formats.includes(format)) return res.status(400).json({ error: "Formato inválido" });
   if (!(exportType in EXPORTS)) return res.status(400).json({ error: "Tipo de exportação inválido" });
   const job: Job = { id: crypto.randomUUID(), status: "queued", progress: 0, created: Date.now() };
   jobs.set(job.id, job);
   const clean = sanitize(preset, values);
-  queue = queue.then(() => runJob(job, preset, clean, format, exportType));
+  queue = queue.then(() => runJob(job, preset, clean, format, exportType, frame));
   res.json({ jobId: job.id });
 });
 
@@ -158,8 +172,21 @@ app.post("/api/still", async (req, res) => {
 app.get("/api/render/:id", (req, res) => {
   const j = jobs.get(req.params.id);
   if (!j) return res.status(404).json({ error: "Job não encontrado" });
-  res.json({ status: j.status, progress: j.progress, error: j.error });
+  res.json({ status: j.status, progress: j.progress, error: j.error, path: j.status === "done" ? j.file : undefined, filename: j.filename, seconds: j.seconds });
 });
+
+/** Abre a pasta do arquivo no Finder (Mac) ou no Explorer (Windows), com o arquivo selecionado. */
+app.post("/api/render/:id/reveal", (req, res) => {
+  const j = jobs.get(req.params.id);
+  if (!j?.file || j.status !== "done") return res.status(404).json({ error: "Arquivo não disponível" });
+  const cmd = process.platform === "darwin" ? ["open", ["-R", j.file]] : process.platform === "win32" ? ["explorer", [`/select,${j.file}`]] : ["xdg-open", [path.dirname(j.file)]];
+  const child = spawn(cmd[0] as string, cmd[1] as string[], { detached: true, stdio: "ignore" });
+  child.on("error", () => {}); // sem gerenciador de arquivos (ex.: servidor sem tela): ignora
+  child.unref();
+  res.json({ ok: true });
+});
+
+app.get("/api/library", (_req, res) => res.json({ dir: LIBRARY_DIR }));
 
 app.get("/api/render/:id/file", (req, res) => {
   const j = jobs.get(req.params.id);

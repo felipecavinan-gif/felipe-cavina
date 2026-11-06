@@ -1,5 +1,5 @@
 {
-  "name": "motion-platform",
+  "name": "anakin",
   "version": "1.0.0",
   "scripts": {
     "dev": "concurrently -k -n api,web \"tsx watch server/index.ts\" \"vite\"",

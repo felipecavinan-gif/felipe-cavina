@@ -61,15 +61,18 @@ export function defaultValues(p: Preset): Values {
   return v;
 }
 
-export function buildInput(p: Preset, values: Values, format: FormatId): RenderInput {
-  const dim = FORMATS[format];
+export type CustomFrame = { width: number; height: number; fps: number };
+
+export function buildInput(p: Preset, values: Values, format: FormatId, custom?: CustomFrame): RenderInput {
+  const dim = custom ? { width: Math.round(custom.width / 2) * 2, height: Math.round(custom.height / 2) * 2 } : FORMATS[format];
+  const fps = custom?.fps && custom.fps > 0 ? custom.fps : p.fps;
   // legendas: a duração vem do próprio arquivo .srt
   const srtSec = p.fields.some((f) => f.type === "srt") ? srtDuration(values.srt) : 0;
   return {
     style: p.style,
     values: { ...(p.props ?? {}), ...values },
-    fps: p.fps,
-    durationInFrames: srtSec > 0 ? Math.ceil(srtSec * p.fps) : Number(values._duration) > 0 ? Math.round(Number(values._duration) * p.fps) : p.durationInFrames,
+    fps,
+    durationInFrames: Math.max(1, srtSec > 0 ? Math.ceil(srtSec * fps) : Number(values._duration) > 0 ? Math.round(Number(values._duration) * fps) : Math.round((p.durationInFrames / p.fps) * fps)),
     width: dim.width,
     height: dim.height,
   };

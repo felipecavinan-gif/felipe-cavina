@@ -16,18 +16,18 @@ export async function fetchExports(): Promise<{ id: string; label: string }[]> {
   return (await fetch("/api/exports")).json();
 }
 
-export async function startRender(presetId: string, values: Values, format: FormatId, exportType: string) {
+export async function startRender(presetId: string, values: Values, format: FormatId, exportType: string, custom?: { width: number; height: number; fps: number }) {
   const r = await fetch("/api/render", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ presetId, values, format, exportType }),
+    body: JSON.stringify({ presetId, values, format, exportType, custom }),
   });
   const data = await r.json();
   if (!r.ok) throw new Error(data.error ?? "Erro ao iniciar render");
   return data.jobId as string;
 }
 
-export async function getJob(id: string): Promise<{ status: string; progress: number; error?: string }> {
+export async function getJob(id: string): Promise<{ status: string; progress: number; error?: string; path?: string; filename?: string }> {
   return (await fetch(`/api/render/${id}`)).json();
 }
 
@@ -39,4 +39,8 @@ export async function renderStillServer(presetId: string, values: Values, format
   });
   if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error ?? "Erro ao gerar PNG");
   return r.blob();
+}
+
+export async function revealInFinder(jobId: string) {
+  await fetch(`/api/render/${jobId}/reveal`, { method: "POST" });
 }

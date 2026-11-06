@@ -1,0 +1,38 @@
+ANAKIN — COMO USAR NO SEU COMPUTADOR
+====================================
+
+1) INSTALE O NODE.JS (só uma vez)
+   Baixe a versão LTS em https://nodejs.org e instale.
+
+2) ABRA O ANAKIN
+   Mac: dê dois cliques em "Abrir Anakin.command".
+        Se o Mac disser que o arquivo é de um desenvolvedor não identificado:
+        clique com o botão direito no arquivo > Abrir > Abrir.
+   Windows: dê dois cliques em "Abrir Anakin.bat".
+   Na primeira vez ele instala o que precisa (alguns minutos, precisa de internet).
+   Depois abre sozinho no navegador. Deixe a janela do Terminal aberta enquanto usa.
+
+3) EXPORTAR VÍDEOS
+   - Com "Fundo transparente" ligado, o padrão é "MOV sem fundo (ProRes 4444)":
+     abre no Finder/QuickTime e no Premiere com a transparência.
+   - Sem fundo transparente, o padrão é MP4 (abre em qualquer lugar).
+   - Todo vídeo exportado fica salvo em:
+       Mac:     Filmes > Anakin
+       Windows: Vídeos > Anakin
+     e também vai para Downloads. O botão "Mostrar no Finder" abre a pasta.
+
+4) EXTENSÃO DO PREMIERE (opcional)
+   Mac: dois cliques em "Instalar extensão no Premiere.command".
+   Windows: dois cliques em "Instalar extensão no Premiere.bat".
+   Depois:
+     a) deixe o Anakin aberto (passo 2);
+     b) reinicie o Premiere;
+     c) menu Janela > Extensões > Anakin.
+   No painel, edite um template, lettering ou legenda e clique em "Adicionar à timeline".
+   O Anakin gera o gráfico sem fundo no tamanho e fps da sua sequência, importa na
+   pasta "Anakin" do projeto e coloca na faixa escolhida (V2, V3...), no ponto de
+   reprodução ou no início da sequência (o padrão para legendas).
+
+   Legendas: no Premiere, exporte as legendas da sequência como .srt
+   (Arquivo > Exportar > Legendas), carregue o .srt no Anakin na aba "Legendas (SRT)"
+   e clique em "Adicionar à timeline" com "No início da sequência".

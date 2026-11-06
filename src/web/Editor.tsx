@@ -4,7 +4,8 @@ import { ImageField } from "./ImageField";
 import { SrtField } from "./SrtField";
 import { FORMATS, defaultValues, type FormatId, type Preset, type PresetField, type Values } from "../types";
 import { Preview } from "./Preview";
-import { STANDALONE, fetchExports, getJob, startRender, renderStillServer } from "./api";
+import { STANDALONE, fetchExports, getJob, startRender, renderStillServer, revealInFinder } from "./api";
+import { IN_PREMIERE, getSequence, placeInTimeline, type SequenceInfo } from "./premiere";
 import { WEB_EXPORTS, renderInBrowser, renderPngInBrowser, type WebExportType } from "./webExport";
 
 declare global {
@@ -148,6 +149,39 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
     }
   };
 
+  // ---------- Premiere (extensão Anakin) ----------
+  const isCaptions = preset.fields.some((f) => f.type === "srt");
+  const [seq, setSeq] = useState<SequenceInfo | null>(null);
+  const [placeAt, setPlaceAt] = useState<"playhead" | "start">(isCaptions ? "start" : "playhead");
+  const [track, setTrack] = useState(2);
+  const [pp, setPp] = useState<{ busy: boolean; msg?: string; error?: string; progress?: number }>({ busy: false });
+  useEffect(() => { if (IN_PREMIERE) getSequence().then(setSeq).catch((e) => setPp({ busy: false, error: e.message })); }, []);
+
+  const addToTimeline = async () => {
+    setPp({ busy: true, msg: "Lendo a sequência…" });
+    try {
+      const s = await getSequence();
+      if (!s) throw new Error("Abra uma sequência no Premiere primeiro.");
+      setSeq(s);
+      const at = placeAt === "start" ? 0 : s.playhead;
+      setPp({ busy: true, msg: "Gerando o gráfico…", progress: 0 });
+      // sempre sem fundo, no tamanho e fps da sequência
+      const jobId = await startRender(preset.id, { ...values, transparent: true }, format, "mov-alpha", { width: s.width, height: s.height, fps: s.fps });
+      let j = await getJob(jobId);
+      while (j.status === "queued" || j.status === "rendering") {
+        await new Promise((r) => setTimeout(r, 700));
+        j = await getJob(jobId);
+        setPp({ busy: true, msg: "Gerando o gráfico…", progress: j.progress });
+      }
+      if (j.status !== "done" || !j.path) throw new Error(j.error ?? "Falha ao gerar o gráfico.");
+      setPp({ busy: true, msg: "Colocando na timeline…" });
+      await placeInTimeline(j.path, at, track);
+      setPp({ busy: false, msg: `Adicionado na faixa V${track} em ${at.toFixed(2)}s.` });
+    } catch (e) {
+      setPp({ busy: false, error: (e as Error).message });
+    }
+  };
+
   const busy = render && (render.status === "queued" || render.status === "rendering");
 
   return (
@@ -188,6 +222,28 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
         <div className={`stage-preview fmt-${format.replace(":", "x")}`}>
           <Preview ref={player} preset={preset} values={values} format={format} />
         </div>
+        {IN_PREMIERE ? (
+          <div className="premiere">
+            <div className="premiere-head">
+              <b>Premiere</b>
+              <span className="muted">{seq ? `${seq.name} · ${seq.width}×${seq.height} · ${seq.fps.toFixed(2)} fps` : "Nenhuma sequência aberta"}</span>
+            </div>
+            <div className="premiere-row">
+              <select id="pp-at" value={placeAt} onChange={(e) => setPlaceAt(e.target.value as "playhead" | "start")}>
+                <option value="playhead">No ponto de reprodução</option>
+                <option value="start">No início da sequência</option>
+              </select>
+              <select id="pp-track" value={track} onChange={(e) => setTrack(Number(e.target.value))}>
+                {[2, 3, 4, 5, 6, 7, 8].map((n) => <option key={n} value={n}>Faixa V{n}</option>)}
+              </select>
+              <button className="primary" disabled={pp.busy} onClick={addToTimeline}>
+                {pp.busy ? `${pp.msg ?? ""} ${pp.progress != null ? Math.round(pp.progress * 100) + "%" : ""}` : "Adicionar à timeline"}
+              </button>
+            </div>
+            {pp.error && <span className="err">{pp.error}</span>}
+            {!pp.busy && pp.msg && <span className="muted">{pp.msg}</span>}
+          </div>
+        ) : null}
         <div className="export">
           <select value={exportType} onChange={(e) => setExportType(e.target.value)}>
             {exports.map((e) => <option key={e.id} value={e.id}>{e.label}</option>)}
@@ -199,7 +255,12 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
             {png.busy ? "Gerando PNG…" : "Baixar PNG sem fundo"}
           </button>
           {busy && <div className="bar"><div style={{ width: `${(render!.progress ?? 0) * 100}%` }} /></div>}
-          {render?.status === "done" && !STANDALONE && <a className="muted" href={`/api/render/${render.jobId}/file`}>Download iniciado. Clique aqui se não começou.</a>}
+          {render?.status === "done" && !STANDALONE && (
+            <>
+              <button className="ghost" onClick={() => revealInFinder(render.jobId)}>Mostrar no Finder</button>
+              <a className="muted" href={`/api/render/${render.jobId}/file`}>Baixar de novo</a>
+            </>
+          )}
           {STANDALONE && saved && render?.status !== "rendering" && (
             <button className="ghost" onClick={() => saveFile(saved)}>Salvar {saved.filename} ({(saved.blob.size / 1e6).toFixed(1)} MB)</button>
           )}

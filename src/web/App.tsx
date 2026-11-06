@@ -30,7 +30,7 @@ export const App: React.FC = () => {
     <div className="app">
       <header className="topbar">
         <a href="#" className="logo">
-          <span className="logo-mark">▶</span> Motion<b>Presets</b>
+          <span className="logo-mark">▶</span> <span>Ana<b>kin</b></span>
         </a>
         <span className="topbar-note">Templates de motion para editores. Troque o texto, exporte e use no seu vídeo.</span>
       </header>
