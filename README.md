@@ -147,6 +147,7 @@ No editor dá para desligar ("Área segura do Instagram") e mostrar as guias sob
 | MP4 (H.264) | Vídeo com fundo, compatível com tudo |
 | Sequência PNG em ZIP | **Sem fundo e universal** (Mac, Windows, celular); importe como sequência de imagens |
 | MP4 com fundo verde | Universal; remova o verde com chroma key no editor |
+| MOV PNG (app local) | **Vídeo com transparência** no codec PNG (QuickTime PNG): Premiere, Finder |
 | MOV ProRes 4444 | **Com transparência**: para Premiere, Final Cut, DaVinci, After Effects |
 | WebM VP9 | Com transparência, arquivo leve (web, CapCut desktop) |
 | GIF | Prévia rápida |

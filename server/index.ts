@@ -6,7 +6,7 @@ import os from "node:os";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { bundle } from "@remotion/bundler";
-import { renderMedia, renderStill, selectComposition } from "@remotion/renderer";
+import { RenderInternals, renderMedia, renderStill, selectComposition } from "@remotion/renderer";
 import { FORMATS, buildInput, defaultValues, type CustomFrame, type FormatId, type Preset, type Values } from "../src/types";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -38,6 +38,7 @@ function loadPresets(): Preset[] {
 // ---------- Export formats ----------
 const EXPORTS = {
   mp4: { label: "MP4 (abre em qualquer aparelho)", ext: "mp4", opts: { codec: "h264", crf: 18, pixelFormat: "yuv420p" } },
+  "mov-png": { label: "Vídeo MOV PNG sem fundo (QuickTime PNG: Premiere, Finder)", ext: "mov", opts: { codec: "prores", proResProfile: "4444", pixelFormat: "yuva444p10le", imageFormat: "png" } },
   "mov-alpha": { label: "MOV sem fundo (ProRes 4444: abre no Finder, QuickTime e Premiere)", ext: "mov", opts: { codec: "prores", proResProfile: "4444", pixelFormat: "yuva444p10le", imageFormat: "png" } },
   "webm-alpha": { label: "WebM VP9 (transparente)", ext: "webm", opts: { codec: "vp9", pixelFormat: "yuva420p", imageFormat: "png" } },
   gif: { label: "GIF", ext: "gif", opts: { codec: "gif", everyNthFrame: 2 } },
@@ -100,11 +101,21 @@ async function runJob(job: Job, preset: Preset, values: Values, format: FormatId
     const filename = `${preset.id}-${size}-${stamp}.${e.ext}`;
     const file = path.join(LIBRARY_DIR, filename);
     job.seconds = inputProps.durationInFrames / inputProps.fps;
+    // MOV PNG: renderiza em ProRes 4444 e converte para o codec PNG (com transparência) usando o ffmpeg do Remotion
+    const target = exp === "mov-png" ? path.join(OUT_DIR, `${job.id}-tmp.mov`) : file;
     await renderMedia({
-      serveUrl, composition, inputProps, outputLocation: file, browserExecutable: BROWSER,
+      serveUrl, composition, inputProps, outputLocation: target, browserExecutable: BROWSER,
       concurrency: CONCURRENCY, ...(e.opts as object),
       onProgress: ({ progress }: { progress: number }) => { job.progress = progress; },
     } as unknown as Parameters<typeof renderMedia>[0]);
+    if (exp === "mov-png") {
+      job.progress = 0.99;
+      await RenderInternals.callFf({
+        bin: "ffmpeg", indent: false, logLevel: "warn", binariesDirectory: null, cancelSignal: undefined,
+        args: ["-y", "-i", target, "-c:v", "png", "-pix_fmt", "rgba", "-an", file],
+      } as Parameters<typeof RenderInternals.callFf>[0]);
+      fs.rm(target, { force: true }, () => {});
+    }
     job.file = file;
     job.filename = filename;
     job.status = "done";

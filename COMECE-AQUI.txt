@@ -13,8 +13,9 @@ ANAKIN — COMO USAR NO SEU COMPUTADOR
    Depois abre sozinho no navegador. Deixe a janela do Terminal aberta enquanto usa.
 
 3) EXPORTAR VÍDEOS
-   - Com "Fundo transparente" ligado, o padrão é "MOV sem fundo (ProRes 4444)":
-     abre no Finder/QuickTime e no Premiere com a transparência.
+   - Com "Fundo transparente" ligado, o padrão é "Vídeo MOV PNG sem fundo":
+     um vídeo .mov com codec PNG, que abre no Finder/QuickTime e no Premiere
+     com a transparência. (Também dá para escolher MOV ProRes 4444.)
    - Sem fundo transparente, o padrão é MP4 (abre em qualquer lugar).
    - Todo vídeo exportado fica salvo em:
        Mac:     Filmes > Anakin

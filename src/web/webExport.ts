@@ -8,9 +8,10 @@ export type WebExportType = "mp4" | "apng" | "mp4-green" | "png-zip" | "webm-alp
 
 export const WEB_EXPORTS: { id: WebExportType; label: string }[] = [
   { id: "mp4", label: "Vídeo MP4 (abre em qualquer aparelho)" },
-  { id: "apng", label: "PNG animado sem fundo (um arquivo .png)" },
+
   { id: "mp4-green", label: "Vídeo MP4 com fundo verde (para chroma key)" },
   { id: "webm-alpha", label: "Vídeo WebM sem fundo (não abre no QuickTime)" },
+  { id: "apng", label: "Imagem PNG animada sem fundo (.png)" },
   { id: "png-zip", label: "Imagens PNG sem fundo (pasta ZIP)" },
 ];
 

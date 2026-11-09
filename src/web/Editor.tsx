@@ -73,8 +73,8 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
   useEffect(() => { try { localStorage.setItem(storageKey, JSON.stringify(values)); } catch {} }, [values, storageKey]);
   // letterings: por padrão saem sem fundo (no navegador, PNG animado; no app do computador, MOV)
   useEffect(() => {
-    if (values.transparent && !STANDALONE) setExportType("mov-alpha");
-    else if (values.transparent && preset.kind === "letterings") setExportType("apng");
+    // sem fundo no app do computador: vídeo MOV PNG; no navegador: MP4 (o navegador não gera vídeo transparente)
+    if (values.transparent && !STANDALONE) setExportType("mov-png");
     else setExportType("mp4");
   }, [values.transparent, preset.kind]);
   useEffect(() => () => window.clearInterval(poll.current), []);
@@ -282,7 +282,7 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
           {png.done && !png.busy && <span className="muted">{png.done} Pause o preview no momento que quiser antes de baixar.</span>}
           {values.transparent && exportType === "mp4" && <span className="muted">{STANDALONE ? "O MP4 sai com a cor de fundo. Para vídeo sem fundo (.mov), use o app Anakin no computador." : "O MP4 sai com a cor de fundo. Para vídeo sem fundo, escolha MOV."}</span>}
           {exportType === "png-zip" && <span className="muted">Baixa uma pasta ZIP com uma imagem por quadro (não é vídeo).</span>}
-          {exportType === "apng" && <span className="muted">Um único .png animado com fundo transparente.</span>}
+          {exportType === "apng" && <span className="muted">Imagem PNG animada (não é vídeo; o Premiere importa só o primeiro quadro).</span>}
           {exportType === "webm-alpha" && <span className="warn">WebM não abre no QuickTime do Mac. Para algo universal, use MP4 ou a sequência PNG.</span>}
         </div>
       </section>
