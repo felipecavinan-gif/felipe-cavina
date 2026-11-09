@@ -122,7 +122,7 @@ export const Captions: React.FC<StyleProps> = ({ v }) => {
   const raw = String(v.captionStyle ?? "cascata");
   const kind: Kind = (raw in LOOK ? raw : LEGACY[raw] ?? "cascata") as Kind;
   const cues = React.useMemo(() => parseSrt(v.srt), [v.srt]);
-  const letterings = React.useMemo(() => pickLetterings(cues, String(v.letteringMode ?? "auto"), Number(v.letteringMaxWords ?? 4), Number(v.letteringEvery ?? 3)), [cues, v.letteringMode, v.letteringMaxWords, v.letteringEvery]);
+  const letterings = React.useMemo(() => pickLetterings(cues, String(v.letteringMode ?? "off"), Number(v.letteringMaxWords ?? 4), Number(v.letteringEvery ?? 3)), [cues, v.letteringMode, v.letteringMaxWords, v.letteringEvery]);
   const look = LOOK[kind];
 
   return (

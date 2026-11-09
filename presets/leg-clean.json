@@ -3,7 +3,7 @@
   "name": "Cascata",
   "category": "Legendas",
   "kind": "legendas",
-  "description": "Minimalista: as palavras sobem uma a uma com blur; o destaque troca para serifa itálica. De vez em quando, um lettering subindo em cascata.",
+  "description": "Minimalista: as palavras sobem uma a uma com blur; o destaque troca para serifa itálica.",
   "style": "captions",
   "fps": 30,
   "durationInFrames": 510,
@@ -61,44 +61,6 @@
       "min": 0.4,
       "max": 3,
       "step": 0.1
-    },
-    {
-      "key": "letteringMode",
-      "label": "Letterings no meio da legenda",
-      "type": "select",
-      "default": "auto",
-      "options": [
-        {
-          "value": "auto",
-          "label": "Automático (falas curtas e *marcadas*)"
-        },
-        {
-          "value": "marked",
-          "label": "Só as falas com *palavra marcada*"
-        },
-        {
-          "value": "off",
-          "label": "Sem letterings"
-        }
-      ]
-    },
-    {
-      "key": "letteringMaxWords",
-      "label": "Automático: falas com até quantas palavras",
-      "type": "number",
-      "default": 4,
-      "min": 1,
-      "max": 10,
-      "step": 1
-    },
-    {
-      "key": "letteringEvery",
-      "label": "Automático: intervalo mínimo entre letterings (falas)",
-      "type": "number",
-      "default": 3,
-      "min": 1,
-      "max": 10,
-      "step": 1
     },
     {
       "key": "font",
@@ -206,15 +168,6 @@
       "step": 1
     },
     {
-      "key": "letteringY",
-      "label": "Posição vertical do lettering (%)",
-      "type": "number",
-      "default": -8,
-      "min": -40,
-      "max": 40,
-      "step": 1
-    },
-    {
       "key": "textColor",
       "label": "Cor da legenda",
       "type": "color",
@@ -223,18 +176,6 @@
     {
       "key": "accentColor",
       "label": "Cor da palavra em destaque",
-      "type": "color",
-      "default": "#ffffff"
-    },
-    {
-      "key": "letteringColor",
-      "label": "Cor da palavra grande do lettering",
-      "type": "color",
-      "default": "#ffffff"
-    },
-    {
-      "key": "letteringSmallColor",
-      "label": "Cor das pequenas do lettering",
       "type": "color",
       "default": "#ffffff"
     },
@@ -257,5 +198,7 @@
       "default": true
     }
   ],
-  "props": {}
+  "props": {
+    "letteringMode": "off"
+  }
 }

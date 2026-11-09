@@ -21,9 +21,9 @@ export const SrtField: React.FC<{ id: string; value: string; onChange: (v: strin
       <input ref={input} type="file" accept=".srt,.vtt,text/plain" hidden onChange={(e) => load(e.target.files?.[0])} />
       <textarea id={id} rows={9} value={value} onChange={(e) => onChange(e.target.value)} spellCheck={false} />
       <small className={cues.length ? "muted" : "err"}>
-        {cues.length ? `${cues.length} falas · ${Math.floor(dur / 60)}:${String(Math.round(dur % 60)).padStart(2, "0")} de vídeo${marked ? ` · ${marked} marcadas para lettering` : ""}` : "Nenhuma fala reconhecida ainda."}
+        {cues.length ? `${cues.length} falas · ${Math.floor(dur / 60)}:${String(Math.round(dur % 60)).padStart(2, "0")} de vídeo${marked ? ` · ${marked} palavras destacadas` : ""}` : "Nenhuma fala reconhecida ainda."}
       </small>
-      <small className="muted">Dica: coloque *asteriscos* numa palavra para aquela fala virar lettering com essa palavra em destaque.</small>
+      <small className="muted">Dica: coloque *asteriscos* numa palavra para escolher qual palavra fica em destaque.</small>
       {err && <small className="err">{err}</small>}
     </div>
   );
