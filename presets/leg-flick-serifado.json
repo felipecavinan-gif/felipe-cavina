@@ -1,0 +1,206 @@
+{
+  "id": "leg-flick-serifado",
+  "name": "Flick Serifado",
+  "category": "Legendas",
+  "kind": "legendas",
+  "description": "Serifada, palavras piscando ao entrar com um glitch leve de cor; destaque em itálico.",
+  "style": "captions",
+  "fps": 30,
+  "durationInFrames": 510,
+  "formats": [
+    "9:16",
+    "16:9",
+    "1:1",
+    "4:5"
+  ],
+  "fields": [
+    {
+      "key": "srt",
+      "label": "Legenda (.srt do seu vídeo)",
+      "type": "srt",
+      "default": "1\n00:00:00,300 --> 00:00:02,400\nHoje eu vou te mostrar como editar mais rápido\n\n2\n00:00:02,400 --> 00:00:04,000\nsem perder *qualidade*\n\n3\n00:00:04,100 --> 00:00:06,600\nO segredo está em usar modelos prontos\n\n4\n00:00:06,600 --> 00:00:08,200\ne repetir o que *funciona*\n\n5\n00:00:08,300 --> 00:00:10,900\nVocê troca o texto, exporta e coloca no vídeo\n\n6\n00:00:10,900 --> 00:00:12,400\nsimples assim\n\n7\n00:00:12,500 --> 00:00:15,000\nEntão salva esse vídeo para não esquecer\n\n8\n00:00:15,000 --> 00:00:16,800\ne bora *editar*\n"
+    },
+    {
+      "key": "captionStyle",
+      "label": "Estilo da legenda",
+      "type": "select",
+      "default": "flick",
+      "options": [
+        {
+          "value": "cascata",
+          "label": "Cascata (palavras subindo)"
+        },
+        {
+          "value": "blur",
+          "label": "Blur (palavras saindo do desfoque)"
+        },
+        {
+          "value": "escala",
+          "label": "Escala (palavras diminuindo)"
+        },
+        {
+          "value": "flick",
+          "label": "Flick (palavras piscando)"
+        }
+      ]
+    },
+    {
+      "key": "wordsPerBlock",
+      "label": "Palavras por vez na tela",
+      "type": "number",
+      "default": 2,
+      "min": 1,
+      "max": 8,
+      "step": 1
+    },
+    {
+      "key": "wordSpeed",
+      "label": "Velocidade das palavras",
+      "type": "number",
+      "default": 1,
+      "min": 0.4,
+      "max": 3,
+      "step": 0.1
+    },
+    {
+      "key": "font",
+      "label": "Fonte da legenda",
+      "type": "font",
+      "default": "playfair",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "emphasisFont",
+      "label": "Fonte da palavra em destaque",
+      "type": "font",
+      "default": "playfair",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        },
+        {
+          "value": "bebas",
+          "label": "Bebas Neue"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "spacegrotesk",
+          "label": "Space Grotesk"
+        },
+        {
+          "value": "jetbrains",
+          "label": "JetBrains Mono"
+        }
+      ]
+    },
+    {
+      "key": "emphasis",
+      "label": "Destacar a palavra principal de cada bloco",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "emphasisScale",
+      "label": "Tamanho do destaque",
+      "type": "number",
+      "default": 1.2,
+      "min": 1,
+      "max": 2,
+      "step": 0.05
+    },
+    {
+      "key": "fontSize",
+      "label": "Tamanho da legenda",
+      "type": "number",
+      "default": 66,
+      "min": 30,
+      "max": 120,
+      "step": 1
+    },
+    {
+      "key": "bottom",
+      "label": "Altura da legenda (% de baixo)",
+      "type": "number",
+      "default": 26,
+      "min": 2,
+      "max": 60,
+      "step": 1
+    },
+    {
+      "key": "textColor",
+      "label": "Cor da legenda",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "accentColor",
+      "label": "Cor da palavra em destaque",
+      "type": "color",
+      "default": "#ffffff"
+    },
+    {
+      "key": "shadow",
+      "label": "Sombra suave",
+      "type": "toggle",
+      "default": true
+    },
+    {
+      "key": "bgColor",
+      "label": "Cor de fundo (só se desligar transparente)",
+      "type": "color",
+      "default": "#111111"
+    },
+    {
+      "key": "transparent",
+      "label": "Fundo transparente",
+      "type": "toggle",
+      "default": true
+    }
+  ],
+  "props": {
+    "letteringMode": "off",
+    "uppercase": false,
+    "rgbGlitch": true
+  }
+}

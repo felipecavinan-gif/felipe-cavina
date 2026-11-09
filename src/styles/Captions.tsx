@@ -78,7 +78,7 @@ const Chunk: React.FC<{ words: string[]; len: number; kind: Kind; v: any }> = ({
           if (kind === "cascata") { tr = `translateY(${(1 - p) * 0.55 * size}px)`; blur = (1 - p) * 10 * u; }
           else if (kind === "blur") { tr = `scale(${1 + (1 - p) * 0.08})`; blur = (1 - p) * 18 * u; }
           else if (kind === "escala") { tr = `scale(${1 + (1 - p) * 0.7})`; blur = (1 - p) * 12 * u; }
-          else { const pat = [1, 0, 1, 0, 0, 1, 1]; op = t < 0 ? 0 : t < pat.length ? pat[Math.floor(t)] : 1; blur = t < 4 ? 6 * u : 0; }
+          else { const pat = [1, 0, 1, 0, 0, 1, 1]; op = t < 0 ? 0 : t < pat.length ? pat[Math.floor(t)] : 1; blur = t < 4 ? 6 * u : 0; if (v.rgbGlitch && t >= 0 && t < 7) tr = `translateX(${((Math.floor(t) % 2) * 2 - 1) * 4 * u}px)`; }
           const isHi = i === hi;
           return (
             <span key={i} style={{ display: "inline-block", whiteSpace: "nowrap", opacity: op, transform: tr, filter: blur ? `blur(${blur}px)` : undefined,
@@ -87,7 +87,9 @@ const Chunk: React.FC<{ words: string[]; len: number; kind: Kind; v: any }> = ({
               fontStyle: (isHi ? look.hiItalic : look.italic) ? "italic" : "normal",
               fontSize: isHi ? size * Number(v.emphasisScale ?? 1.25) : size, lineHeight: 1.05,
               color: isHi ? v.accentColor ?? "#ffffff" : v.textColor ?? "#ffffff",
-              textTransform: (v.uppercase ?? look.upper) && !(isHi && look.hiItalic) ? "uppercase" : "none", textShadow: shadow }}>
+              textTransform: (v.uppercase ?? look.upper) && !(isHi && look.hiItalic) ? "uppercase" : "none",
+              // glitch: separação de cor (vermelho/ciano) só enquanto a palavra pisca
+              textShadow: kind === "flick" && v.rgbGlitch && t >= 0 && t < 7 ? `${-3 * u}px 0 0 rgba(255,40,80,.85), ${3 * u}px 0 0 rgba(0,229,255,.85)${shadow === "none" ? "" : ", " + shadow}` : shadow }}>
               {w}
             </span>
           );

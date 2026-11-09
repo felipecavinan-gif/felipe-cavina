@@ -63,13 +63,14 @@ const C = (id, name, description, o) => ({
     tog("shadow","Sombra suave",true),
     c("bgColor","Cor de fundo (só se desligar transparente)","#111111"), tog("transparent","Fundo transparente",true),
   ],
-  props: { letteringMode: "off" },
+  props: { letteringMode: "off", ...(o.props ?? {}) },
 });
 const presets = [
   C("clean","Cascata","Minimalista: as palavras sobem uma a uma com blur; o destaque troca para serifa itálica.",{style:"cascata",font:"montserrat",hifont:"playfair",size:62}),
   C("editorial","Blur","Serifada e leve: cada palavra sai do desfoque.",{style:"blur",font:"playfair",hifont:"playfair",size:64,text:"#fff8ec",accent:"#fff8ec",lcolor:"#fff8ec",lsmall:"#e8c37d"}),
   C("destaque","Escala","Cada palavra chega maior e assenta; o destaque vira uma palavra condensada.",{style:"escala",font:"poppins",hifont:"bebas",size:62,hs:1.45,lsmall:"#cfe8ff"}),
   C("impacto","Flick","Caixa alta fina, palavras piscando ao entrar.",{style:"flick",font:"spacegrotesk",hifont:"jetbrains",size:54,wpb:2,lsmall:"#7cf5c4"}),
+  C("flick-serifado","Flick Serifado","Serifada, palavras piscando ao entrar com um glitch leve de cor; destaque em itálico.",{style:"flick",font:"playfair",hifont:"playfair",size:66,wpb:2,hs:1.2,props:{uppercase:false,rgbGlitch:true}}),
 ];
 for (const p of presets) fs.writeFileSync(`${out}/${p.id}.json`, JSON.stringify(p, null, 2) + "\n");
 console.log(presets.length, "presets");
