@@ -65,6 +65,8 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
   const [render, setRender] = useState<RenderState>(null);
   const poll = useRef<number | undefined>(undefined);
   const player = useRef<PlayerRef>(null);
+  const [guides, setGuides] = useState(() => { try { return localStorage.getItem("mp:guides") !== "0"; } catch { return true; } });
+  const toggleGuides = (on: boolean) => { setGuides(on); try { localStorage.setItem("mp:guides", on ? "1" : "0"); } catch {} };
   const [png, setPng] = useState<{ busy: boolean; error?: string; done?: string }>({ busy: false });
 
   useEffect(() => { if (STANDALONE) setExports(WEB_EXPORTS); else fetchExports().then(setExports); }, []);
@@ -222,10 +224,16 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
             <span>{(Number(values._duration) || preset.durationInFrames / preset.fps).toFixed(1)}s</span>
           </label>
           ) : <span className="muted">Duração: igual à legenda</span>}
+          {format === "9:16" ? (
+            <span className="safe-toggles">
+              <label><input id="safe-area" type="checkbox" checked={values._safe !== false} onChange={(e) => set("_safe", e.target.checked)} /> Área segura do Instagram</label>
+              <label><input id="safe-guides" type="checkbox" checked={guides} disabled={values._safe === false} onChange={(e) => toggleGuides(e.target.checked)} /> Mostrar guias</label>
+            </span>
+          ) : null}
           <span className="muted">{FORMATS[format].width}×{FORMATS[format].height} · {preset.fps}fps</span>
         </div>
         <div className={`stage-preview fmt-${format.replace(":", "x")}`}>
-          <Preview ref={player} preset={preset} values={values} format={format} />
+          <Preview ref={player} preset={preset} values={values} format={format} guides={guides && values._safe !== false} />
         </div>
         {IN_PREMIERE ? (
           <div className="premiere">

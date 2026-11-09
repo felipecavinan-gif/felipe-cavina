@@ -83,6 +83,7 @@ function sanitize(p: Preset, input: unknown): Values {
   }
   const dur = Number((input as Record<string, unknown> | undefined)?._duration);
   if (Number.isFinite(dur) && dur >= 1 && dur <= 30) v._duration = dur;
+  if ((input as Record<string, unknown> | undefined)?._safe === false) v._safe = false;
   return v;
 }
 

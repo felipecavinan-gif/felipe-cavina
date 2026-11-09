@@ -133,6 +133,13 @@ Todos aceitam `font`, `bgColor` e `transparent`, e se adaptam a 16:9, 9:16, 1:1 
 As fontes ficam em `src/assets/fonts` (embutidas, sem depender da internet na hora do render).
 Para adicionar uma, coloque o `.woff2` lá e registre em `src/fonts.ts`.
 
+## Área segura do Instagram
+
+No formato 9:16 (Reels/Stories), todo conteúdo fica dentro da área segura recomendada pela Meta:
+14% livres em cima, 35% embaixo e 6% nas laterais (`src/safeArea.ts`). O fundo continua na tela toda.
+Estilos que são uma cena inteira (fundos animados, synthwave, túnel…) ficam na tela toda com o texto no centro.
+No editor dá para desligar ("Área segura do Instagram") e mostrar as guias sobre o preview.
+
 ## Exportação
 
 | Formato | Uso |

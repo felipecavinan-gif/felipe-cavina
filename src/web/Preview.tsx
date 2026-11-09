@@ -2,11 +2,12 @@ import React, { useMemo } from "react";
 import { Player, PlayerRef } from "@remotion/player";
 import { PresetVideo } from "../remotion/PresetVideo";
 import { buildInput, type FormatId, type Preset, type Values } from "../types";
+import { IG_SAFE, usesSafeArea } from "../safeArea";
 
 export const Preview = React.forwardRef<
   PlayerRef,
-  { preset: Preset; values: Values; format: FormatId; controls?: boolean; autoPlay?: boolean; initialFrame?: number; className?: string }
->(({ preset, values, format, controls = true, autoPlay = true, initialFrame, className }, ref) => {
+  { preset: Preset; values: Values; format: FormatId; controls?: boolean; autoPlay?: boolean; initialFrame?: number; className?: string; guides?: boolean }
+>(({ preset, values, format, controls = true, autoPlay = true, initialFrame, className, guides }, ref) => {
   const input = useMemo(() => buildInput(preset, values, format), [preset, values, format]);
   return (
     <div className={`preview ${values.transparent ? "checker" : ""} ${className ?? ""}`} style={{ aspectRatio: `${input.width} / ${input.height}` }}>
@@ -25,6 +26,14 @@ export const Preview = React.forwardRef<
         initialFrame={initialFrame}
         acknowledgeRemotionLicense
       />
+      {guides && usesSafeArea(input.width, input.height, values) ? (
+        // Guias da área segura do Instagram (só na tela, não vão para o vídeo)
+        <div className="safe-guides" aria-hidden="true">
+          <div className="sg-band" style={{ top: 0, height: `${IG_SAFE.top * 100}%` }}><span>nome do perfil</span></div>
+          <div className="sg-band" style={{ bottom: 0, height: `${IG_SAFE.bottom * 100}%` }}><span>legenda, áudio e botões</span></div>
+          <div className="sg-box" style={{ top: `${IG_SAFE.top * 100}%`, bottom: `${IG_SAFE.bottom * 100}%`, left: `${IG_SAFE.left * 100}%`, right: `${IG_SAFE.right * 100}%` }} />
+        </div>
+      ) : null}
     </div>
   );
 });
