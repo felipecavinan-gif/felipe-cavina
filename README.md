@@ -1,8 +1,13 @@
-# Motion Presets
+# Anakin
 
 Plataforma web de templates de motion design para editores de vídeo.
 O editor escolhe um template, troca textos, cores e fonte, vê o preview ao vivo e exporta o vídeo.
 Tudo é renderizado com [Remotion](https://www.remotion.dev), **sem nenhuma IA**.
+
+**Usar no navegador:** a pasta `docs/` tem a versão que roda direto no navegador (GitHub Pages).
+**Usar no computador:** baixe o projeto e siga o `COMECE-AQUI.txt` (exporta vídeo .mov sem fundo e tem a extensão do Premiere).
+
+Para atualizar a página: `npm run build:standalone && cp dist-standalone/index.html docs/index.html`.
 
 ## Como rodar
 
