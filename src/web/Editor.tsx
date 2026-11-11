@@ -97,8 +97,11 @@ export const Editor: React.FC<{ preset: Preset }> = ({ preset }) => {
     const a = document.createElement("a");
     a.href = URL.createObjectURL(file.blob);
     a.download = file.filename;
+    a.rel = "noopener";
+    a.style.display = "none";
+    document.body.appendChild(a); // Safari e Firefox só baixam se o link estiver na página
     a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 60_000);
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 60_000);
   };
 
   const doExport = async () => {

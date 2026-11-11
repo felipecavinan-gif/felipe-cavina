@@ -32,32 +32,75 @@ export async function renderInBrowser(
     id: "Preset", component: PresetVideo, durationInFrames: input.durationInFrames,
     fps: input.fps, width: input.width, height: input.height,
   };
-  const check = await canRenderMediaOnWeb({ container, videoCodec, width: input.width, height: input.height, transparent, muted: true }).catch(() => null);
-  if (check && !check.canRender) {
-    const msg = check.issues.filter((i) => i.severity === "error").map((i) => i.message).join(" ");
-    throw new Error(`Este navegador não consegue gerar ${type.toUpperCase()}. ${msg} Tente outro formato.`);
-  }
   // Sequência PNG: guarda cada quadro (com transparência) enquanto o navegador renderiza
   const pngs: Blob[] = [];
   let canvas: OffscreenCanvas | null = null;
+  const toPng = async (src: CanvasImageSource, w: number, h: number) => {
+    canvas ??= new OffscreenCanvas(w, h);
+    const ctx = canvas.getContext("2d")!;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(src, 0, 0);
+    return canvas.convertToBlob({ type: "image/png" });
+  };
   const onFrame = capture
-    ? async (frame: VideoFrame) => {
-        canvas ??= new OffscreenCanvas(frame.displayWidth, frame.displayHeight);
-        const ctx = canvas.getContext("2d")!;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(frame, 0, 0);
-        pngs.push(await canvas.convertToBlob({ type: "image/png" }));
-        return frame;
-      }
+    ? async (frame: VideoFrame) => { pngs.push(await toPng(frame, frame.displayWidth, frame.displayHeight)); return frame; }
     : null;
-  const result = await renderMediaOnWeb({
-    onFrame,
-    composition, inputProps: input, container, videoCodec, transparent, muted: true,
-    videoBitrate: "very-high",
-    onProgress: ({ progress }: { progress: number }) => onProgress(progress),
-    signal: signal ?? null,
-    licenseKey: "free-license",
-  } as never);
+
+  // Tentativas em ordem: se o navegador (ex.: Safari) não aceitar uma configuração, tenta a próxima.
+  type Attempt = { container: "mp4" | "webm"; codec: "h264" | "vp8" | "vp9"; hw: "no-preference" | "prefer-software" };
+  const attempts: Attempt[] = [
+    { container, codec: videoCodec, hw: "no-preference" },
+    { container, codec: videoCodec, hw: "prefer-software" },
+  ];
+  if (isMp4) attempts.push({ container: "webm", codec: "vp8", hw: "no-preference" });
+  else if (!transparent) attempts.push({ container: "mp4", codec: "h264", hw: "no-preference" });
+  if (type === "webm-alpha") attempts.push({ container: "webm", codec: "vp8", hw: "no-preference" });
+
+  const errors: string[] = [];
+  let result: { getBlob: () => Promise<Blob> } | null = null;
+  let used: Attempt | null = null;
+  for (const a of attempts) {
+    const check = await canRenderMediaOnWeb({ container: a.container, videoCodec: a.codec, width: input.width, height: input.height, transparent, muted: true }).catch(() => null);
+    if (check && !check.canRender) {
+      errors.push(`${a.container}/${a.codec}: ${check.issues.filter((i) => i.severity === "error").map((i) => i.message).join(" ")}`);
+      continue;
+    }
+    try {
+      pngs.length = 0;
+      result = await renderMediaOnWeb({
+        onFrame,
+        composition, inputProps: input, container: a.container, videoCodec: a.codec, transparent, muted: true,
+        videoBitrate: "very-high", hardwareAcceleration: a.hw,
+        onProgress: ({ progress }: { progress: number }) => onProgress(progress),
+        signal: signal ?? null,
+        licenseKey: "free-license",
+      } as never);
+      used = a;
+      break;
+    } catch (e) {
+      if (signal?.aborted) throw e;
+      errors.push(`${a.container}/${a.codec}/${a.hw}: ${(e as Error)?.message ?? e}`);
+    }
+  }
+
+  // PNG (animado ou ZIP) sem codificador de vídeo: gera quadro a quadro (funciona mesmo sem suporte a vídeo)
+  if (!result && capture) {
+    pngs.length = 0;
+    for (let f = 0; f < input.durationInFrames; f++) {
+      if (signal?.aborted) throw new Error("Cancelado");
+      const still = await renderStillOnWeb({ composition, inputProps: input, frame: f, licenseKey: "free-license" } as never);
+      pngs.push(await (still as { blob: (o: { format: "png" }) => Promise<Blob> }).blob({ format: "png" }));
+      onProgress((f + 1) / input.durationInFrames);
+    }
+    result = { getBlob: async () => new Blob() };
+    used = { container: "webm", codec: "vp9", hw: "no-preference" };
+  }
+
+  if (!result || !used) {
+    const ua = typeof navigator !== "undefined" ? navigator.userAgent : "";
+    const browser = /Edg\//.test(ua) ? "Edge" : /Chrome\//.test(ua) ? "Chrome" : /Firefox\//.test(ua) ? "Firefox" : /Safari\//.test(ua) ? "Safari" : "este navegador";
+    throw new Error(`Não foi possível gerar o vídeo no ${browser}. Tente no Google Chrome atualizado. Detalhe: ${errors.join(" | ") || "sem detalhes"}`);
+  }
   const base = `${preset.id}-${format.replace(":", "x")}`;
   if (type === "apng") {
     return { blob: await makeApng(pngs, input.fps), filename: `${base}-sem-fundo.png` };
@@ -82,7 +125,7 @@ export async function renderInBrowser(
     return { blob, filename: `${base}-sem-fundo.zip` };
   }
   const blob = await result.getBlob();
-  return { blob, filename: `${base}${type === "mp4-green" ? "-fundo-verde" : transparent ? "-sem-fundo" : ""}.${container}` };
+  return { blob, filename: `${base}${type === "mp4-green" ? "-fundo-verde" : transparent ? "-sem-fundo" : ""}.${used.container}` };
 }
 
 /** Renderiza um quadro como PNG com fundo transparente. */
