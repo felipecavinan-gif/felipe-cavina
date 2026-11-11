@@ -1,3 +1,4 @@
+import "./polyfills"; // precisa ser o primeiro import (Safari)
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
