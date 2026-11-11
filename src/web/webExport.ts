@@ -16,7 +16,7 @@ export const WEB_EXPORTS: { id: WebExportType; label: string }[] = [
 ];
 
 /** Renderiza o vídeo no próprio navegador (sem servidor) e devolve o arquivo. */
-export async function renderInBrowser(
+async function renderInBrowserInner(
   preset: Preset, values: Values, format: FormatId, type: WebExportType,
   onProgress: (p: number) => void, signal?: AbortSignal,
 ): Promise<{ blob: Blob; filename: string }> {
@@ -137,4 +137,20 @@ export async function renderPngInBrowser(preset: Preset, values: Values, format:
   };
   const result = await renderStillOnWeb({ composition, inputProps: input, frame, licenseKey: "free-license" } as never);
   return (result as { blob: (o: { format: "png" }) => Promise<Blob> }).blob({ format: "png" });
+}
+
+function browserName() {
+  const ua = typeof navigator !== "undefined" ? navigator.userAgent : "";
+  return /Edg\//.test(ua) ? "Edge" : /Chrome\//.test(ua) ? "Chrome" : /Firefox\//.test(ua) ? "Firefox" : /Safari\//.test(ua) ? "Safari" : "este navegador";
+}
+
+/** Exporta no navegador; qualquer erro volta com o nome do navegador e o detalhe técnico. */
+export async function renderInBrowser(...args: Parameters<typeof renderInBrowserInner>) {
+  try {
+    return await renderInBrowserInner(...args);
+  } catch (e) {
+    const msg = (e as Error)?.message ?? String(e);
+    if (msg.startsWith("Não foi possível")) throw e;
+    throw new Error(`Não foi possível gerar o vídeo no ${browserName()} (v2026.11.11-safari). Detalhe: ${msg}`);
+  }
 }

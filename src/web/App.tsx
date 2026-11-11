@@ -32,6 +32,7 @@ export const App: React.FC = () => {
         <a href="#" className="logo">
           <span className="logo-mark">▶</span> <span>Ana<b>kin</b></span>
         </a>
+        <span className="version" title="Versão do Anakin">v2026.11.11-safari</span>
         <span className="topbar-note">Templates de motion para editores. Troque o texto, exporte e use no seu vídeo.</span>
       </header>
       {error && <div className="error">{error}</div>}
